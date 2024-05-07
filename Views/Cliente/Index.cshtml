@@ -1,0 +1,61 @@
+@model IEnumerable<Reciicer.Models.Entities.Cliente>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+<p>
+    <a class="btn btn-primary" asp-action="Create">Adicionar Cliente</a>
+</p>
+<table class="table table-striped">
+        <thead>
+            <tr>
+                    <th>@Html.DisplayNameFor(model => model.Nome)</th>
+                    <th>@Html.DisplayNameFor(model => model.Telefone)</th>
+                    <th>@Html.DisplayNameFor(model => model.Email)</th>
+                    <th>@Html.DisplayNameFor(model => model.CPF)</th>
+                    <th>@Html.DisplayNameFor(model => model.Nivel.Descricao)</th>
+                    <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                <td>@Html.DisplayFor(modelItem => item.Telefone)</td>
+                <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                <td>@Html.DisplayFor(modelItem => item.CPF)</td>
+
+                @if(item.Nivel.Id == 1){
+                    <td class="bg-info text-white  text-center">@Html.DisplayFor(modelItem => item.Nivel.Descricao)</td>
+                }else
+                {
+                    <td class="bg-warning text-white text-center">@Html.DisplayFor(modelItem => item.Nivel.Descricao)</td>
+                }
+                @* <td>
+                <a class="btn btn-info" asp-action="DetalhesCliente" asp-route-Nome="@item.Nome"
+                                                                        asp-route-id="@item.ID"
+                                                                        asp-route-Telefone="@item.Telefone"
+                                                                        asp-route-Email="@item.Email"
+                                                                        asp-route-Carro="@item.Carro"><i class="fa-solid fa-circle-info"></i>
+                </a>
+                <a class="btn btn-warning" asp-action="AtualizarCliente" asp-route-Nome="@item.Nome"
+                                                                        asp-route-id="@item.ID"
+                                                                        asp-route-Telefone="@item.Telefone"
+                                                                        asp-route-Email="@item.Email"
+                                                                        asp-route-Carro="@item.Carro"><i class="fa-solid fa-user-pen"></i>
+                </a>
+                    <a class="btn btn-danger"  asp-action="DeletarCliente" asp-route-id="@item.ID"><i class="fa-solid fa-trash"></i></a> remover direto do index
+                    <a class="btn btn-danger"  asp-action="DeletarCliente" asp-route-Nome="@item.Nome"
+                                                                        asp-route-id="@item.ID"
+                                                                        asp-route-Telefone="@item.Telefone"
+                                                                        asp-route-Email="@item.Email"
+                                                                        asp-route-Carro="@item.Carro"><i class="fa-solid fa-trash"></i></a> 
+                </td> *@
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

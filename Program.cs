@@ -1,7 +1,20 @@
+using Microsoft.EntityFrameworkCore;
+using Reciicer.Data;
+using Reciicer.Repository;
+using Reciicer.Repository.Interface;
+
 var builder = WebApplication.CreateBuilder(args);
+
+//Repository Interface
+builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Add Dbcontext
+builder.Services.AddDbContext<AppDbContext>(options => 
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+);  
 
 var app = builder.Build();
 
