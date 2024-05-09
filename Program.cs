@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 //Repository Interface
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
+builder.Services.AddScoped<INivelRepository, NivelRepository>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

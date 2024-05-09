@@ -16,8 +16,10 @@ namespace Reciicer.Models.Entities
         [DisplayName("Nível")]
         public string? Descricao { get; set; }
 
+        [DisplayName("Pontuação Necessária")]
         public int PontuacaoNecessario { get; set; }
 
+        [DisplayName("Penalidade")]
         public int PontosPerdaFrequencia { get; set; }
 
         public ICollection<Cliente>? Clientes { get; set; } // Navigation
