@@ -14,11 +14,6 @@ namespace Reciicer.Repository
             _context = context;
         }
 
-        public void ExcluirCliente(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<Cliente> ListarCliente()
         {
             var clientes = _context.Cliente.Include(n => n.Nivel).ToList();
@@ -28,12 +23,63 @@ namespace Reciicer.Repository
 
         public Cliente ObterClientePorId(int id)
         {
-            throw new NotImplementedException();
+            return _context.Cliente.Find(id);
         }
 
-        public void RegistrarCliente(Cliente cliente)
+        public void RegistrarCliente(Cliente model)
         {
-            throw new NotImplementedException();
+           
+            var cliente = new Cliente(model.Nome, model.Email, model.Telefone, model.CPF, 1);
+ 
+            _context.Cliente.Add(cliente);
+            _context.SaveChanges();
+        }
+
+        public Cliente DetalharCliente(int id)
+        {
+           
+            var clienteBD = _context.Cliente
+                                    .Include(n => n.Nivel)
+                                    .FirstOrDefault(c => c.Id == id);
+                
+            if(clienteBD is not null)
+            {
+                return clienteBD;
+            }
+
+            return null;
+
+        }
+
+        public void AtualizarCliente(Cliente cliente)
+        {
+            var clienteBD = _context.Cliente.Find(cliente.Id);
+
+
+            if (clienteBD != null)
+            {
+                clienteBD.Nome = cliente.Nome;
+                clienteBD.Telefone = cliente.Telefone;
+                clienteBD.CPF = cliente.CPF;
+                clienteBD.Email = cliente.Email;
+
+
+                _context.Cliente.Update(clienteBD);
+                _context.SaveChanges();
+
+            }
+
+        }
+
+        public void ExcluirCliente(int id)
+        {
+           var clienteRemover = _context.Cliente.Find(id);
+
+           if(clienteRemover != null)
+           {
+                _context.Cliente.Remove(clienteRemover);
+                _context.SaveChanges();
+           }
         }
     }
 }

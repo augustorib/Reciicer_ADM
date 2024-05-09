@@ -53,6 +53,35 @@ namespace Reciicer.Migrations
                     b.HasIndex("NivelId");
 
                     b.ToTable("Cliente");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CPF = "48906785062",
+                            Email = "jurandir@gmail.com",
+                            NivelId = 3,
+                            Nome = "Jurandir",
+                            Telefone = "(85)98792-0782"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CPF = "48517494067",
+                            Email = "judit@gmail.com",
+                            NivelId = 2,
+                            Nome = "Judit",
+                            Telefone = "(69)99727-2310"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CPF = "71134549504",
+                            Email = "astolfo@gmail.com",
+                            NivelId = 4,
+                            Nome = "Astolfo",
+                            Telefone = "(92)98308-7102"
+                        });
                 });
 
             modelBuilder.Entity("Reciicer.Models.Entities.Nivel", b =>
@@ -76,6 +105,36 @@ namespace Reciicer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Nivel");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Descricao = "Iniciannte",
+                            PontosPerdaFrequencia = 0,
+                            PontuacaoNecessario = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Descricao = "Básico",
+                            PontosPerdaFrequencia = 2,
+                            PontuacaoNecessario = 10
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Descricao = "Intermediário",
+                            PontosPerdaFrequencia = 10,
+                            PontuacaoNecessario = 50
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Descricao = "Avançado",
+                            PontosPerdaFrequencia = 20,
+                            PontuacaoNecessario = 200
+                        });
                 });
 
             modelBuilder.Entity("Reciicer.Models.Entities.Cliente", b =>

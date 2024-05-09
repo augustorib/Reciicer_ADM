@@ -1,23 +1,22 @@
 @model IEnumerable<Reciicer.Models.Entities.Cliente>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Listar Clientes";
 }
 
 <h1>@ViewData["Title"]</h1>
 
 <div>
 <p>
-    <a class="btn btn-primary" asp-action="Create">Adicionar Cliente</a>
+    <a class="btn btn-primary" asp-action="Create"><i class="fa-solid fa-user-plus"></i> Adicionar Cliente</a>
 </p>
-<table class="table table-striped">
+<table class="table table-striped text-center">
         <thead>
             <tr>
                     <th>@Html.DisplayNameFor(model => model.Nome)</th>
                     <th>@Html.DisplayNameFor(model => model.Telefone)</th>
                     <th>@Html.DisplayNameFor(model => model.Email)</th>
-                    <th>@Html.DisplayNameFor(model => model.CPF)</th>
                     <th>@Html.DisplayNameFor(model => model.Nivel.Descricao)</th>
-                    <th></th>
+                    <th>Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -26,34 +25,56 @@
                 <td>@Html.DisplayFor(modelItem => item.Nome)</td>
                 <td>@Html.DisplayFor(modelItem => item.Telefone)</td>
                 <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                <td>@Html.DisplayFor(modelItem => item.CPF)</td>
+                
 
                 @if(item.Nivel.Id == 1){
-                    <td class="bg-info text-white  text-center">@Html.DisplayFor(modelItem => item.Nivel.Descricao)</td>
+                    <td class="bg-secondary ">@Html.DisplayFor(modelItem => item.Nivel.Descricao)</td>
+                }else if(item.Nivel.Id == 2)
+                {
+                    <td class="bg-info ">@Html.DisplayFor(modelItem => item.Nivel.Descricao)</td>
+                    
+                }else if(item.Nivel.Id == 3)
+                {
+                    <td class="bg-warning ">@Html.DisplayFor(modelItem => item.Nivel.Descricao)</td>
+                    
                 }else
                 {
-                    <td class="bg-warning text-white text-center">@Html.DisplayFor(modelItem => item.Nivel.Descricao)</td>
+                    <td class="bg-success ">@Html.DisplayFor(modelItem => item.Nivel.Descricao)</td>
                 }
-                @* <td>
-                <a class="btn btn-info" asp-action="DetalhesCliente" asp-route-Nome="@item.Nome"
-                                                                        asp-route-id="@item.ID"
-                                                                        asp-route-Telefone="@item.Telefone"
-                                                                        asp-route-Email="@item.Email"
-                                                                        asp-route-Carro="@item.Carro"><i class="fa-solid fa-circle-info"></i>
+                <td>
+                <a class="btn btn-primary " asp-action="Read" asp-route-Id="@item.Id">
+                     <i class="fa-solid fa-circle-info text-white"></i>
                 </a>
-                <a class="btn btn-warning" asp-action="AtualizarCliente" asp-route-Nome="@item.Nome"
-                                                                        asp-route-id="@item.ID"
-                                                                        asp-route-Telefone="@item.Telefone"
-                                                                        asp-route-Email="@item.Email"
-                                                                        asp-route-Carro="@item.Carro"><i class="fa-solid fa-user-pen"></i>
+                <a class="btn btn-warning" asp-action="Update" asp-route-Id="@item.Id">
+                    <i class="fa-solid fa-user-pen text-white"></i>
                 </a>
-                    <a class="btn btn-danger"  asp-action="DeletarCliente" asp-route-id="@item.ID"><i class="fa-solid fa-trash"></i></a> remover direto do index
-                    <a class="btn btn-danger"  asp-action="DeletarCliente" asp-route-Nome="@item.Nome"
-                                                                        asp-route-id="@item.ID"
-                                                                        asp-route-Telefone="@item.Telefone"
-                                                                        asp-route-Email="@item.Email"
-                                                                        asp-route-Carro="@item.Carro"><i class="fa-solid fa-trash"></i></a> 
-                </td> *@
+                 @*   <a class="btn btn-danger"  asp-action="DeletarCliente" asp-route-Id="@item.Id"> <i class="fa-solid fa-trash"></i></a> 
+                *@
+
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#DeleteModal-@item.Id">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="DeleteModal-@item.Id" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="deleteModalLabel">Excluir Cliente @item.Nome ?</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-center">
+                            Esta operação não poderá ser revertida!<br><br>Deseja realmente excluir @item.Nome ?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-rotate-left"></i> Não</button>
+                            <a class="btn btn-danger"  asp-action="Delete" asp-route-Id="@item.Id"><i class="fa-solid fa-trash"></i> Sim</a>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                </td> 
             </tr>
         }
         </tbody>

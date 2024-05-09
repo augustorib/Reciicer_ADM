@@ -1,0 +1,28 @@
+@model Reciicer.Models.Entities.Cliente
+@{
+    ViewData["Title"] = "Atualizar Cliente";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <form method="post" asp-action="Update">
+
+            <label asp-for="Nome" class="col-form-label">@Html.DisplayNameFor(model => model.Nome)</label>
+            <input asp-for="Nome" class="form-control" type="text"  >
+
+            <label asp-for="Telefone" class="col-form-label">@Html.DisplayNameFor(model => model.Telefone)</label>
+            <input asp-for="Telefone" class="form-control" type="text">
+
+
+            <label asp-for="Email" class="col-form-label">@Html.DisplayNameFor(model => model.Email)</label>
+            <input asp-for="Email" class="form-control" type="text">
+
+
+            <label asp-for="CPF" class="col-form-label">@Html.DisplayNameFor(model => model.CPF)</label>
+            <input asp-for="CPF" class="form-control" type="text">
+                
+            <button type="submit" class="btn btn-warning mt-2">Atualizar <i class="fa-solid fa-user-pen"></i></button>
+            <a asp-action="Index" class="btn btn-secondary mt-2">Voltar <i class="fa-solid fa-rotate-left"></i></a>
+        </form>
+</div>

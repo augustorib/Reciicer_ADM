@@ -5,8 +5,10 @@ namespace Reciicer.Repository.Interface
     public interface IClienteRepository
     {
         IEnumerable<Cliente> ListarCliente();  
-        void RegistrarCliente(Cliente cliente);
-        Cliente ObterClientePorId(int id);
+        Cliente ObterClientePorId(int id);  
+        void RegistrarCliente(Cliente cliente); 
+        void AtualizarCliente(Cliente cliente);
+        Cliente DetalharCliente(int id);
         void ExcluirCliente(int id);
 
     }

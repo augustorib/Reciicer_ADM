@@ -23,5 +23,19 @@ namespace Reciicer.Models.Entities
         
         public int NivelId { get; set; }
         public Nivel? Nivel { get; set; }// Navigation
+
+        public Cliente()
+        {
+            
+        }
+        
+        public Cliente(string nome, string email, string telefone, string cpf, int nivelId = 1)
+        {
+            Nome= nome;
+            Email = email;
+            Telefone = telefone;
+            CPF = cpf;
+            NivelId = nivelId;
+        }
     }
 }

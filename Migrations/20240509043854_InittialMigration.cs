@@ -2,6 +2,8 @@
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Reciicer.Migrations
 {
     /// <inheritdoc />
@@ -46,6 +48,27 @@ namespace Reciicer.Migrations
                         principalTable: "Nivel",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Nivel",
+                columns: new[] { "Id", "Descricao", "PontosPerdaFrequencia", "PontuacaoNecessario" },
+                values: new object[,]
+                {
+                    { 1, "Iniciannte", 0, 0 },
+                    { 2, "Básico", 2, 10 },
+                    { 3, "Intermediário", 10, 50 },
+                    { 4, "Avançado", 20, 200 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Cliente",
+                columns: new[] { "Id", "CPF", "Email", "NivelId", "Nome", "Telefone" },
+                values: new object[,]
+                {
+                    { 1, "48906785062", "jurandir@gmail.com", 3, "Jurandir", "(85)98792-0782" },
+                    { 2, "48517494067", "judit@gmail.com", 2, "Judit", "(69)99727-2310" },
+                    { 3, "71134549504", "astolfo@gmail.com", 4, "Astolfo", "(92)98308-7102" }
                 });
 
             migrationBuilder.CreateIndex(

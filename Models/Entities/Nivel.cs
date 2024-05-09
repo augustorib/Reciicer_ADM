@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace Reciicer.Models.Entities
         public int Id { get; set; }
 
         [Required]
+        [DisplayName("Nível")]
         public string? Descricao { get; set; }
 
         public int PontuacaoNecessario { get; set; }
