@@ -1,43 +1,29 @@
-@model IEnumerable<Reciicer.Models.Entities.Nivel>
+@model IEnumerable<Reciicer.Models.Entities.Reciclagem>
 @{
-    ViewData["Title"] = "Listar Níveis";
+    ViewData["Title"] = "Listar Reciclagem";
 }
 
 <h1>@ViewData["Title"]</h1>
 
 <div>
 <p>
-    <a class="btn btn-primary" asp-action="Create"><i class="fa-solid fa-plus"></i> Adicionar Nível</a>
+    <a class="btn btn-primary" asp-action="Create"><i class="fa-solid fa-plus"></i> Adicionar Reciclagem</a>
 </p>
 <table class="table table-striped text-center">
         <thead>
             <tr>
-                    <th>@Html.DisplayNameFor(model => model.Descricao)</th>
-                    <th>@Html.DisplayNameFor(model => model.PontuacaoNecessario)</th>
-                    <th>@Html.DisplayNameFor(model => model.PontosPerdaFrequencia)</th>
+                    <th>@Html.DisplayNameFor(model => model.Cliente.Nome)</th>
+                    <th>@Html.DisplayNameFor(model => model.PontuacaoGanha)</th>
+                    <th>@Html.DisplayNameFor(model => model.DataOperacao)</th>
                     <th>Ações</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody> 
     @foreach (var item in Model) {
             <tr>
-
-                @if(item.Id == 1){
-                    <td class="bg-secondary ">@Html.DisplayFor(modelItem => item.Descricao)</td>
-                }else if(item.Id == 2)
-                {
-                    <td class="bg-info ">@Html.DisplayFor(modelItem => item.Descricao)</td>
-                    
-                }else if(item.Id == 3)
-                {
-                    <td class="bg-warning ">@Html.DisplayFor(modelItem => item.Descricao)</td>
-                    
-                }else
-                {
-                    <td class="bg-success ">@Html.DisplayFor(modelItem => item.Descricao)</td>
-                }
-                <td>@Html.DisplayFor(modelItem => item.PontuacaoNecessario)</td>
-                <td>@Html.DisplayFor(modelItem => item.PontosPerdaFrequencia)</td>
+                <td>@Html.DisplayFor(modelItem => item.Cliente.Nome)</td>
+                <td>@Html.DisplayFor(modelItem => item.PontuacaoGanha)</td>
+                <td>@Html.DisplayFor(modelItem => item.DataOperacao.Date)</td>
 
                 <td>
                     <a class="btn btn-primary " asp-action="Read" asp-route-Id="@item.Id">
@@ -57,11 +43,11 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="deleteModalLabel">Excluir Nível @item.Descricao ?</h1>
+                                <h1 class="modal-title fs-5" id="deleteModalLabel">Excluir Reciclagem?</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body text-center">
-                                Esta operação não poderá ser revertida!<br><br>Deseja realmente excluir @item.Descricao ?
+                                Esta operação não poderá ser revertida!<br><br>Deseja realmente excluir ?
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-rotate-left"></i> Não</button>

@@ -1,7 +1,11 @@
+using System.Linq;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Reciicer.Data;
 using Reciicer.Models.Entities;
 using Reciicer.Repository.Interface;
+
+
 
 namespace Reciicer.Repository
 {
@@ -16,6 +20,16 @@ namespace Reciicer.Repository
 
         public IEnumerable<Cliente> ListarCliente()
         {
+            var clientes = _context.Cliente.Include(n => n.Nivel).ToList();
+
+            return clientes;
+        }
+
+        public IEnumerable<Cliente> ListarClienteComPontuacaoTotal()
+        {
+
+            _context.Database.ExecuteSqlRaw("EXEC UpdateClientePontuacaoTotal");
+
             var clientes = _context.Cliente.Include(n => n.Nivel).ToList();
 
             return clientes;
@@ -71,6 +85,19 @@ namespace Reciicer.Repository
 
         }
 
+        public void AtualizarClientesNivelProc()
+        {
+            var clientes = _context.Cliente.ToList();
+            
+            foreach(var cliente in clientes)
+            {
+                _context.Database.ExecuteSqlRaw("EXEC UpdateClienteNivel @PontuacaoTotalCliente, @ClienteID", 
+                                                new SqlParameter("@PontuacaoTotalCliente", cliente.PontuacaoTotal),
+                                                new SqlParameter("@ClienteID", cliente.Id));
+
+            }
+        }
+
         public void ExcluirCliente(int id)
         {
            var clienteRemover = _context.Cliente.Find(id);
@@ -81,5 +108,7 @@ namespace Reciicer.Repository
                 _context.SaveChanges();
            }
         }
+
+
     }
 }

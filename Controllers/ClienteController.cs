@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Reciicer.Models.Entities;
 using Reciicer.Repository.Interface;
+using Reciicer.Service.Cliente;
 
 namespace Reciicer.Controllers
 {
@@ -10,17 +11,19 @@ namespace Reciicer.Controllers
     {
 
         private readonly IClienteRepository _clienteRepository;
+        private readonly ClienteService _clienteService;
 
-        public ClienteController(IClienteRepository clienteRepository)
+        public ClienteController(IClienteRepository clienteRepository, ClienteService clienteService)
         {
             _clienteRepository = clienteRepository;
+            _clienteService = clienteService;
         }
 
         public IActionResult Index()
         {
-            var clientes = _clienteRepository.ListarCliente();
+            //var clientes = _clienteRepository.ListarCliente();
  
-            return View(clientes);
+            return View(_clienteService.CalcularPontuacaoTotalCliente());
         }
 
 

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Reciicer.Models.Entities;
 
 namespace Reciicer.Data
@@ -12,7 +13,8 @@ namespace Reciicer.Data
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        {   
+            
             modelBuilder.Entity<Nivel>().HasData(
                 new Nivel {Id = 1, Descricao= "Iniciante", PontuacaoNecessario = 0, PontosPerdaFrequencia = 0},
                 new Nivel {Id = 2, Descricao= "Básico", PontuacaoNecessario = 10, PontosPerdaFrequencia =2},
@@ -26,10 +28,18 @@ namespace Reciicer.Data
                 new Cliente {Id = 3, Nome= "Astolfo", Email ="astolfo@gmail.com", Telefone ="(92)98308-7102", CPF ="71134549504", NivelId = 4}
                
             );
+
+            modelBuilder.Entity<Reciclagem>().HasData(
+                new Reciclagem {Id = 1, DataOperacao = DateTime.Now, PontuacaoGanha = 10, ClienteId = 1 },
+                new Reciclagem {Id = 2, DataOperacao = DateTime.Now, PontuacaoGanha = 5, ClienteId = 1 }
+        
+            );
+
         }
         
         public DbSet<Cliente> Cliente {get; set;}
         public DbSet<Nivel> Nivel { get; set; }
+        public DbSet<Reciclagem> Reciclagem {get; set;}
         
     }
 }

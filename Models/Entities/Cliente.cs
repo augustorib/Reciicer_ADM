@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 
@@ -20,9 +21,11 @@ namespace Reciicer.Models.Entities
         [Required]
         public string? CPF { get; set; }
 
-        
+        [DisplayName("Pontuação")]
+        public int PontuacaoTotal { get; set; }
         public int NivelId { get; set; }
         public Nivel? Nivel { get; set; }// Navigation
+        public Reciclagem? Reciclagem { get; set; }// Navigation
 
         public Cliente()
         {

@@ -2,12 +2,17 @@ using Microsoft.EntityFrameworkCore;
 using Reciicer.Data;
 using Reciicer.Repository;
 using Reciicer.Repository.Interface;
+using Reciicer.Service.Cliente;
 
 var builder = WebApplication.CreateBuilder(args);
 
 //Repository Interface
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 builder.Services.AddScoped<INivelRepository, NivelRepository>();
+builder.Services.AddScoped<IReciclagemRepository, ReciclagemRepository>();
+
+//Services
+builder.Services.AddScoped<ClienteService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
