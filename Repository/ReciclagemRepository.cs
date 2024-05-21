@@ -32,12 +32,24 @@ namespace Reciicer.Repository
 
         public Reciclagem ObterReciclagemPorId(int id)
         {
-            throw new NotImplementedException();
+            return _context.Reciclagem.Find(id);
         }
 
         public void RegistrarReciclagem(Reciclagem reciclagem)
-        {
-            throw new NotImplementedException();
+        {   
+             var transaction = _context.Database.BeginTransaction();
+
+             try
+             {
+                _context.Reciclagem.Add(reciclagem);
+                _context.SaveChanges();
+
+                transaction.Commit();
+             }
+             catch(Exception e)
+             {
+                transaction.Rollback();
+             }
         }
 
 

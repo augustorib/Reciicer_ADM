@@ -1,4 +1,3 @@
-using System.Linq;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Reciicer.Data;
@@ -23,7 +22,7 @@ namespace Reciicer.Repository
             var clientes = _context.Cliente.Include(n => n.Nivel).ToList();
 
             return clientes;
-        }
+        }     
 
         public IEnumerable<Cliente> ListarClienteComPontuacaoTotal()
         {
@@ -108,7 +107,6 @@ namespace Reciicer.Repository
                 _context.SaveChanges();
            }
         }
-
 
     }
 }

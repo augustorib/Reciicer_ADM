@@ -20,6 +20,9 @@ namespace Reciicer.Models.Entities
 
         public int ClienteId { get; set; }
 
-        public Cliente? Cliente { get; set; }
+        //Navigation
+        public Cliente? Cliente { get; set; } 
+
+        public ICollection<Material_Reciclagem>? Material_Reciclagems { get; set; }
     }
 }

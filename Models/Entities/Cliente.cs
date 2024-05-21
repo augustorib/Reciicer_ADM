@@ -25,7 +25,7 @@ namespace Reciicer.Models.Entities
         public int PontuacaoTotal { get; set; }
         public int NivelId { get; set; }
         public Nivel? Nivel { get; set; }// Navigation
-        public Reciclagem? Reciclagem { get; set; }// Navigation
+        public ICollection<Reciclagem>? Reciclagems { get; set; }// Navigation
 
         public Cliente()
         {

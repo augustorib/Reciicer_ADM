@@ -35,11 +35,27 @@ namespace Reciicer.Data
         
             );
 
+            modelBuilder.Entity<Material>().HasData(
+                new Material {Id = 1, Nome = "Plástico", Descricao = "Plástico",  Ativo = true  },
+                new Material {Id = 2, Nome = "Papel", Descricao = "Papel",  Ativo = true  },
+                new Material {Id = 3, Nome = "Vidro", Descricao = "Vidro",  Ativo = true  },
+                new Material {Id = 4, Nome = "Metal", Descricao = "Metal",  Ativo = true  }
+      
+            );
+
+
+            modelBuilder.Entity<Material_Reciclagem>().HasData(
+                new Material_Reciclagem {Id = 1, MaterialId = 2, Peso = 5, Quantidade = 0, ReciclagemId = 1}
+            );
+
         }
         
         public DbSet<Cliente> Cliente {get; set;}
         public DbSet<Nivel> Nivel { get; set; }
         public DbSet<Reciclagem> Reciclagem {get; set;}
+        public DbSet<Material> Material {get; set;}
+        public DbSet<Material_Reciclagem> Material_Reciclagem {get; set;}
+        
         
     }
 }
