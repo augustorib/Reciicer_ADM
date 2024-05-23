@@ -42,6 +42,33 @@ namespace Reciicer.Service.Reciclagem
             _material_ReciclagemRepository.RegistrarMaterialReciclagem(materialReciclagem);
 
         }
+        
+        public void EfetuarRecilagemMuitosMateriais(ReciclagemCreateViewModel reciclagemCreateViewModel)
+        {
+
+            var reciclagem = new Models.Entities.Reciclagem
+            {
+                ClienteId = reciclagemCreateViewModel.ClienteId,
+                DataOperacao = DateTime.Now,
+                PontuacaoGanha = 2// TODO:Obter pontuação dinamicamente 
+            };
+
+            _reciclagemRepository.RegistrarReciclagem(reciclagem);
+
+            foreach(var item in reciclagemCreateViewModel.Material_Reciclagem)
+            {
+                var materialReciclagem = new Material_Reciclagem
+                {
+                    MaterialId = item.MaterialId,
+                    ReciclagemId = item.ReciclagemId,
+                    Peso = item.Peso,
+                    Quantidade = item.Quantidade
+                };
+
+                _material_ReciclagemRepository.RegistrarMaterialReciclagem(materialReciclagem);
+            }
+
+        }
 
 
     }

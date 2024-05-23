@@ -1,9 +1,10 @@
+using Reciicer.Repository;
 using Reciicer.Repository.Interface;
 
 
 namespace Reciicer.Service.Cliente
 {
-    public class ClienteService
+    public class ClienteService 
     {
         private readonly IClienteRepository _clienteRepository;
 
