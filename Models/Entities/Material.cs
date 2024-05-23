@@ -1,5 +1,6 @@
 
 
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Reciicer.Models.Entities
@@ -10,6 +11,7 @@ namespace Reciicer.Models.Entities
         [Key]
         public int Id { get; set; }
 
+        [DisplayName("Material")]
         [Required]
         public string? Nome { get; set; }
 

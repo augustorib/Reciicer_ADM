@@ -18,23 +18,43 @@ namespace Reciicer.Repository
             return _context.Material.ToList();
         }
 
-        public void AtualizarMaterial(Material material)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ExcluirMaterial(int id)
-        {
-            throw new NotImplementedException();
-        }
         public Material ObterMaterialPorId(int id)
         {
-            throw new NotImplementedException();
+            return _context.Material.Find(id);
         }
 
         public void RegistrarMaterial(Material material)
         {
-            throw new NotImplementedException();
+            _context.Material.Add(material);
+            _context.SaveChanges();
         }
+
+        public void AtualizarMaterial(Material material)
+        {
+            var materialDB = _context.Material.Find(material.Id);
+
+            if(materialDB != null)
+            {
+                materialDB.Nome = material.Nome;
+                materialDB.Descricao = material.Descricao;
+                materialDB.Ativo = material.Ativo;
+
+                _context.Material.Update(materialDB);
+                _context.SaveChanges();
+            }
+        }
+
+        public void ExcluirMaterial(int id)
+        {
+            var materialDB = _context.Material.Find(id);
+
+            if(materialDB != null)
+            {
+                _context.Material.Remove(materialDB);
+                _context.SaveChanges();
+            }
+
+        }
+
     }
 }
