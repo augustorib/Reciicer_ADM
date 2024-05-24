@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Reciicer.Models.Entities;
 
 namespace Reciicer.Data
@@ -48,12 +47,20 @@ namespace Reciicer.Data
                 new Material_Reciclagem {Id = 1, MaterialId = 2, Peso = 5, Quantidade = 0, ReciclagemId = 1}
             );
 
+            modelBuilder.Entity<TipoMaterial>().HasData(
+                new TipoMaterial{Id = 1, Nome = "Papelão", Descricao ="Papelão", TempoDegradacao= 162000, MaterialId = 2},
+                new TipoMaterial{Id = 2, Nome = "Papel Presente", Descricao ="Papel de presente", TempoDegradacao= 150, MaterialId = 2},
+                new TipoMaterial{Id = 3, Nome = "PET", Descricao ="Garrafa PET - Polietileno Tereftalato", TempoDegradacao= 18000, MaterialId = 1},
+                new TipoMaterial{Id = 4, Nome = "Copo", Descricao ="Copo de Vidro", TempoDegradacao= 1000000, MaterialId = 3}
+            );
+
         }
         
         public DbSet<Cliente> Cliente {get; set;}
         public DbSet<Nivel> Nivel { get; set; }
         public DbSet<Reciclagem> Reciclagem {get; set;}
         public DbSet<Material> Material {get; set;}
+        public DbSet<TipoMaterial> TipoMaterial {get; set;}
         public DbSet<Material_Reciclagem> Material_Reciclagem {get; set;}
         
         
