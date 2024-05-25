@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Reciicer.Data;
 using Reciicer.Models.Entities;
+using Reciicer.Models.TipoMaterialViewModels;
 using Reciicer.Repository.Interface;
 
 namespace Reciicer.Repository
@@ -30,14 +31,37 @@ namespace Reciicer.Repository
             return _context.TipoMaterial.Include(t => t.Material).FirstOrDefault(t => t.Id == id);
         }
 
-        public void AtualizarTipoMaterial(TipoMaterial tipoMaterial)
+        public void AtualizarTipoMaterial(TipoMaterialCreateView tipoMaterialCreateView)
         {
-            throw new NotImplementedException();
+            var tipoMaterialDB = _context.TipoMaterial.Find(tipoMaterialCreateView.TipoMaterial.Id);
+             
+
+             Console.WriteLine(1);
+             Console.WriteLine(tipoMaterialCreateView.TipoMaterial.Id);
+             Console.WriteLine(2);
+
+            if(tipoMaterialDB != null)
+            {
+                tipoMaterialDB.MaterialId = tipoMaterialCreateView.TipoMaterial.MaterialId;
+                tipoMaterialDB.Nome = tipoMaterialCreateView.TipoMaterial.Nome;
+                tipoMaterialDB.Descricao = tipoMaterialCreateView.TipoMaterial.Descricao;
+                tipoMaterialDB.TempoDegradacao = tipoMaterialCreateView.TipoMaterial.TempoDegradacao;
+               
+               _context.TipoMaterial.Update(tipoMaterialDB);
+               _context.SaveChanges();
+
+            }
         }
 
         public void ExcluirTipoMaterial(int id)
         {
-            throw new NotImplementedException();
+            var tipoMaterial = _context.TipoMaterial.Find(id);
+
+            if(tipoMaterial is not null)
+            {
+                _context.TipoMaterial.Remove(tipoMaterial);
+                _context.SaveChanges();
+            }
         }
 
 

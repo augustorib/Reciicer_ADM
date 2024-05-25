@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Reciicer.Migrations;
 using Reciicer.Models.TipoMaterialViewModels;
 using Reciicer.Repository.Interface;
 using Reciicer.Service.Material;
@@ -51,6 +52,35 @@ namespace Reciicer.Controllers
         { 
             return View( _tipoMaterialRepository.ObterTipoMaterialPorId(id));
         }
-      
+        
+        [HttpGet]
+        public IActionResult Update(int id)
+        {    
+            var tipoMaterialCreateView = new TipoMaterialCreateView{
+                Material = _materialService.PopularSelect(),
+                TipoMaterial = _tipoMaterialRepository.ObterTipoMaterialPorId(id),
+            
+            };
+
+            return View(tipoMaterialCreateView);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(TipoMaterialCreateView tipoMaterialCreateView)
+        { 
+
+            _tipoMaterialRepository.AtualizarTipoMaterial(tipoMaterialCreateView);
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        { 
+             _tipoMaterialRepository.ExcluirTipoMaterial(id);
+
+            return RedirectToAction("Index");
+        }
     }
 }
