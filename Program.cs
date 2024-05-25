@@ -6,6 +6,7 @@ using Reciicer.Service.Cliente;
 using Reciicer.Service.Reciclagem;
 using Reciicer.Service.Material;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 //Repository Interface
@@ -15,6 +16,7 @@ builder.Services.AddScoped<IReciclagemRepository, ReciclagemRepository>();
 builder.Services.AddScoped<IMaterialRepository, MaterialRepository>();
 builder.Services.AddScoped<ITipoMaterialRepository, TipoMaterialRepository>();
 builder.Services.AddScoped<IMaterial_ReciclagemRepository, Material_ReciclagemRepository>();
+builder.Services.AddScoped<IPontuacaoMaterialRepository, PontuacaoMaterialRepository>();
 
 //Services
 builder.Services.AddScoped<ClienteService>();

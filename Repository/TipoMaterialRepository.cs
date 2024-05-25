@@ -36,10 +36,6 @@ namespace Reciicer.Repository
             var tipoMaterialDB = _context.TipoMaterial.Find(tipoMaterialCreateView.TipoMaterial.Id);
              
 
-             Console.WriteLine(1);
-             Console.WriteLine(tipoMaterialCreateView.TipoMaterial.Id);
-             Console.WriteLine(2);
-
             if(tipoMaterialDB != null)
             {
                 tipoMaterialDB.MaterialId = tipoMaterialCreateView.TipoMaterial.MaterialId;

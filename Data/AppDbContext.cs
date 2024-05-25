@@ -54,6 +54,15 @@ namespace Reciicer.Data
                 new TipoMaterial{Id = 4, Nome = "Copo", Descricao ="Copo de Vidro", TempoDegradacao= 1000000, MaterialId = 3}
             );
 
+            modelBuilder.Entity<PontuacaoMaterial>().HasData(
+                new PontuacaoMaterial{Id = 1, PontuacaoPeso = 20, PontuacaoUnidade = 2, TipoMaterialId = 2 },
+                new PontuacaoMaterial{Id = 2, PontuacaoPeso = 100, PontuacaoUnidade = 10, TipoMaterialId = 4},
+                new PontuacaoMaterial{Id = 3, PontuacaoPeso = 50, PontuacaoUnidade = 5, TipoMaterialId = 1}
+
+                
+
+            );
+
         }
         
         public DbSet<Cliente> Cliente {get; set;}
@@ -61,6 +70,7 @@ namespace Reciicer.Data
         public DbSet<Reciclagem> Reciclagem {get; set;}
         public DbSet<Material> Material {get; set;}
         public DbSet<TipoMaterial> TipoMaterial {get; set;}
+        public DbSet<PontuacaoMaterial> PontuacaoMaterial {get; set;}
         public DbSet<Material_Reciclagem> Material_Reciclagem {get; set;}
         
         
