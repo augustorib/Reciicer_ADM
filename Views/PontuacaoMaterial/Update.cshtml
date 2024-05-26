@@ -1,18 +1,19 @@
 @model Reciicer.Models.PontuacaoMaterialViewModels.PontuacaoMaterialCreateViewModel
 @{
-    ViewData["Title"] = "Criar Pontuação";
+    ViewData["Title"] = "Atualizar Pontuaçao";
 }
 
 <h1>@ViewData["Title"]</h1>
 
 <div>
-    <form method="post" asp-action="Create">
+   <form method="post" asp-action="Update">
      
+    @Html.HiddenFor(model => model.PontuacaoMaterial.Id)
+    
     <div class="form-group row ">
         <div class="col-md-6">
             <label asp-for="PontuacaoMaterial.TipoMaterialId" class="form-label">Escolha um Tipo de Material: </label>
-            <select asp-for="PontuacaoMaterial.TipoMaterialId" asp-items="@(new SelectList(Model.TipoMaterial, "Id", "Nome"))" class="form-select form-select-md">
-                <option value=""selected>Selecione um Tipo</option>
+            <select asp-for="PontuacaoMaterial.TipoMaterialId" asp-items="@(new SelectList(Model.TipoMaterial, "Id", "Nome", Model.PontuacaoMaterial.TipoMaterialId))" class="form-select form-select-md">
             </select>
         </div>
     </div>
@@ -29,7 +30,7 @@
     </div>
 
         <div class="form-group mt-2">
-            <input type="submit" class="btn btn-primary" value="Confirmar">
+            <button type="submit" class="btn btn-warning text-white">Atualizar <i class="fa-solid fa-pen"></i></button>
             <a asp-action="Index" class="btn btn-secondary">Voltar <i class="fa-solid fa-rotate-left"></i></a>
         </div>
     </form>

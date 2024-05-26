@@ -8,8 +8,8 @@ namespace Reciicer.Repository.Interface
     {
         IEnumerable<PontuacaoMaterial> ListarPontuacaoMaterial();  
         PontuacaoMaterial ObterPontuacaoMaterialPorId(int id);  
-        void RegistrarPontuacaoMaterial(PontuacaoMaterial PontuacaoMaterial); 
-        void AtualizarPontuacaoMaterial(PontuacaoMaterial PontuacaoMaterial);
+        void RegistrarPontuacaoMaterial(PontuacaoMaterial pontuacaoMaterial); 
+        void AtualizarPontuacaoMaterial(PontuacaoMaterial pontuacaoMaterial);
         void ExcluirPontuacaoMaterial(int id);
     }
 }

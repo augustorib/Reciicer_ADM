@@ -25,22 +25,43 @@ namespace Reciicer.Repository
             return _context.PontuacaoMaterial.Include(p => p.TipoMaterial).FirstOrDefault( p => p.Id == id);
         }
 
-        public void AtualizarPontuacaoMaterial(PontuacaoMaterial PontuacaoMaterial)
+        public void RegistrarPontuacaoMaterial(PontuacaoMaterial pontuacaoMaterial)
         {
-            throw new NotImplementedException();
+            _context.PontuacaoMaterial.Add(pontuacaoMaterial);
+            _context.SaveChanges();
+        }
+
+        public void AtualizarPontuacaoMaterial(PontuacaoMaterial pontuacaoMaterial)
+        {
+            var pontuacaoMaterialDB = _context.PontuacaoMaterial.Find(pontuacaoMaterial.Id);
+
+            Console.WriteLine(pontuacaoMaterialDB);
+
+            if(pontuacaoMaterialDB != null)
+            {
+                pontuacaoMaterialDB.TipoMaterialId = pontuacaoMaterial.TipoMaterialId;
+                pontuacaoMaterialDB.PontuacaoPeso = pontuacaoMaterial.PontuacaoPeso;
+                pontuacaoMaterialDB.PontuacaoUnidade = pontuacaoMaterial.PontuacaoUnidade;
+
+                _context.PontuacaoMaterial.Update(pontuacaoMaterialDB);
+                _context.SaveChanges();
+            }
         }
 
         public void ExcluirPontuacaoMaterial(int id)
         {
-            throw new NotImplementedException();
+            var pontuacaoMaterialDB = _context.PontuacaoMaterial.Find(id);
+
+            if(pontuacaoMaterialDB != null)
+            {
+                _context.PontuacaoMaterial.Remove(pontuacaoMaterialDB);
+                _context.SaveChanges();
+            }
         }
 
 
 
-        public void RegistrarPontuacaoMaterial(PontuacaoMaterial PontuacaoMaterial)
-        {
-            throw new NotImplementedException();
-        }
+
 
 
     }

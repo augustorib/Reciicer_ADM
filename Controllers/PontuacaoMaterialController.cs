@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Reciicer.Models.Entities;
+using Reciicer.Models.PontuacaoMaterialViewModels;
 using Reciicer.Repository.Interface;
+using Reciicer.Service.TipoMaterial;
 
 namespace Reciicer.Controllers
 {
@@ -14,9 +10,13 @@ namespace Reciicer.Controllers
     {
         private readonly IPontuacaoMaterialRepository _pontuacaoMateriarepository;
 
-        public PontuacaoMaterialController(IPontuacaoMaterialRepository pontuacaoMaterialRepository)
+        private readonly TipoMaterialService _tipoMaterialService;
+
+        public PontuacaoMaterialController(IPontuacaoMaterialRepository pontuacaoMaterialRepository,
+                                           TipoMaterialService tipoMaterialService)
         {
             _pontuacaoMateriarepository = pontuacaoMaterialRepository;
+            _tipoMaterialService = tipoMaterialService;
         }
 
         public IActionResult Index()
@@ -28,7 +28,12 @@ namespace Reciicer.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+
+            var pontuacaoMaterial = new PontuacaoMaterialCreateViewModel{
+                TipoMaterial = _tipoMaterialService.PopularSelect()
+            };
+
+            return View(pontuacaoMaterial);
         }
 
         [HttpPost]
@@ -40,10 +45,42 @@ namespace Reciicer.Controllers
             return RedirectToAction("Index");
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View("Error!");
+
+        [HttpGet]
+        public IActionResult Read(int id)
+        { 
+            return View( _pontuacaoMateriarepository.ObterPontuacaoMaterialPorId(id));
         }
+
+        [HttpGet]
+        public IActionResult Update(int id)
+        { 
+            var pontuacaoMaterial = _pontuacaoMateriarepository.ObterPontuacaoMaterialPorId(id);
+
+            var pontuacaoMaterialCreateViewModel = new PontuacaoMaterialCreateViewModel{
+                TipoMaterial = _tipoMaterialService.PopularSelect(),
+                PontuacaoMaterial =  pontuacaoMaterial
+            };
+
+            return View(pontuacaoMaterialCreateViewModel);
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(PontuacaoMaterialCreateViewModel pontuacaoMaterialCreateViewModel)
+        { 
+            _pontuacaoMateriarepository.AtualizarPontuacaoMaterial(pontuacaoMaterialCreateViewModel.PontuacaoMaterial);
+
+            return RedirectToAction("Index");
+        }   
+          
+        [HttpGet]
+        public IActionResult Delete(int id)
+        { 
+             _pontuacaoMateriarepository.ExcluirPontuacaoMaterial(id);
+
+            return RedirectToAction("Index");
+        }
+
     }
 }
