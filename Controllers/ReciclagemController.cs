@@ -3,6 +3,7 @@ using Reciicer.Models;
 using Reciicer.Models.Entities;
 using Reciicer.Repository.Interface;
 using Reciicer.Service.Reciclagem;
+using Reciicer.Service.TipoMaterial;
 
 
 namespace Reciicer.Controllers
@@ -14,16 +15,23 @@ namespace Reciicer.Controllers
         private readonly ReciclagemService _reciclagemService;
         private readonly IClienteRepository _clienteRepository;
         private readonly IMaterialRepository _materialRepository;
+        private readonly TipoMaterialService _tipoMaterialService;
+        private readonly IMaterial_ReciclagemRepository _material_ReciclagemRepository;
 
         public ReciclagemController(IReciclagemRepository reciclagemRepository, 
                                     IClienteRepository clienteRepository,
                                     IMaterialRepository materialRepository,
-                                    ReciclagemService reciclagemService)
+                                    ReciclagemService reciclagemService,
+                                    TipoMaterialService tipoMaterialService,
+                                    IMaterial_ReciclagemRepository material_ReciclagemRepository)
         {
            _reciclagemRepository = reciclagemRepository; 
            _clienteRepository = clienteRepository;
            _materialRepository = materialRepository;
            _reciclagemService = reciclagemService;
+           _tipoMaterialService = tipoMaterialService;
+           _material_ReciclagemRepository = material_ReciclagemRepository;
+           
         }
 
         public IActionResult Index()
@@ -39,37 +47,39 @@ namespace Reciicer.Controllers
 
             var clientes = _clienteRepository.ListarCliente();
             var materiais = _materialRepository.ListarMaterial();
+          
 
             var reciclagemCreate = new ReciclagemCreateViewModel{
                 Clientes = clientes,
                 Materiais = materiais
+               
             };
 
             return View(reciclagemCreate);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(ReciclagemViewModel reciclagemViewModel)
-        {       
+        // [HttpPost]
+        // [ValidateAntiForgeryToken]
+        // public IActionResult Create(ReciclagemViewModel reciclagemViewModel)
+        // {       
          
-            _reciclagemService.EfetuarRecilagem(reciclagemViewModel);
+        //     _reciclagemService.EfetuarRecilagem(reciclagemViewModel);
                 
-            return RedirectToAction("Index");
+        //     return RedirectToAction("Index");
            
-        }
+        // }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult CreateManyMateriais(ReciclagemCreateViewModel reciclagemCreateViewModel)
-        {
+        // [HttpPost]
+        // [ValidateAntiForgeryToken]
+        // public IActionResult CreateManyMateriais(ReciclagemCreateViewModel reciclagemCreateViewModel)
+        // {
 
 
-            _reciclagemService.EfetuarRecilagemMuitosMateriais(reciclagemCreateViewModel);
+        //     _reciclagemService.EfetuarRecilagemMuitosMateriais(reciclagemCreateViewModel);
                 
-            return RedirectToAction("Index");
+        //     return RedirectToAction("Index");
            
-        }
+        // }
 
         [HttpGet]
         public IActionResult Read(int id)
@@ -101,20 +111,111 @@ namespace Reciicer.Controllers
             return RedirectToAction("Index");
         }
 
+        // [HttpGet]
+        // public IActionResult CarregarSelectMateriais(int count)
+        // {   
+        //     var clientes = _clienteRepository.ListarCliente();
+        //     var materiais = _materialRepository.ListarMaterial();
+
+        //     var reciclagemCreate = new ReciclagemCreateViewModel{
+        //         Clientes = clientes,
+        //         Materiais = materiais,
+        //         QtdMateriais = count
+                 
+        //     };
+
+        //     return PartialView("_ReciclagemMaterialListPartial", reciclagemCreate);
+        // }
+
+
+        //Carregar drop TipoMaterial de acordo com o Material selecionado
+        // dinamicamente na view Reciclagem/Create
         [HttpGet]
-        public IActionResult CarregarSelectMateriais(int count)
-        {   
-            var clientes = _clienteRepository.ListarCliente();
+        public JsonResult ObterTipoMaterialByMaterialId(int materialId)
+        {
+            return Json(_tipoMaterialService.PopularSelectFiltrandoPorMaterialId(materialId));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AdicionarReciclagemCliente(ReciclagemCreateViewModel reciclagemCreateViewModel)
+        {       
+                //Cria a Reciclagem para o cliente
+                _reciclagemService.EfetuarRecilagemCliente(reciclagemCreateViewModel);
+
+
+
+                var materiais = _materialRepository.ListarMaterial();     
+                reciclagemCreateViewModel.Materiais = materiais;
+                
+
+                reciclagemCreateViewModel.Reciclagem = _reciclagemService.ObterClienteUltimaReciclagem(reciclagemCreateViewModel.ClienteId);
+
+                var reciclagemId = reciclagemCreateViewModel.Reciclagem.Id;
+                reciclagemCreateViewModel.ReciclagemId = reciclagemId;
+
+            return View("Create", reciclagemCreateViewModel);
+        }
+
+        //Adiocionar material na tabela da view Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AdicionarReciclagemTabela(ReciclagemCreateViewModel reciclagemCreateViewModel)
+        {
+                var reciclagemCliente = _reciclagemService.ObterClienteUltimaReciclagem(reciclagemCreateViewModel.ClienteId);
+
+                var materiais = _materialRepository.ListarMaterial();
+                // reciclagemCreateViewModel.Material_Reciclagem.Add( new Material_Reciclagem{
+                //         MaterialId = reciclagemCreateViewModel.MaterialId,
+                //         ReciclagemId = reciclagemCliente.Id,
+                //         Peso = reciclagemCreateViewModel.Peso,
+                //         Quantidade = reciclagemCreateViewModel.Quantidade
+                //     }
+                // );
+                
+                 _reciclagemService.EfetuarReciclagemMaterial(reciclagemCreateViewModel);
+
+                
+                reciclagemCreateViewModel.Materiais = materiais;
+                reciclagemCreateViewModel.Reciclagem = reciclagemCliente;
+                reciclagemCreateViewModel.Material_Reciclagem = _material_ReciclagemRepository.ListarMaterialReciclagemPorReciclagemId(reciclagemCliente.Id);
+                reciclagemCreateViewModel.ReciclagemId = reciclagemCliente.Id;
+
+                return View("Create", reciclagemCreateViewModel);          
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletarMaterialReciclagem(int id, int clienteId)
+        {
+
+            _material_ReciclagemRepository.ExcluirMaterialReciclagem(id);
+
+            var reciclagemCliente = _reciclagemService.ObterClienteUltimaReciclagem(clienteId);
             var materiais = _materialRepository.ListarMaterial();
 
-            var reciclagemCreate = new ReciclagemCreateViewModel{
-                Clientes = clientes,
+            var reciclagemCreateViewModel = new ReciclagemCreateViewModel{
                 Materiais = materiais,
-                QtdMateriais = count
-                 
+                Reciclagem = reciclagemCliente,
+                Material_Reciclagem = _material_ReciclagemRepository.ListarMaterialReciclagemPorReciclagemId(reciclagemCliente.Id),
+                ClienteId = reciclagemCliente.ClienteId,
+                ReciclagemId = reciclagemCliente.Id
+            
             };
-
-            return PartialView("_ReciclagemMaterialListPartial", reciclagemCreate);
+            
+            return View("Create", reciclagemCreateViewModel);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CalcularPontuacaoReciclagem(int reciclagemId)
+        {
+                    
+            _reciclagemService.CalcularPontuacaoReciclagem(reciclagemId);
+
+            return RedirectToAction("Index");
+        }
+
     }
+
 }

@@ -2,6 +2,7 @@
 
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Reciicer.Migrations;
 
 namespace Reciicer.Models.Entities
 {
@@ -22,5 +23,6 @@ namespace Reciicer.Models.Entities
 
         //Navigation
         public ICollection<Material_Reciclagem>? Material_Reciclagems { get; set; }
+        public ICollection<TipoMaterial>? TipoMateriais { get; set; }
     }
 }

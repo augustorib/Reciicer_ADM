@@ -4,18 +4,48 @@
 // Write your JavaScript code.
 
 //Carregar dinamicamente select da tela "View/ReciclagemCreate"
-document.getElementById('carregarSelects').addEventListener('click', function () {
-    var qtdMateriais = document.getElementById('QtdMateriais').value;
+// document.getElementById('carregarSelects').addEventListener('click', function () {
+//     var qtdMateriais = document.getElementById('QtdMateriais').value;
 
+//     $.ajax({
+//         url: 'CarregarSelectMateriais',
+//         type: 'GET',
+//         data: {count : qtdMateriais},
+//         success: function (response) {
+//              $('#selectMateriais').html(response);
+//         },
+//         error: function (xhr, status, error) {
+//             console.error('Erro ao carregar materiais: ', error);
+//         }
+//     });
+// });
+
+//Drop down em cascata Reciclagem/Create
+$(document).ready(function (){
+    ObterTipoMaterialByMaterialId();
+
+});
+
+$("#MaterialId").change(function(){
+    ObterTipoMaterialByMaterialId();
+   
+});
+
+var ObterTipoMaterialByMaterialId = function(){
     $.ajax({
-        url: 'CarregarSelectMateriais',
+        url: 'ObterTipoMaterialByMaterialId',
         type: 'GET',
-        data: {count : qtdMateriais},
-        success: function (response) {
-             $('#selectMateriais').html(response);
+        data: {
+            materialId : $('#MaterialId').val(),
         },
-        error: function (xhr, status, error) {
-            console.error('Erro ao carregar materiais: ', error);
+        success: function(data){
+            $('#TipoMaterialId').find('option').remove();
+            $(data).each(
+                function(index,item){
+                    $('#TipoMaterialId').append('<option value="'+item.id+'">'+item.nome+'</option>');
+                }
+           
+            )
         }
     });
-});
+}

@@ -28,5 +28,6 @@ namespace Reciicer.Service.Cliente
          {
             _clienteRepository.AtualizarClientesNivelProc();
          }
+
     }
 }

@@ -11,5 +11,7 @@ namespace Reciicer.Repository.Interface
         ReciclagemReadViewModel DetalharReciclagem(int id); 
         void AtualizarReciclagem(Reciclagem reciclagem);
         void ExcluirReciclagem(int id);
+        Reciclagem ObterClienteUltimaReciclagem(int ClienteId);
+        void CalcularPontuacaoReciclagem(int reciclagemId);
     }
 }

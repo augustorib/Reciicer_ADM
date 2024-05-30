@@ -20,6 +20,14 @@ namespace Reciicer.Repository
             throw new NotImplementedException();
         }
 
+        public IEnumerable<Material_Reciclagem> ListarMaterialReciclagemPorReciclagemId(int reciclagemId)
+        {
+            return _context.Material_Reciclagem.Where(m => m.ReciclagemId == reciclagemId)
+                                               .Include(m => m.Material)
+                                               .ThenInclude(ma => ma.TipoMateriais)
+                                               .ToList();
+        }
+
         public Material_Reciclagem ObterMaterialReciclagemPorId(int id)
         {
             throw new NotImplementedException();
@@ -40,6 +48,18 @@ namespace Reciicer.Repository
             {
                 transaction.Rollback();
             }
+        }
+       
+        public void ExcluirMaterialReciclagem(int id)
+        {
+            var materialReciclagem = _context.Material_Reciclagem.Find(id);
+            
+            if(materialReciclagem != null)
+            {
+                _context.Material_Reciclagem.Remove(materialReciclagem);
+                _context.SaveChanges();
+            }
+
         }
     }
 }

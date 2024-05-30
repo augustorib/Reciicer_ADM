@@ -17,5 +17,13 @@ namespace Reciicer.Service.TipoMaterial
         {
             return _tipoMaterialRepsitory.ListarTipoMaterial();
         } 
+        public IEnumerable<Models.Entities.TipoMaterial> PopularSelectFiltrandoPorMaterialId(int materialId)
+        {
+            return _tipoMaterialRepsitory.ListarTipoMaterialPorMaterialId(materialId);
+        } 
+        public Models.Entities.TipoMaterial ObterTipoMaterialPorId(int tipoMaterialId)
+        {
+            return _tipoMaterialRepsitory.ObterTipoMaterialPorId(tipoMaterialId);
+        } 
     }
 }

@@ -20,6 +20,13 @@ namespace Reciicer.Repository
             return _context.TipoMaterial.Include(t => t.Material).ToList();
         }
 
+
+        public IEnumerable<TipoMaterial> ListarTipoMaterialPorMaterialId(int id)
+        {
+           
+            return _context.TipoMaterial.Where(t => t.MaterialId == id).ToList();
+        }
+
         public void RegistrarTipoMaterial(TipoMaterial tipoMaterial)
         {
             _context.TipoMaterial.Add(tipoMaterial);

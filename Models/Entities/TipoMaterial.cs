@@ -22,5 +22,7 @@ namespace Reciicer.Models.Entities
         //Navigation
         public Material? Material { get; set; }
 
+        public PontuacaoMaterial? PontuacaoMaterial { get; set; }
+
     }
 }

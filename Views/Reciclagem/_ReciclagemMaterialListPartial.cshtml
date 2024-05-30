@@ -16,20 +16,20 @@
         <div class="form-group row mt-2">
 
             <div class="col-md-6 ">
-                <label asp-for="Material_Reciclagem[i].MaterialId" class="form-label">Escolha um Material: </label>
-                <select asp-for="Material_Reciclagem[i].MaterialId" asp-items="@(new SelectList(Model.Materiais, "Id", "Nome"))" class="form-select form-select-md">
+                <label asp-for="MaterialId" class="form-label">Escolha um Material: </label>
+                <select asp-for="MaterialId" asp-items="@(new SelectList(Model.Materiais, "Id", "Nome"))" class="form-select form-select-md">
                     <option value=""selected>Selecione um Material</option>
                 </select>
             </div>
 
             <div class="col-md-3">
-                <label asp-for="Material_Reciclagem[i].Peso" class="form-label">Peso:</label>
-                <input asp-for="Material_Reciclagem[i].Peso" class="form-control">
+                <label asp-for="Peso" class="form-label">Peso:</label>
+                <input asp-for="Peso" class="form-control">
             </div>
 
             <div class="col-md-3">
-                <label asp-for="Material_Reciclagem[i].Quantidade" class="form-label">Quantidade:</label>
-                <input asp-for="Material_Reciclagem[i].Quantidade" class="form-control">
+                <label asp-for="Quantidade" class="form-label">Quantidade:</label>
+                <input asp-for="Quantidade" class="form-control">
             </div> 
         </div>
     } 

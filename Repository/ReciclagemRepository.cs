@@ -1,5 +1,5 @@
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
 using Reciicer.Data;
 using Reciicer.Models;
 using Reciicer.Models.Entities;
@@ -86,6 +86,20 @@ namespace Reciicer.Repository
                 _context.Reciclagem.Remove(reciclagemRemover);
                 _context.SaveChanges();
            }
+        }
+
+        public Reciclagem ObterClienteUltimaReciclagem(int clienteId)
+        {
+            return _context.Reciclagem.Where(r => r.ClienteId == clienteId)
+                                      .Include(r => r.Cliente)
+                                      .OrderByDescending(r => r.DataOperacao)
+                                      .FirstOrDefault();
+        }
+
+        public void CalcularPontuacaoReciclagem(int reciclagemId)
+        {
+            _context.Database.ExecuteSqlRaw("Exec UpdateReciclagemPontuacaoGanha @ReciclagemId", 
+                                            new SqlParameter("@ReciclagemId", reciclagemId));
         }
     }
 }
