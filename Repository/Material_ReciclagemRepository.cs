@@ -24,7 +24,7 @@ namespace Reciicer.Repository
         {
             return _context.Material_Reciclagem.Where(m => m.ReciclagemId == reciclagemId)
                                                .Include(m => m.Material)
-                                               .ThenInclude(ma => ma.TipoMateriais)
+                                               .Include(tm => tm.TipoMaterial)
                                                .ToList();
         }
 

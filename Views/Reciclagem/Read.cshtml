@@ -53,6 +53,11 @@
                     </div>
 
                     <div class="col-md-3">
+                        <label asp-for="@item.TipoMaterial.Nome" class="form-label">@Html.DisplayNameFor(model => item.TipoMaterial.Descricao)</label>
+                        <input asp-for="@item.TipoMaterial.Nome" class="form-control" disabled>
+                    </div>
+
+                    <div class="col-md-3">
                         <label asp-for="@item.Peso" class="form-label">@Html.DisplayNameFor(model => item.Peso)</label>
                         <input asp-for="@item.Peso" class="form-control" disabled>
                     </div>

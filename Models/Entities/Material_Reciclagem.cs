@@ -12,6 +12,7 @@ namespace Reciicer.Models.Entities
         public int MaterialId { get; set; } 
 
         public int ReciclagemId { get; set; }
+        public int TipoMaterialId { get; set; }
 
         public int Peso { get; set; }
 
@@ -20,5 +21,8 @@ namespace Reciicer.Models.Entities
         //Navigation 
         public Reciclagem? Reciclagem { get; set; }
         public Material? Material { get; set; }
+
+        public TipoMaterial? TipoMaterial { get; set; }
+
     }
 }

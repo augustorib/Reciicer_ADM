@@ -46,13 +46,13 @@ namespace Reciicer.Repository
         {   
             var reciclagem = _context.Reciclagem.Find(id);
 
-            var materiaisReciclagem = _context.Material_Reciclagem.Include( m => m.Material).Where(mr => mr.ReciclagemId == reciclagem.Id).ToList();
-            //var materiaisId = materiaisReciclagem.Select( m => m.MaterialId).ToList();
-
+            var materiaisReciclagem = _context.Material_Reciclagem.Include( m => m.Material)
+                                                                  .Include(m => m.TipoMaterial).Where(mr => mr.ReciclagemId == reciclagem.Id)
+                                                                  .ToList();
+    
             var reciclagemReadViewModel = new ReciclagemReadViewModel{
                 Cliente = _context.Cliente.Find(reciclagem.ClienteId),
                 Reciclagem = reciclagem,
-                //Materiais = _context.Material.Where(m => materiaisId.Contains(m.Id)),
                 Materiais_Reciclagem = materiaisReciclagem
 
             };

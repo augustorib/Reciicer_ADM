@@ -8,9 +8,7 @@
 <div class="row">
     <div class="col">
         <form method="post" asp-action="AdicionarReciclagemCliente">    
-            
-            @Html.HiddenFor(model => model.Reciclagem.Id)
-            @Html.HiddenFor(model => model.ReciclagemId)
+
             <input type="hidden" name="reciclagemId" value="@Model.ReciclagemId" />
             
 
@@ -21,6 +19,7 @@
                         <label  asp-for="ClienteId" class="control-label">Escolha um cliente: </label>
                         <select asp-for="ClienteId" asp-items="@(new SelectList(Model.Clientes, "Id", "Nome"))" class="form-select form-select-md ">
                             <option value=""selected>Selecione um Cliente</option>
+
                         </select>
                     </div>
 
@@ -43,11 +42,9 @@
 
         <form method="post" asp-action="AdicionarReciclagemTabela">  
 
-            @Html.HiddenFor(model => model.Reciclagem.Id)
-            @Html.HiddenFor(model => model.ReciclagemId)
+
             @Html.HiddenFor(model => model.ClienteId)
             <input type="hidden" name="reciclagemId" value="@Model.ReciclagemId" />
-            @*checkpoint ---------------------------------------------*@
             <div class="form-group row mt-2">
                 <div class="col-md-3">
                     <label  asp-for="MaterialId" class="form-label">Escolha um Material: </label>
@@ -98,7 +95,7 @@
                     {   
                         <tr>
                             <td>@Html.DisplayFor(modelItem => item.Material.Nome)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Material.TipoMateriais)</td>
+                            <td>@Html.DisplayFor(modelItem => item.TipoMaterial.Nome)</td>
                             <td>@Html.DisplayFor(modelItem => item.Peso)</td>
                             <td>@Html.DisplayFor(modelItem => item.Quantidade)</td>
                             <td>
@@ -124,13 +121,9 @@
                                             @*checkpoint form ----------------*@
                                             <form  method="post" asp-action="DeletarMaterialReciclagem">
                                                     @Html.HiddenFor(model => model.ClienteId)
-                                                    @Html.HiddenFor(model => model.Reciclagem.Id)
-                                                    @* @Html.HiddenFor(modelItem => item.Id) *@
                                                     <input type="hidden" name="reciclagemId" value="@Model.ReciclagemId" />
-                                                    <input type="hidden" name="ReciclagemId" value="@Model.ReciclagemId" />
                                                     <input type="hidden" name="id" value="@item.Id" />
-                                                <button type="submit"class="btn btn-danger">
-                                                                                                    <i class="fa-solid fa-trash"></i> Sim</button>
+                                                    <button type="submit"class="btn btn-danger"> <i class="fa-solid fa-trash"></i> Sim</button>
                                             </form>
                                         </div>
                                         </div>

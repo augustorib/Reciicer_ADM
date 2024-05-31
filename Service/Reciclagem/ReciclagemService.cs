@@ -24,8 +24,7 @@ namespace Reciicer.Service.Reciclagem
             {
                 ClienteId = reciclagemCreateViewModel.ClienteId,
                 DataOperacao = DateTime.Now,
-                //PontuacaoGanha = 2// TODO:Obter pontuação dinamicamente 
-                PontuacaoGanha = 0// TODO:Obter pontuação dinamicamente 
+                PontuacaoGanha = 0 //Procedure Update UpdateReciclagemPontuacaoGanha
             };
 
             _reciclagemRepository.RegistrarReciclagem(reciclagem);
@@ -38,72 +37,23 @@ namespace Reciicer.Service.Reciclagem
             var pesoReciclagem = reciclagemCreateViewModel.Peso;
             var quantidadeReciclagem = reciclagemCreateViewModel.Quantidade;
             var materialId = reciclagemCreateViewModel.MaterialId;
+            var tipoMaterialId = reciclagemCreateViewModel.TipoMaterialId;
 
-            SalvarMaterialReciclagem(reciclagemCliente.Id, materialId, pesoReciclagem, quantidadeReciclagem);
+            SalvarMaterialReciclagem(reciclagemCliente.Id, materialId, tipoMaterialId, pesoReciclagem, quantidadeReciclagem);
         }
 
-        public void SalvarMaterialReciclagem(int reciclagemId, int materialId, int peso, int quantidade)
+        public void SalvarMaterialReciclagem(int reciclagemId, int materialId, int tipoMaterialId, int peso, int quantidade)
         {
             var materialReciclagem = new Material_Reciclagem{
                 MaterialId = materialId,
                 ReciclagemId = reciclagemId,
+                TipoMaterialId = tipoMaterialId,
                 Peso = peso,
                 Quantidade = quantidade
             };
 
             _material_ReciclagemRepository.RegistrarMaterialReciclagem(materialReciclagem);
         }
-        // public void EfetuarRecilagem(ReciclagemViewModel reciclagemViewModel)
-        // {
-
-        //     var reciclagem = new Models.Entities.Reciclagem
-        //     {
-        //         ClienteId = reciclagemViewModel.ClienteId,
-        //         DataOperacao = DateTime.Now,
-        //         //PontuacaoGanha = 2// TODO:Obter pontuação dinamicamente 
-        //         PontuacaoGanha = 2// TODO:Obter pontuação dinamicamente 
-        //     };
-
-        //     _reciclagemRepository.RegistrarReciclagem(reciclagem);
-
-        //     var materialReciclagem = new Material_Reciclagem
-        //     {
-        //         MaterialId = reciclagemViewModel.MaterialId,
-        //         ReciclagemId = reciclagem.Id,
-        //         Peso = reciclagemViewModel.Material_Reciclagem.Peso,
-        //         Quantidade = reciclagemViewModel.Material_Reciclagem.Quantidade
-        //     };
-
-        //     _material_ReciclagemRepository.RegistrarMaterialReciclagem(materialReciclagem);
-
-        // }
-        
-        // public void EfetuarRecilagemMuitosMateriais(ReciclagemCreateViewModel reciclagemCreateViewModel)
-        // {
-
-        //     var reciclagem = new Models.Entities.Reciclagem
-        //     {
-        //         ClienteId = reciclagemCreateViewModel.ClienteId,
-        //         DataOperacao = DateTime.Now,
-        //         PontuacaoGanha = 2// TODO:Obter pontuação dinamicamente 
-        //     };
-
-        //     _reciclagemRepository.RegistrarReciclagem(reciclagem);
-
-        //     foreach(var item in reciclagemCreateViewModel.Material_Reciclagem)
-        //     {
-        //         var materialReciclagem = new Material_Reciclagem
-        //         {
-        //             MaterialId = item.MaterialId,
-        //             ReciclagemId = item.ReciclagemId,
-        //             Peso = item.Peso,
-        //             Quantidade = item.Quantidade
-        //         };
-
-        //         _material_ReciclagemRepository.RegistrarMaterialReciclagem(materialReciclagem);
-        //     }
-
-        // }
 
 
         //Método Para calcular a quantidade de pontos que foi feita na recilagem

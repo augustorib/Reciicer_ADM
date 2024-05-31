@@ -24,5 +24,7 @@ namespace Reciicer.Models.Entities
 
         public PontuacaoMaterial? PontuacaoMaterial { get; set; }
 
+        public ICollection<Material_Reciclagem>? Material_Reciclagem { get; set; }
+
     }
 }

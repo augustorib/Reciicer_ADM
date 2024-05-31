@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Reciicer.Models;
 using Reciicer.Models.Entities;
 using Reciicer.Repository.Interface;
@@ -58,29 +59,6 @@ namespace Reciicer.Controllers
             return View(reciclagemCreate);
         }
 
-        // [HttpPost]
-        // [ValidateAntiForgeryToken]
-        // public IActionResult Create(ReciclagemViewModel reciclagemViewModel)
-        // {       
-         
-        //     _reciclagemService.EfetuarRecilagem(reciclagemViewModel);
-                
-        //     return RedirectToAction("Index");
-           
-        // }
-
-        // [HttpPost]
-        // [ValidateAntiForgeryToken]
-        // public IActionResult CreateManyMateriais(ReciclagemCreateViewModel reciclagemCreateViewModel)
-        // {
-
-
-        //     _reciclagemService.EfetuarRecilagemMuitosMateriais(reciclagemCreateViewModel);
-                
-        //     return RedirectToAction("Index");
-           
-        // }
-
         [HttpGet]
         public IActionResult Read(int id)
         { 
@@ -111,23 +89,6 @@ namespace Reciicer.Controllers
             return RedirectToAction("Index");
         }
 
-        // [HttpGet]
-        // public IActionResult CarregarSelectMateriais(int count)
-        // {   
-        //     var clientes = _clienteRepository.ListarCliente();
-        //     var materiais = _materialRepository.ListarMaterial();
-
-        //     var reciclagemCreate = new ReciclagemCreateViewModel{
-        //         Clientes = clientes,
-        //         Materiais = materiais,
-        //         QtdMateriais = count
-                 
-        //     };
-
-        //     return PartialView("_ReciclagemMaterialListPartial", reciclagemCreate);
-        // }
-
-
         //Carregar drop TipoMaterial de acordo com o Material selecionado
         // dinamicamente na view Reciclagem/Create
         [HttpGet]
@@ -143,10 +104,10 @@ namespace Reciicer.Controllers
                 //Cria a Reciclagem para o cliente
                 _reciclagemService.EfetuarRecilagemCliente(reciclagemCreateViewModel);
 
-
-
                 var materiais = _materialRepository.ListarMaterial();     
                 reciclagemCreateViewModel.Materiais = materiais;
+
+               
                 
 
                 reciclagemCreateViewModel.Reciclagem = _reciclagemService.ObterClienteUltimaReciclagem(reciclagemCreateViewModel.ClienteId);
@@ -165,17 +126,9 @@ namespace Reciicer.Controllers
                 var reciclagemCliente = _reciclagemService.ObterClienteUltimaReciclagem(reciclagemCreateViewModel.ClienteId);
 
                 var materiais = _materialRepository.ListarMaterial();
-                // reciclagemCreateViewModel.Material_Reciclagem.Add( new Material_Reciclagem{
-                //         MaterialId = reciclagemCreateViewModel.MaterialId,
-                //         ReciclagemId = reciclagemCliente.Id,
-                //         Peso = reciclagemCreateViewModel.Peso,
-                //         Quantidade = reciclagemCreateViewModel.Quantidade
-                //     }
-                // );
                 
                  _reciclagemService.EfetuarReciclagemMaterial(reciclagemCreateViewModel);
 
-                
                 reciclagemCreateViewModel.Materiais = materiais;
                 reciclagemCreateViewModel.Reciclagem = reciclagemCliente;
                 reciclagemCreateViewModel.Material_Reciclagem = _material_ReciclagemRepository.ListarMaterialReciclagemPorReciclagemId(reciclagemCliente.Id);
