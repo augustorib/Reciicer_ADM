@@ -42,11 +42,6 @@ namespace Reciicer.Data
       
             );
 
-
-            modelBuilder.Entity<Material_Reciclagem>().HasData(
-                new Material_Reciclagem {Id = 1, MaterialId = 2, Peso = 5, Quantidade = 0, ReciclagemId = 1}
-            );
-
             modelBuilder.Entity<TipoMaterial>().HasData(
                 new TipoMaterial{Id = 1, Nome = "Papelão", Descricao ="Papelão", TempoDegradacao= 162000, MaterialId = 2},
                 new TipoMaterial{Id = 2, Nome = "Papel Presente", Descricao ="Papel de presente", TempoDegradacao= 150, MaterialId = 2},
@@ -54,12 +49,21 @@ namespace Reciicer.Data
                 new TipoMaterial{Id = 4, Nome = "Copo", Descricao ="Copo de Vidro", TempoDegradacao= 1000000, MaterialId = 3}
             );
 
+            modelBuilder.Entity<Material_Reciclagem>().HasData(
+                new Material_Reciclagem {Id = 1, MaterialId = 2, Peso = 5, Quantidade = 0, ReciclagemId = 1, TipoMaterialId = 2}
+            );
+
             modelBuilder.Entity<PontuacaoMaterial>().HasData(
                 new PontuacaoMaterial{Id = 1, PontuacaoPeso = 20, PontuacaoUnidade = 2, TipoMaterialId = 2 },
                 new PontuacaoMaterial{Id = 2, PontuacaoPeso = 100, PontuacaoUnidade = 10, TipoMaterialId = 4},
                 new PontuacaoMaterial{Id = 3, PontuacaoPeso = 50, PontuacaoUnidade = 5, TipoMaterialId = 1}
 
-                
+            );
+
+            modelBuilder.Entity<Premiacao>().HasData(
+                new Premiacao{Id = 1,  Nome = "Desconto 10%", Descricao ="Desconto de 10% na compra",  Ativo = true, NivelId = 2 },
+                new Premiacao{Id = 2,  Nome = "Sorteio Carro", Descricao ="Sorteio do carro Fiat", Ativo= true, NivelId = 4 },
+                new Premiacao{Id = 4,  Nome = "Ingresso Cinema", Descricao ="Ingresso para ver Vingadores", Ativo= true, NivelId = 3}
 
             );
 
@@ -71,6 +75,7 @@ namespace Reciicer.Data
         public DbSet<Material> Material {get; set;}
         public DbSet<TipoMaterial> TipoMaterial {get; set;}
         public DbSet<PontuacaoMaterial> PontuacaoMaterial {get; set;}
+        public DbSet<Premiacao> Premiacao {get; set;}
         public DbSet<Material_Reciclagem> Material_Reciclagem {get; set;}
         
         

@@ -6,6 +6,7 @@ using Reciicer.Service.Cliente;
 using Reciicer.Service.Reciclagem;
 using Reciicer.Service.Material;
 using Reciicer.Service.TipoMaterial;
+using Reciicer.Service.Nivel;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,12 +19,14 @@ builder.Services.AddScoped<IMaterialRepository, MaterialRepository>();
 builder.Services.AddScoped<ITipoMaterialRepository, TipoMaterialRepository>();
 builder.Services.AddScoped<IMaterial_ReciclagemRepository, Material_ReciclagemRepository>();
 builder.Services.AddScoped<IPontuacaoMaterialRepository, PontuacaoMaterialRepository>();
+builder.Services.AddScoped<IPremiacaoRepository, PremiacaoRepository>();
 
 //Services
 builder.Services.AddScoped<ClienteService>();
 builder.Services.AddScoped<MaterialService>();
 builder.Services.AddScoped<ReciclagemService>();
 builder.Services.AddScoped<TipoMaterialService>();
+builder.Services.AddScoped<NivelService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

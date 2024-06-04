@@ -8,7 +8,7 @@ namespace Reciicer.Models.Entities
     {
         [Key]
         public int Id { get; set; }
-        
+
         public int MaterialId { get; set; } 
 
         public int ReciclagemId { get; set; }
