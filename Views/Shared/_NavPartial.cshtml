@@ -1,0 +1,35 @@
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> signInManager
+
+
+@if(signInManager.IsSignedIn(User))
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index"><i class="fa-solid fa-house pe-1"></i> Início</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Cliente" asp-action="Index"><i class="fa-solid fa-person pe-1"></i> Cliente </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Nivel" asp-action="Index"><i class="fa-solid fa-medal pe-1"></i> Nível </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Reciclagem" asp-action="Index"><i class="fa-solid fa-recycle pe-1"></i> Reciclagem</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Premiacao" asp-action="Index"><i class="fa-solid fa-ranking-star pe-1"></i> Premiação</a>
+    </li>
+ 
+    <li class="nav-item dropdown">
+        <a class="nav-link text-dark dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+           <i class="fa-solid fa-tag pe-1"></i> Material
+        </a>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" asp-area="" asp-action="Index" asp-controller="Material" ><i class="fa-solid fa-tag pe-1"></i>Material </a></li>
+            <li><a class="dropdown-item" asp-area="" asp-action="Index" asp-controller="TipoMaterial" ><i class="fa-solid fa-gifts pe-1"></i>Tipo </a></li>
+            <li><a class="dropdown-item" asp-area="" asp-action="Index" asp-controller="PontuacaoMaterial" ><i class="fa-solid fa-star pe-1"></i>Pontuação </a></li>
+        </ul>
+     </li>
+
+}
+
