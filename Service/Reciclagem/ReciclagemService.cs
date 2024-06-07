@@ -66,5 +66,20 @@ namespace Reciicer.Service.Reciclagem
         {
             return _reciclagemRepository.ObterClienteUltimaReciclagem(clienteId);
         }
+
+        public int ObterTotalMaterialReciclagem()
+        {
+            return _material_ReciclagemRepository.ListarMaterialReciclagem().Count();
+        }
+
+        public DateTime ObterDataUltimaReciclagem()
+        {
+            return _reciclagemRepository.ListarReciclagem().Max(r => r.DataOperacao);
+           
+        }
+
+        
+
+
     }
 }

@@ -1,4 +1,3 @@
-using Reciicer.Repository;
 using Reciicer.Repository.Interface;
 
 
@@ -28,6 +27,11 @@ namespace Reciicer.Service.Cliente
          {
             _clienteRepository.AtualizarClientesNivelProc();
          }
-
+ 
+        
+         public int ObterTotalClientes()
+         {
+             return _clienteRepository.ListarCliente().Count();
+         }
     }
 }

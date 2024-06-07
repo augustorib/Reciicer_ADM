@@ -1,5 +1,6 @@
 using Reciicer.Data;
 using Reciicer.Models.Entities;
+using Reciicer.Models.HomeViewModels;
 using Reciicer.Repository.Interface;
 
 namespace Reciicer.Repository
@@ -55,6 +56,17 @@ namespace Reciicer.Repository
             }
 
         }
+
+        public MaterialChart ObterNomeeQuantidadeMateriaisGrafico
+//         Select 
+// 	M.Nome, Count(Mr.Id) AS Quantidade
+// FROM 
+// 	Material M
+// 	left JOIN Material_Reciclagem mr ON mr.MaterialId = m.id
+// GROUP BY
+// 	M.Nome, M.id
+// ORDER BY 
+// 	M.id
 
     }
 }

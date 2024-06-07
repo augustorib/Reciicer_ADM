@@ -106,6 +106,7 @@ namespace Reciicer.Repository
                 _context.Cliente.Remove(clienteRemover);
                 _context.SaveChanges();
            }
+
         }
 
     }

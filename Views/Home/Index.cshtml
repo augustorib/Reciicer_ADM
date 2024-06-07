@@ -1,8 +1,139 @@
-﻿@{
+﻿@model Reciicer.Models.HomeViewModels.HomeIndexViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <div class="container">
+
+        <h1>Reciicer</h1>
+
+        <div class="row my-4"> 
+
+            <div class="col-md-4">
+                <div class="card bg-info">
+                    <div class="card-title">
+                        <h5 class="card-title">Reciicer</h5>
+                    </div>
+                    <div class="card-body">
+ 
+                        <p class="card-text">@Model.DataUltimaReciclagem</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 border rounded border-dark  text-white" style="background: linear-gradient(to right, #50c9da, #2633e2);">                     
+                <i class="fa-solid fa-person"></i>
+                <div>
+                    <h2>@Model.TotalCliente</h2>
+                    <span>Quantidade de Clientes</span>
+                </div>    
+            </div>
+
+            <div class="col-md-4 border rounded border-dark  text-white" style="background: linear-gradient(to right, #FFEB3B, #2196F3 );">                     
+                <i class="fa-solid fa-recycle"></i>
+                <div>
+                    <h2>@Model.TotalReciclagem</h2>
+                    <span>Quantidade Reciclagens</span>
+                </div>    
+            </div>
+
+
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                Dashboard
+            </div>
+            <div class="card-body d-flex justify-content-between">
+                <div class="col-md-4 align-self-center">
+                    <canvas id="myChart"></canvas>
+                </div>
+                <div class="col-md-4">
+                    <canvas id="myChart2"></canvas>
+                </div>
+                <div class="col-md-4 align-self-center">
+                    <p >Hello World</p>
+                </div>
+            </div>
+        </div>
+            
+    </div>
 </div>
+
+@section  Scripts {
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+         
+        var intTeste = @Html.Raw(Json.Serialize(Model.TotalCliente))
+        var labels = @Html.Raw(Json.Serialize(Model.MateriaisNome))
+
+        var ctx = document.getElementById('myChart');
+        var ctx2 = document.getElementById('myChart2');
+        
+        @* var barChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+        labels: labels,//['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            borderWidth: 1
+        }]
+        },
+        options: {
+        scales: {
+            y: {
+            beginAtZero: true
+            }
+        }
+        }
+    }); *@
+
+        var myChart = new Chart(ctx2, { 
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: '# of Votes',
+                    data: [intTeste, intTeste, intTeste, 5],
+                    backgroundColor: [
+                        'rgba(255, 0, 0, 1)',
+                        'rgba(255, 240, 0, 1)',
+                        'rgba(0, 0, 255, 1)',
+                        'rgba(0, 135, 0, 1)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 0, 0, 1)',
+                        'rgba(255, 240, 0, 1)',
+                        'rgba(0, 0, 255, 1)',
+                        'rgba(0, 135, 0, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                label += Math.round(context.raw * 100) / 100;
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+}

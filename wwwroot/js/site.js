@@ -48,4 +48,90 @@ var ObterTipoMaterialByMaterialId = function(){
             )
         }
     });
-}
+};
+
+//const ctx = document.getElementById('myChart');
+//const ctx2 = document.getElementById('myChart2').getContext('2d');
+
+var barChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+//   var barChart = new Chart(ctx, {
+//     type: 'bar',
+//     data: {
+//       labels: ['Red', 'Blue', 'Yellow', 'Green'],
+//       datasets: [{
+//         label: '# of Votes',
+//         data: [12, 19, 3, 5],
+//         borderWidth: 3
+//       }]
+//     },
+//     options: {
+//       scales: {
+//         y: {
+//           beginAtZero: true
+//         }
+//       }
+//     }
+//   });
+  
+
+  // var myPieChart = new Chart(ctx2, {
+  //     type: 'pie',
+  //     data: {
+  //         labels: ['Plástico', 'Metal', 'Papel', 'Vidro'],
+  //         datasets: [{
+  //             label: '# of Votes',
+  //             data: [12, 19, 3, 5],
+  //             backgroundColor: [
+  //                 'rgba(255, 0, 0, 1)',
+  //                 'rgba(255, 240, 0, 1)',
+  //                 'rgba(0, 0, 255, 1)',
+  //                 'rgba(0, 135, 0)'
+  //             ],
+  //             borderColor: [
+  //                 'rgba(255, 0, 0, 1)',
+  //                 'rgba(255, 240, 0, 1)',
+  //                 'rgba(255, 206, 86, 1)',
+  //                 'rgba(0, 135, 0, 1)'
+  //             ],
+  //             borderWidth: 1
+  //         }]
+  //     },
+  //     options: {
+  //         responsive: true,
+  //         plugins: {
+  //             legend: {
+  //                 position: 'top',
+  //             },
+  //             tooltip: {
+  //                 callbacks: {
+  //                     label: function(context) {
+  //                         let label = context.label || '';
+  //                         if (label) {
+  //                             label += ': ';
+  //                         }
+  //                         label += Math.round(context.raw * 100) / 100;
+  //                         return label;
+  //                     }
+  //                 }
+  //             }
+  //         }
+  //     }
+  // });

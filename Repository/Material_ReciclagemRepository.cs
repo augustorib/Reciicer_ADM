@@ -17,7 +17,7 @@ namespace Reciicer.Repository
 
         public IEnumerable<Material_Reciclagem> ListarMaterialReciclagem()
         {
-            throw new NotImplementedException();
+            return _context.Material_Reciclagem.ToList();
         }
 
         public IEnumerable<Material_Reciclagem> ListarMaterialReciclagemPorReciclagemId(int reciclagemId)
@@ -59,7 +59,6 @@ namespace Reciicer.Repository
                 _context.Material_Reciclagem.Remove(materialReciclagem);
                 _context.SaveChanges();
             }
-
         }
     }
 }

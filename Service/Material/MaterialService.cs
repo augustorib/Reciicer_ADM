@@ -17,5 +17,10 @@ namespace Reciicer.Service.Material
         {
             return _materialRepository.ListarMaterial();
         }
+
+        public IEnumerable<string> ListarNomesMaterial()
+        {
+            return PopularSelect().Select(m => m.Nome).ToList();
+        }
     }
 }

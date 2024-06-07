@@ -2,6 +2,10 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Reciicer.Models;
+using Reciicer.Models.HomeViewModels;
+using Reciicer.Service.Cliente;
+using Reciicer.Service.Material;
+using Reciicer.Service.Reciclagem;
 
 namespace Reciicer.Controllers;
 
@@ -10,15 +14,30 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
 
-    public HomeController(ILogger<HomeController> logger)
+    private readonly ClienteService _clienteService;
+    private readonly ReciclagemService _reciclagemService;
+    private readonly MaterialService _materialService;
+
+    public HomeController(ILogger<HomeController> logger, ClienteService clienteService, ReciclagemService reciclagemService
+                          ,MaterialService materialService  )
     {
         _logger = logger;
+        _clienteService = clienteService;
+        _reciclagemService = reciclagemService;
+        _materialService = materialService;
     }
 
 
     public IActionResult Index()
     {
-        return View();
+        var model = new HomeIndexViewModel{
+            TotalCliente = _clienteService.ObterTotalClientes(),
+            TotalReciclagem = _reciclagemService.ObterTotalMaterialReciclagem(),
+            MateriaisNome = _materialService.ListarNomesMaterial(),
+            DataUltimaReciclagem = _reciclagemService.ObterDataUltimaReciclagem()
+        };
+
+        return View(model);
     }
 
     [AllowAnonymous]
