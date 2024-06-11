@@ -1,4 +1,5 @@
 using Reciicer.Models.Entities;
+using Reciicer.Models.HomeViewModels;
 
 namespace Reciicer.Repository.Interface
 {
@@ -9,5 +10,6 @@ namespace Reciicer.Repository.Interface
         void RegistrarMaterial(Material material); 
         void AtualizarMaterial(Material material);
         void ExcluirMaterial(int id);
+        List<MaterialQuantidadeChart> ObterNomeeQuantidadeMateriaisGrafico();
     }
 }

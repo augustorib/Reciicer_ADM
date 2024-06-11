@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Reciicer.Data;
 using Reciicer.Models.Entities;
 using Reciicer.Models.HomeViewModels;
@@ -57,16 +58,23 @@ namespace Reciicer.Repository
 
         }
 
-        public MaterialChart ObterNomeeQuantidadeMateriaisGrafico
-//         Select 
-// 	M.Nome, Count(Mr.Id) AS Quantidade
-// FROM 
-// 	Material M
-// 	left JOIN Material_Reciclagem mr ON mr.MaterialId = m.id
-// GROUP BY
-// 	M.Nome, M.id
-// ORDER BY 
-// 	M.id
+        public List<MaterialQuantidadeChart> ObterNomeeQuantidadeMateriaisGrafico()
+        {
+            var sql = @"Select 
+                        M.Id, M.Nome, Count(Mr.Id) AS Quantidade
+                    FROM 
+                        Material M
+                        left JOIN Material_Reciclagem mr ON mr.MaterialId = m.id
+                    GROUP BY
+                        M.Nome, M.id
+                    ORDER BY 
+                        M.id" ;
+
+            var resultado = _context.Database.SqlQueryRaw<MaterialQuantidadeChart>(sql).ToList();
+            
+            return resultado;
+        
+        }
 
     }
 }

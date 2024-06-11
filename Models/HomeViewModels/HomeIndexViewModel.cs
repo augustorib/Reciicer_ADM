@@ -1,5 +1,5 @@
-
 using System.ComponentModel.DataAnnotations;
+using Reciicer.Models.Entities;
 
 namespace Reciicer.Models.HomeViewModels
 {
@@ -13,5 +13,9 @@ namespace Reciicer.Models.HomeViewModels
 
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}")]
         public DateTime DataUltimaReciclagem { get; set; }
+
+        public IEnumerable<MaterialQuantidadeChart> chartMaterials { get; set; }
+
+        public IEnumerable<Cliente> Clientes { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 using Reciicer.Models.Entities;
+using Reciicer.Models.HomeViewModels;
 using Reciicer.Repository.Interface;
 
 namespace Reciicer.Service.Material
@@ -22,5 +23,11 @@ namespace Reciicer.Service.Material
         {
             return PopularSelect().Select(m => m.Nome).ToList();
         }
+
+        public IEnumerable<MaterialQuantidadeChart> ObterMaterialQuantidadeChart()
+        {
+            return _materialRepository.ObterNomeeQuantidadeMateriaisGrafico();
+        }
+
     }
 }

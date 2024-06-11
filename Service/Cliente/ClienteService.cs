@@ -1,6 +1,7 @@
 using Reciicer.Repository.Interface;
 
 
+
 namespace Reciicer.Service.Cliente
 {
     public class ClienteService 
@@ -22,6 +23,15 @@ namespace Reciicer.Service.Cliente
 
             return clientesComPontuacaoENivelAtualizados;
          }
+
+        public IEnumerable<Models.Entities.Cliente> ObterClientesOrdenadoPorPontuação()
+        {
+            var  clientesTop3 = _clienteRepository.ListarCliente()
+                                                  .OrderByDescending(c => c.PontuacaoTotal)
+                                                  .Take(3)
+                                                  .ToList();
+            return clientesTop3;
+        }
 
          public void AtualizarClientesNivel()
          {

@@ -34,9 +34,12 @@ public class HomeController : Controller
             TotalCliente = _clienteService.ObterTotalClientes(),
             TotalReciclagem = _reciclagemService.ObterTotalMaterialReciclagem(),
             MateriaisNome = _materialService.ListarNomesMaterial(),
-            DataUltimaReciclagem = _reciclagemService.ObterDataUltimaReciclagem()
+            DataUltimaReciclagem = _reciclagemService.ObterDataUltimaReciclagem(),
+            chartMaterials =  _materialService.ObterMaterialQuantidadeChart(),
+            Clientes = _clienteService.ObterClientesOrdenadoPorPontuação(),
         };
 
+        
         return View(model);
     }
 
