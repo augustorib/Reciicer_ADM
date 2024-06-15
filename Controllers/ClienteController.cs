@@ -12,11 +12,13 @@ namespace Reciicer.Controllers
 
         private readonly IClienteRepository _clienteRepository;
         private readonly ClienteService _clienteService;
+        private readonly IEmailService _emailService;
 
-        public ClienteController(IClienteRepository clienteRepository, ClienteService clienteService)
+        public ClienteController(IClienteRepository clienteRepository, ClienteService clienteService, IEmailService emailService)
         {
             _clienteRepository = clienteRepository;
             _clienteService = clienteService;
+            _emailService = emailService;
         }
 
         public IActionResult Index()
@@ -46,6 +48,11 @@ namespace Reciicer.Controllers
         [HttpGet]
         public IActionResult Read(int id)
         { 
+            
+            var mensagem = "HelLo World!!!<br> Teste Email =D";
+
+            _emailService.EnviarEmail("guhstudante@gmail.com", "Reciicer", mensagem);
+            
             return View(_clienteRepository.DetalharCliente(id));
         }
 

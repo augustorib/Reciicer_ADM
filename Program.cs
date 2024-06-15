@@ -9,6 +9,7 @@ using Reciicer.Service.TipoMaterial;
 using Reciicer.Service.Nivel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Reciicer.Service.Email;
 
 
 
@@ -30,6 +31,7 @@ builder.Services.AddScoped<MaterialService>();
 builder.Services.AddScoped<ReciclagemService>();
 builder.Services.AddScoped<TipoMaterialService>();
 builder.Services.AddScoped<NivelService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
