@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Reciicer.Models.Entities;
 
 
@@ -13,6 +14,7 @@ namespace Reciicer.Models
 
         public int QtdMateriais { get; set; } = 1;
         public int ClienteId { get; set; }
+        [DisplayName("Peso(g)")]
         public int Peso { get; set; }
         public int Quantidade { get; set; }
         public int MaterialId { get; set; }

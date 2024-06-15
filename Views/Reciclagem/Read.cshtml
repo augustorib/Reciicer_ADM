@@ -27,48 +27,39 @@
     </div>
 
     <div class="card mt-3">
+
         <div class="card-header">
             <h4>Materiais</h4>
         </div>
+
         <div class="card-body">
-
-            @* @foreach(var item in Model.Materiais)
-            {
-                <div class="form-group row mt-2">
-                    <div class="col-md-4">
-                        <label asp-for="@item.Descricao" class="form-label">@Html.DisplayNameFor(model => item.Descricao)</label>
-                        <input asp-for="@item.Descricao" class="form-control" disabled>
-                    </div>
-                </div>
-            } *@
-            
          
-            @foreach(var item in Model.Materiais_Reciclagem)
-            {
-                <div class="form-group row mt-2">
+        @foreach(var item in Model.Materiais_Reciclagem)
+        {
+            <div class="form-group row mt-2">
 
-                    <div class="col-md-3">
-                        <label asp-for="@item.Material.Descricao" class="form-label">@Html.DisplayNameFor(model => item.Material.Descricao)</label>
-                        <input asp-for="@item.Material.Descricao" class="form-control" disabled>
-                    </div>
-
-                    <div class="col-md-3">
-                        <label asp-for="@item.TipoMaterial.Nome" class="form-label">@Html.DisplayNameFor(model => item.TipoMaterial.Descricao)</label>
-                        <input asp-for="@item.TipoMaterial.Nome" class="form-control" disabled>
-                    </div>
-
-                    <div class="col-md-3">
-                        <label asp-for="@item.Peso" class="form-label">@Html.DisplayNameFor(model => item.Peso)</label>
-                        <input asp-for="@item.Peso" class="form-control" disabled>
-                    </div>
-
-                    <div class="col-md-3">
-                        <label asp-for="@item.Quantidade" class="form-label">@Html.DisplayNameFor(model => item.Quantidade)</label>
-                        <input asp-for="@item.Quantidade" class="form-control" disabled>
-                    </div>
-
+                <div class="col-md-3">
+                    <label asp-for="@item.Material.Descricao" class="form-label">@Html.DisplayNameFor(model => item.Material.Descricao)</label>
+                    <input asp-for="@item.Material.Descricao" class="form-control" disabled>
                 </div>
-            }
+
+                <div class="col-md-3">
+                    <label asp-for="@item.TipoMaterial.Nome" class="form-label">@Html.DisplayNameFor(model => item.TipoMaterial.Descricao)</label>
+                    <input asp-for="@item.TipoMaterial.Nome" class="form-control" disabled>
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="@item.Peso" class="form-label">@Html.DisplayNameFor(model => item.Peso)</label>
+                    <input asp-for="@item.Peso" class="form-control" disabled>
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="@item.Quantidade" class="form-label">@Html.DisplayNameFor(model => item.Quantidade)</label>
+                    <input asp-for="@item.Quantidade" class="form-control" disabled>
+                </div>
+
+            </div>
+        }
 
         </div>
     </div>
@@ -77,4 +68,5 @@
         <a asp-action="Update" asp-route-Id="@Model.Reciclagem.Id" class="btn btn-warning text-white ">Atualizar <i class="fa-solid fa-pen"></i></a>
         <a asp-action="Index" class="btn btn-secondary">Voltar <i class="fa-solid fa-rotate-left"></i></a>
     </div>
+
 </div>

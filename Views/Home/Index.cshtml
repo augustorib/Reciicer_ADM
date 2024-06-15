@@ -39,18 +39,6 @@
 
         <div class="row my-4"> 
 
-            @* <div class="col-md-4">
-                <div class="card bg-info">
-                    <div class="card-title">
-                        <h5 class="card-title">Reciicer</h5>
-                    </div>
-                    <div class="card-body">
- 
-                        <p class="card-text">@Model.DataUltimaReciclagem</p>
-                    </div>
-                </div>
-            </div> *@
-
             <div class="col-md-4 border rounded border-dark  text-white" style="background: linear-gradient(to right, #6f9fe7, #104b1c);">                     
                 <i class="fa-solid fa-clock"></i>
                 <div>
@@ -101,10 +89,10 @@
                     {  
                        
                         <div class="row">   
-                            <div class="col-md-3 ">
+                            <div class="col-md-2">
                                 <p ># @rank</p>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <p >@item.Nome</p>
                             </div>
                             <div class="col-md-3">
@@ -141,7 +129,7 @@
         var barChart = new Chart(ctx, {
         type: 'bar',
         data: {
-        labels: labels,//['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: labels,
         datasets: [{
             label: 'Quantidade Reciclagem por Material',
             data: quantidadeMateriaisChart,
@@ -163,7 +151,6 @@
                 labels: labels,
                 datasets: [{
                     label: '# of Votes',
-                    //data: [10, intTeste, intTeste, 5],
                     data: quantidadeMateriaisChart,
                     backgroundColor: [
                         'rgba(255, 0, 0, 1)',

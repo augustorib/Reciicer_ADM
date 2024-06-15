@@ -12,6 +12,7 @@ namespace Reciicer.Models.Entities
 
         [Required]
         [DisplayName("Data Realizada")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}")]
         public DateTime DataOperacao { get; set;}
 
         [Required]

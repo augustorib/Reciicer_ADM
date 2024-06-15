@@ -22,7 +22,34 @@
 
 //Drop down em cascata Reciclagem/Create
 $(document).ready(function (){
+
     ObterTipoMaterialByMaterialId();
+
+    $('#dataTableInit').DataTable({
+      "language": {
+                    "sEmptyTable": "Nenhum dado disponível na tabela",
+                    "sInfo": "Mostrando _START_ até _END_ de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                    "sInfoFiltered": "(filtrado de _MAX_ registros no total)",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ".",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": "Processando...",
+                    "sSearch": "Buscar:",
+                    "sZeroRecords": "Nenhum registro encontrado",
+                    "oPaginate": {
+                        "sFirst": "Primeiro",
+                        "sLast": "Último",
+                        "sNext": "Próximo",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Ordenar colunas de forma ascendente",
+                        "sSortDescending": ": Ordenar colunas de forma descendente"
+                    }
+                }
+      });
 
 });
 
@@ -49,89 +76,3 @@ var ObterTipoMaterialByMaterialId = function(){
         }
     });
 };
-
-//const ctx = document.getElementById('myChart');
-//const ctx2 = document.getElementById('myChart2').getContext('2d');
-
-var barChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-      datasets: [{
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-
-//   var barChart = new Chart(ctx, {
-//     type: 'bar',
-//     data: {
-//       labels: ['Red', 'Blue', 'Yellow', 'Green'],
-//       datasets: [{
-//         label: '# of Votes',
-//         data: [12, 19, 3, 5],
-//         borderWidth: 3
-//       }]
-//     },
-//     options: {
-//       scales: {
-//         y: {
-//           beginAtZero: true
-//         }
-//       }
-//     }
-//   });
-  
-
-  // var myPieChart = new Chart(ctx2, {
-  //     type: 'pie',
-  //     data: {
-  //         labels: ['Plástico', 'Metal', 'Papel', 'Vidro'],
-  //         datasets: [{
-  //             label: '# of Votes',
-  //             data: [12, 19, 3, 5],
-  //             backgroundColor: [
-  //                 'rgba(255, 0, 0, 1)',
-  //                 'rgba(255, 240, 0, 1)',
-  //                 'rgba(0, 0, 255, 1)',
-  //                 'rgba(0, 135, 0)'
-  //             ],
-  //             borderColor: [
-  //                 'rgba(255, 0, 0, 1)',
-  //                 'rgba(255, 240, 0, 1)',
-  //                 'rgba(255, 206, 86, 1)',
-  //                 'rgba(0, 135, 0, 1)'
-  //             ],
-  //             borderWidth: 1
-  //         }]
-  //     },
-  //     options: {
-  //         responsive: true,
-  //         plugins: {
-  //             legend: {
-  //                 position: 'top',
-  //             },
-  //             tooltip: {
-  //                 callbacks: {
-  //                     label: function(context) {
-  //                         let label = context.label || '';
-  //                         if (label) {
-  //                             label += ': ';
-  //                         }
-  //                         label += Math.round(context.raw * 100) / 100;
-  //                         return label;
-  //                     }
-  //                 }
-  //             }
-  //         }
-  //     }
-  // });

@@ -9,7 +9,7 @@
 <p>
     <a class="btn btn-primary" asp-action="Create"><i class="fa-solid fa-plus"></i> Adicionar Reciclagem</a>
 </p>
-<table class="table table-striped text-center">
+<table class="table table-striped text-center" id="dataTableInit">
         <thead>
             <tr>
                     <th>@Html.DisplayNameFor(model => model.Cliente.Nome)</th>
@@ -23,7 +23,7 @@
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.Cliente.Nome)</td>
                 <td>@Html.DisplayFor(modelItem => item.PontuacaoGanha)</td>
-                <td>@Html.DisplayFor(modelItem => item.DataOperacao.Date)</td>
+                <td>@Html.DisplayFor(modelItem => item.DataOperacao)</td>
 
                 <td>
                     <a class="btn btn-primary " asp-action="Read" asp-route-Id="@item.Id">

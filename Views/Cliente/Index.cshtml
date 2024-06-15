@@ -3,13 +3,36 @@
     ViewData["Title"] = "Listar Clientes";
 }
 
+@functions{
+    public string ColorirNivel(int id)
+    {
+        switch(id)
+        {
+            case 1:
+                return "bg-secondary";
+            case 2:
+                return "bg-info";
+            case 3:
+                return "bg-warning ";
+            case 4:
+                return "bg-success ";
+            case 5:
+                 return "bg-primary ";
+            case 6:
+                 return "bg-danger ";
+            default:
+                return "none";   
+        }
+    }
+}
+
 <h1>@ViewData["Title"]</h1>
 
 <div>
 <p>
     <a class="btn btn-primary" asp-action="Create"><i class="fa-solid fa-user-plus"></i> Adicionar Cliente</a>
 </p>
-<table class="table table-striped text-center">
+<table class="table table-striped text-center" id="dataTableInit">
         <thead>
             <tr>
                     <th>@Html.DisplayNameFor(model => model.Nome)</th>
@@ -27,21 +50,8 @@
                 <td>@Html.DisplayFor(modelItem => item.Telefone)</td>
                 <td>@Html.DisplayFor(modelItem => item.Email)</td>
                 <td>@Html.DisplayFor(modelItem => item.PontuacaoTotal)</td>
+                <td class="@ColorirNivel(item.Nivel.Id)">@Html.DisplayFor(modelItem => item.Nivel.Descricao)</td>
 
-                @if(item.Nivel.Id == 1){
-                    <td class="bg-secondary ">@Html.DisplayFor(modelItem => item.Nivel.Descricao)</td>
-                }else if(item.Nivel.Id == 2)
-                {
-                    <td class="bg-info ">@Html.DisplayFor(modelItem => item.Nivel.Descricao)</td>
-                    
-                }else if(item.Nivel.Id == 3)
-                {
-                    <td class="bg-warning ">@Html.DisplayFor(modelItem => item.Nivel.Descricao)</td>
-                    
-                }else
-                {
-                    <td class="bg-success ">@Html.DisplayFor(modelItem => item.Nivel.Descricao)</td>
-                }
                 <td>
                 <a class="btn btn-primary " asp-action="Read" asp-route-Id="@item.Id">
                      <i class="fa-solid fa-circle-info text-white"></i>

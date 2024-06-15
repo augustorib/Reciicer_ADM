@@ -60,7 +60,7 @@
                 </div> 
 
                 <div class="col-md-2">
-                    <label asp-for="Peso" class="form-label">Peso:</label>
+                    <label asp-for="Peso" class="form-label">@Html.DisplayNameFor(model => model.Peso):</label>
                     <input asp-for="Peso" class="form-control">
                 </div>
 
@@ -83,7 +83,7 @@
                     <tr>
                             <th>Material</th>
                             <th>Tipo Material</th>
-                            <th>Peso</th>
+                            <th>@Html.DisplayNameFor(model => model.Peso)</th>
                             <th>Quantidade</th>
                             <th></th>
                     </tr>
