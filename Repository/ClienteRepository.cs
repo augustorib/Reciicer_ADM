@@ -109,5 +109,12 @@ namespace Reciicer.Repository
 
         }
 
+        public IEnumerable<Cliente> ListarClienteNivelPremiacao()
+        {
+            return _context.Cliente.Include(c => c.Nivel)
+                                   .ThenInclude(n => n.Premiacao)
+                                   .Where(c => c.Nivel.Id != 1)
+                                   .ToList();
+        }
     }
 }

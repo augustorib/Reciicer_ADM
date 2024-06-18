@@ -6,6 +6,7 @@ namespace Reciicer.Repository.Interface
     {
         IEnumerable<Cliente> ListarCliente();  
         IEnumerable<Cliente> ListarClienteComPontuacaoTotal();  
+        IEnumerable<Cliente> ListarClienteNivelPremiacao();  
         Cliente ObterClientePorId(int id);  
         void RegistrarCliente(Cliente cliente); 
         void AtualizarCliente(Cliente cliente);

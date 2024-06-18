@@ -43,5 +43,10 @@ namespace Reciicer.Service.Cliente
          {
              return _clienteRepository.ListarCliente().Count();
          }
+
+         public IEnumerable<Models.Entities.Cliente> ObterClientesPremiacao()
+         {
+             return _clienteRepository.ListarClienteNivelPremiacao();
+         }
     }
 }

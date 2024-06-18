@@ -10,6 +10,15 @@
     <li class="nav-item">
         <a class="nav-link text-dark" asp-area="" asp-controller="Cliente" asp-action="Index"><i class="fa-solid fa-person pe-1"></i> Cliente </a>
     </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link text-dark dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+           <i class="fa-solid fa-person pe-1"></i> Cliente
+        </a>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" asp-area="" asp-action="Create" asp-controller="Cliente"><i class="fa-solid fa-person-circle-plus"></i> Adicionar </a></li>
+            <li><a class="dropdown-item" asp-area="" asp-action="InformarClientePremiacaoFiltro" asp-controller="Cliente" ><i class="fa-solid fa-tag pe-1"></i> Prêmios</a></li>
+        </ul>
+    </li>
     <li class="nav-item">
         <a class="nav-link text-dark" asp-area="" asp-controller="Nivel" asp-action="Index"><i class="fa-solid fa-medal pe-1"></i> Nível </a>
     </li>

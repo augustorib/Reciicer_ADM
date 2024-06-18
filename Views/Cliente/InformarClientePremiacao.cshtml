@@ -1,0 +1,65 @@
+@model IEnumerable<Reciicer.Models.Entities.Cliente>
+@{
+    ViewData["Title"] = "Informar Cliente Premiação";
+}
+
+@functions{
+    public string ColorirNivel(int id)
+    {
+        switch(id)
+        {
+            case 1:
+                return "bg-secondary";
+            case 2:
+                return "bg-info";
+            case 3:
+                return "bg-warning ";
+            case 4:
+                return "bg-success ";
+            case 5:
+                 return "bg-primary ";
+            case 6:
+                 return "bg-danger ";
+            default:
+                return "none";   
+        }
+    }
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <table class="table table-striped text-center" id="dataTableInit">
+        <thead>
+            <tr>
+                    <th>@Html.DisplayNameFor(model => model.Nome)</th>
+                    <th>@Html.DisplayNameFor(model => model.Email)</th>
+                    <th>@Html.DisplayNameFor(model => model.Nivel.Descricao)</th>
+                    <th>@Html.DisplayNameFor(model => model.Nivel.Premiacao.Descricao)</th>
+                    <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+
+    @foreach (var item in Model) 
+    {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                <td class="@ColorirNivel(item.Nivel.Id)">@Html.DisplayFor(modelItem => item.Nivel.Descricao)</td>
+                <td>@Html.DisplayFor(modelItem => item.Nivel.Premiacao.Descricao)</td>
+
+                @*chekpoint----*@
+                <td>
+                    <form asp-action="InformarClientePremiacao" method="post">
+                        <button type="submit" class="btn btn-primary">
+                            <input type="hidden" name="email" value="@item.Email">
+                            <i class="fa-regular fa-envelope"></i>
+                        </button>
+                    </form>
+                </td> 
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

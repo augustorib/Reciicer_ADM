@@ -74,6 +74,7 @@ builder.Services.Configure<IdentityOptions>(options =>
    options.Password.RequiredUniqueChars = 1;
 });
 
+builder.Services.AddLogging( config => config.AddConsole());
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
