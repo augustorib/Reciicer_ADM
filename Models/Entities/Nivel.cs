@@ -19,6 +19,9 @@ namespace Reciicer.Models.Entities
         [DisplayName("Penalidade")]
         public int PontosPerdaFrequencia { get; set; }
 
+        [DisplayName("Cor do Nível")]
+        public string Cor { get; set; }
+
         public ICollection<Cliente>? Clientes { get; set; } // Navigation
         public Premiacao Premiacao { get; set; } // Navigation
     }

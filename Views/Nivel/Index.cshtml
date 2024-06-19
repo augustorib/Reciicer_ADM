@@ -3,29 +3,6 @@
     ViewData["Title"] = "Listar Níveis";
 }
 
-@functions{
-    public string ColorirNivel(int id)
-    {
-        switch(id)
-        {
-            case 1:
-                return "bg-secondary";
-            case 2:
-                return "bg-info";
-            case 3:
-                return "bg-warning ";
-            case 4:
-                return "bg-success ";
-            case 5:
-                 return "bg-primary ";
-            case 6:
-                 return "bg-danger ";
-            default:
-                return "none";   
-        }
-    }
-}
-
 <h1>@ViewData["Title"]</h1>
 
 <div>
@@ -45,7 +22,7 @@
     @foreach (var item in Model) {
             <tr>
 
-                <td class="@ColorirNivel(item.Id)">@Html.DisplayFor(modelItem => item.Descricao)</td>
+                <td style="background-color: @item.Cor;">@Html.DisplayFor(modelItem => item.Descricao)</td>
                 <td>@Html.DisplayFor(modelItem => item.PontuacaoNecessario)</td>
                 <td>@Html.DisplayFor(modelItem => item.PontosPerdaFrequencia)</td>
 

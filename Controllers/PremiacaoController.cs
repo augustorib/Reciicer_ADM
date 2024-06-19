@@ -43,7 +43,9 @@ namespace Reciicer.Controllers
                 Nome = premiacaoCreateView.Premiacao.Nome,
                 Descricao = premiacaoCreateView.Premiacao.Descricao,
                 Ativo = premiacaoCreateView.Premiacao.Ativo,
-                NivelId = premiacaoCreateView.Premiacao.NivelId
+                NivelId = premiacaoCreateView.Premiacao.NivelId,
+                DataInicial = premiacaoCreateView.Premiacao.DataInicial,
+                DataFinal = premiacaoCreateView.Premiacao.DataFinal
                 
             };
 
@@ -80,7 +82,9 @@ namespace Reciicer.Controllers
                 Nome = premiacaoCreateView.Premiacao.Nome,
                 Descricao = premiacaoCreateView.Premiacao.Descricao,
                 Ativo = premiacaoCreateView.Premiacao.Ativo,
-                NivelId = premiacaoCreateView.Premiacao.NivelId
+                NivelId = premiacaoCreateView.Premiacao.NivelId,
+                DataInicial = premiacaoCreateView.Premiacao.DataInicial,
+                DataFinal = premiacaoCreateView.Premiacao.DataFinal
             };
 
             _premiacaoRepository.AtualizarPremiacao(premiacao);

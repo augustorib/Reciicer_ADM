@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Reciicer.Models.Entities
@@ -12,6 +13,12 @@ namespace Reciicer.Models.Entities
         public string Descricao { get; set; }
         
         public bool Ativo { get; set; }
+
+        [DisplayName("Início")]
+        public DateOnly DataInicial { get; set; }
+        
+        [DisplayName("Fim")]
+        public DateOnly DataFinal { get; set; }
 
         public int NivelId { get; set; }
 

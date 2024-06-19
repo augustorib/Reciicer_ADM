@@ -13,8 +13,9 @@
         <thead>
             <tr>
                     <th>@Html.DisplayNameFor(model => model.Nome)</th>
-                    <th>@Html.DisplayNameFor(model => model.Descricao)</th>
                     <th>@Html.DisplayNameFor(model => model.Ativo)</th>
+                    <th>@Html.DisplayNameFor(model => model.DataInicial)</th>
+                    <th>@Html.DisplayNameFor(model => model.DataFinal)</th>
                     <th>@Html.DisplayNameFor(model => model.Nivel.Descricao)</th>
                     <th>Ações</th>
             </tr>
@@ -24,9 +25,10 @@
             <tr>
 
                 <td>@Html.DisplayFor(modelItem => item.Nome)</td>
-                <td>@Html.DisplayFor(modelItem => item.Descricao)</td>
                 <td>@Html.DisplayFor(modelItem => item.Ativo)</td>
-                <td>@Html.DisplayFor(modelItem => item.Nivel.Descricao)</td>
+                <td>@Html.DisplayFor(modelItem => item.DataInicial)</td>
+                <td>@Html.DisplayFor(modelItem => item.DataFinal)</td>
+                <td style="background-color: @item.Nivel.Cor;">@Html.DisplayFor(modelItem => item.Nivel.Descricao)</td>
 
                 <td>
                     <a class="btn btn-primary " asp-action="Read" asp-route-Id="@item.Id">

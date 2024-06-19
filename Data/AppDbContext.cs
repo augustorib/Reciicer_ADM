@@ -18,10 +18,10 @@ namespace Reciicer.Data
             base.OnModelCreating(modelBuilder);
             
             modelBuilder.Entity<Nivel>().HasData(
-                new Nivel {Id = 1, Descricao= "Iniciante", PontuacaoNecessario = 0, PontosPerdaFrequencia = 0},
-                new Nivel {Id = 2, Descricao= "Básico", PontuacaoNecessario = 10, PontosPerdaFrequencia =2},
-                new Nivel {Id = 3, Descricao= "Intermediário", PontuacaoNecessario = 50, PontosPerdaFrequencia =10},
-                new Nivel {Id = 4, Descricao= "Avançado", PontuacaoNecessario = 200, PontosPerdaFrequencia = 20}
+                new Nivel {Id = 1, Descricao= "Iniciante", PontuacaoNecessario = 0, PontosPerdaFrequencia = 0, Cor = "#adb5bd"},
+                new Nivel {Id = 2, Descricao= "Básico", PontuacaoNecessario = 10, PontosPerdaFrequencia =2, Cor = "#0dcaf0"},
+                new Nivel {Id = 3, Descricao= "Intermediário", PontuacaoNecessario = 50, PontosPerdaFrequencia =10, Cor ="#ffc107"},
+                new Nivel {Id = 4, Descricao= "Avançado", PontuacaoNecessario = 200, PontosPerdaFrequencia = 20, Cor ="#198754"}
             );
            
             modelBuilder.Entity<Cliente>().HasData(
@@ -64,9 +64,9 @@ namespace Reciicer.Data
             );
 
             modelBuilder.Entity<Premiacao>().HasData(
-                new Premiacao{Id = 1,  Nome = "Desconto 10%", Descricao ="Desconto de 10% na compra",  Ativo = true, NivelId = 2 },
-                new Premiacao{Id = 2,  Nome = "Sorteio Carro", Descricao ="Sorteio do carro Fiat", Ativo= true, NivelId = 4 },
-                new Premiacao{Id = 4,  Nome = "Ingresso Cinema", Descricao ="Ingresso para ver Vingadores", Ativo= true, NivelId = 3}
+                new Premiacao{Id = 1,  Nome = "Desconto 10%", Descricao ="Desconto de 10% na compra",  Ativo = true, NivelId = 2, DataInicial = new DateOnly(2024,6,1), DataFinal = new DateOnly(2024,6,30) },
+                new Premiacao{Id = 2,  Nome = "Sorteio Carro", Descricao ="Sorteio do carro Fiat", Ativo= true, NivelId = 4, DataInicial = new DateOnly(2024,6,1), DataFinal = new DateOnly(2024,6,30) },
+                new Premiacao{Id = 4,  Nome = "Ingresso Cinema", Descricao ="Ingresso para ver Vingadores", Ativo= true, NivelId = 3, DataInicial = new DateOnly(2024,6,1), DataFinal = new DateOnly(2024,6,30)}
 
             );
 

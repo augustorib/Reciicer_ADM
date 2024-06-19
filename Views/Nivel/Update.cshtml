@@ -13,13 +13,17 @@
                 <label asp-for="Descricao" class="form-label">Nível:</label>
                 <input asp-for="Descricao" class="form-control">
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <label asp-for="PontuacaoNecessario" class="form-label">Pontos Necessários:</label>
                 <input asp-for="PontuacaoNecessario" class="form-control">
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <label asp-for="PontosPerdaFrequencia" class="form-label">Penalidade:</label>
                 <input asp-for="PontosPerdaFrequencia" class="form-control">
+            </div>
+            <div class="col-md-2">
+                <label asp-for="Cor" class="form-label">@Html.DisplayNameFor(modelItem => modelItem.Cor)</label>
+                <input type="color" asp-for="Cor" class="form-control form-control-color">
             </div>
         </div>
 

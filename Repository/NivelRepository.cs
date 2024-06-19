@@ -41,6 +41,7 @@ namespace Reciicer.Repository
                nivelBD.Descricao = nivel.Descricao;   
                nivelBD.PontuacaoNecessario = nivel.PontuacaoNecessario;   
                nivelBD.PontosPerdaFrequencia = nivel.PontosPerdaFrequencia;
+               nivelBD.Cor = nivel.Cor;
 
                _context.Nivel.Update(nivelBD);
                _context.SaveChanges(); 

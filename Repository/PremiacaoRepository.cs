@@ -40,6 +40,9 @@ namespace Reciicer.Repository
                 premiacaoBD.Descricao = premiacao.Descricao;
                 premiacaoBD.Ativo = premiacao.Ativo;
                 premiacao.NivelId = premiacao.NivelId;
+                premiacaoBD.DataInicial = premiacao.DataInicial;
+                premiacaoBD.DataFinal = premiacao.DataFinal;
+
 
                 _context.Premiacao.Update(premiacaoBD);
                 _context.SaveChanges();
