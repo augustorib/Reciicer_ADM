@@ -11,8 +11,8 @@ namespace Reciicer.Models.Entities
         public int Id { get; set; }
 
         [Required]
-        [DisplayName("Data Realizada")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}")]
+        [DisplayName("Data Operação")]
+        // [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime DataOperacao { get; set;}
 
         [Required]

@@ -15,12 +15,17 @@
             @if(Model.Reciclagem == null)
             {
                 <div class="form-group row">
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <label  asp-for="ClienteId" class="control-label">Escolha um cliente: </label>
                         <select asp-for="ClienteId" asp-items="@(new SelectList(Model.Clientes, "Id", "Nome"))" class="form-select form-select-md ">
                             <option value=""selected>Selecione um Cliente</option>
 
                         </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label  asp-for="Reciclagem.DataOperacao" class="control-label">Data: </label>
+                        <input  asp-for="Reciclagem.DataOperacao" class="form-control" >
                     </div>
 
                     <div class="col-md-2 align-self-end">
@@ -29,10 +34,15 @@
                 </div>
             }else
             {
-                <div class="form-group">
+                <div class="form-group row">
                     <div class="col-md-7">
                         <label asp-for="Reciclagem.Cliente.Nome" class="control-label">Cliente: </label>
                         <input asp-for="Reciclagem.Cliente.Nome" class="form-control" disabled>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label  asp-for="Reciclagem.DataOperacao" class="control-label">Data: </label>
+                        <input  asp-for="Reciclagem.DataOperacao" class="form-control" disabled  >
                     </div>
                 </div>
             }
@@ -45,6 +55,7 @@
 
             @Html.HiddenFor(model => model.ClienteId)
             <input type="hidden" name="reciclagemId" value="@Model.ReciclagemId" />
+            
             <div class="form-group row mt-2">
                 <div class="col-md-3">
                     <label  asp-for="MaterialId" class="form-label">Escolha um Material: </label>

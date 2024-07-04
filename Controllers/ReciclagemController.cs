@@ -35,6 +35,7 @@ namespace Reciicer.Controllers
            
         }
 
+     
         public IActionResult Index()
         {   
             var reciclagens = _reciclagemRepository.ListarReciclagem();
@@ -65,10 +66,18 @@ namespace Reciicer.Controllers
             return View( _reciclagemRepository.DetalharReciclagem(id));
         }
 
+        // [HttpGet]
+        // public IActionResult Update(int id)
+        // {
+        //     var reciclagem = _reciclagemRepository.ObterReciclagemPorId(id);
+
+        //     return View(reciclagem);
+        // }
+
         [HttpGet]
         public IActionResult Update(int id)
         {
-            var reciclagem = _reciclagemRepository.ObterReciclagemPorId(id);
+            var reciclagem = _reciclagemRepository.DetalharReciclagem(id);
 
             return View(reciclagem);
         }

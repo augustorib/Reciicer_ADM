@@ -19,7 +19,9 @@ namespace Reciicer.Repository
 
         public IEnumerable<Reciclagem> ListarReciclagem()
         {
-            return _context.Reciclagem.Include(c => c.Cliente).ToList();
+            return _context.Reciclagem.Include(r => r.Cliente)
+                                      .OrderByDescending(r => r.Id)
+                                      .ToList();
         }
 
         public Reciclagem ObterReciclagemPorId(int id)
@@ -92,7 +94,7 @@ namespace Reciicer.Repository
         {
             return _context.Reciclagem.Where(r => r.ClienteId == clienteId)
                                       .Include(r => r.Cliente)
-                                      .OrderByDescending(r => r.DataOperacao)
+                                      .OrderByDescending(r => r.Id)
                                       .FirstOrDefault();
         }
 

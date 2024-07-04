@@ -23,7 +23,8 @@ namespace Reciicer.Service.Reciclagem
             var reciclagem = new Models.Entities.Reciclagem
             {
                 ClienteId = reciclagemCreateViewModel.ClienteId,
-                DataOperacao = DateTime.Now,
+                //DataOperacao = DateTime.Now,
+                DataOperacao = reciclagemCreateViewModel.Reciclagem.DataOperacao,
                 PontuacaoGanha = 0 //Procedure Update UpdateReciclagemPontuacaoGanha
             };
 
