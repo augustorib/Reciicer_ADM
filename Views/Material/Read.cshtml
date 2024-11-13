@@ -1,0 +1,41 @@
+@model Reciicer.Models.Entities.Material
+@{
+    ViewData["Title"] = "Detalhes Material";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+
+        <div class="form-group row">
+            <div class="col-md-3">
+                <label asp-for="Nome" class="form-label">@Html.DisplayNameFor(model => model.Nome)</label>
+                <input asp-for="Nome" class="form-control" disabled>
+            </div>
+            <div class="col-md-5">
+                <label asp-for="Descricao" class="form-label">@Html.DisplayNameFor(model => model.Descricao)</label>
+                <input asp-for="Descricao" class="form-control" disabled>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="TempoDegradacao" class="form-label">@Html.DisplayNameFor(model => model.TempoDegradacao):</label>
+                <input asp-for="TempoDegradacao" class="form-control" disabled>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-4">
+                <label asp-for="PontuacaoPeso" class="form-label">@Html.DisplayNameFor(model => model.PontuacaoPeso)</label>
+                <input asp-for="PontuacaoPeso" class="form-control" disabled>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="PontuacaoUnidade" class="form-label">@Html.DisplayNameFor(model => model.PontuacaoUnidade)</label>
+                <input asp-for="PontuacaoUnidade" class="form-control" disabled>
+            </div>
+        </div>
+
+        <div class="form-group mt-2">
+            <a asp-action="Update" asp-route-Id="@Model.Id" class="btn btn-warning text-white ">Atualizar <i class="fa-solid fa-pen"></i></a>
+            <a asp-action="Index" class="btn btn-secondary">Voltar <i class="fa-solid fa-rotate-left"></i></a>
+        </div>
+
+</div>
