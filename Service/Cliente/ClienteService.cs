@@ -1,4 +1,5 @@
 using Reciicer.Repository.Interface;
+using  Model = Reciicer.Models.Entities;
 
 
 
@@ -13,16 +14,35 @@ namespace Reciicer.Service.Cliente
             _clienteRepository = clienteRepository;
         }
 
+        public void RegistrarCliente(Model.Cliente cliente)
+        {
+            _clienteRepository.RegistrarCliente(cliente);
+        }
 
-         public IEnumerable<Models.Entities.Cliente> CalcularPontuacaoTotalCliente()
-         {
+        public Model.Cliente ObterClientePorId(int id)
+        {
+           return _clienteRepository.ObterClientePorId(id);
+        }
 
-            var clientesComPontuacaoENivelAtualizados =_clienteRepository.ListarClienteComPontuacaoTotal();
-            
-            AtualizarClientesNivel();
+        public void AtualizarCliente(Model.Cliente cliente)
+        {
+            _clienteRepository.AtualizarCliente(cliente);
+        }
 
-            return clientesComPontuacaoENivelAtualizados;
-         }
+        public void ExcluirCliente(int id)
+        {
+            _clienteRepository.ExcluirCliente(id);
+        }
+
+        public IEnumerable<Models.Entities.Cliente> CalcularPontuacaoTotalCliente()
+        {
+
+        var clientesComPontuacaoENivelAtualizados =_clienteRepository.ListarClienteComPontuacaoTotal();
+        
+        AtualizarClientesNivel();
+
+        return clientesComPontuacaoENivelAtualizados;
+        }
 
         public IEnumerable<Models.Entities.Cliente> ObterClientesOrdenadoPorPontuação()
         {

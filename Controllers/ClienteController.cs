@@ -1,10 +1,8 @@
 
 using Microsoft.AspNetCore.Mvc;
-using Reciicer.Models.ClienteViewModels;
 using Reciicer.Models.Entities;
 using Reciicer.Repository.Interface;
 using Reciicer.Service.Cliente;
-using Reciicer.Service.Nivel;
 
 namespace Reciicer.Controllers
 {
@@ -12,17 +10,16 @@ namespace Reciicer.Controllers
     public class ClienteController : Controller
     {
 
-        private readonly IClienteRepository _clienteRepository;
+        
         private readonly ClienteService _clienteService;
-        private readonly NivelService _nivelService;
         private readonly IEmailService _emailService;
 
-        public ClienteController(IClienteRepository clienteRepository, ClienteService clienteService, IEmailService emailService, NivelService nivelService)
+        public ClienteController(IClienteRepository clienteRepository, ClienteService clienteService, IEmailService emailService)
         {
-            _clienteRepository = clienteRepository;
+            
             _clienteService = clienteService;
             _emailService = emailService;
-            _nivelService = nivelService;
+            
         }
 
         public IActionResult Index()
@@ -44,7 +41,7 @@ namespace Reciicer.Controllers
         public IActionResult Create(Cliente cliente)
         {
            
-            _clienteRepository.RegistrarCliente(cliente);
+            _clienteService.RegistrarCliente(cliente);
 
             return RedirectToAction("Index");
          }
@@ -57,13 +54,13 @@ namespace Reciicer.Controllers
 
             // _emailService.EnviarEmail("guhstudante@gmail.com", "Reciicer", mensagem);
             
-            return View(_clienteRepository.DetalharCliente(id));
+            return View(_clienteService.ObterClientePorId(id));
         }
 
         [HttpGet]
         public IActionResult Update(int id)
         {
-            var cliente = _clienteRepository.ObterClientePorId(id);
+            var cliente = _clienteService.ObterClientePorId(id);
 
             return View(cliente);
         }
@@ -72,7 +69,7 @@ namespace Reciicer.Controllers
         [ValidateAntiForgeryToken] // evitar crsf
         public IActionResult Update(Cliente cliente)
         {
-            _clienteRepository.AtualizarCliente(cliente);
+            _clienteService.AtualizarCliente(cliente);
 
             return RedirectToAction("Index");
         }
@@ -80,24 +77,24 @@ namespace Reciicer.Controllers
 
         public IActionResult Delete(int id)
         {
-            _clienteRepository.ExcluirCliente(id);
+            _clienteService.ExcluirCliente(id);
 
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
-        public IActionResult InformarClientePremiacaoFiltro(int? nivelId )
-        {   
+        // [HttpGet]
+        // public IActionResult InformarClientePremiacaoFiltro(int? nivelId )
+        // {   
       
-            var model =  new ClienteNivelPremiacaoViewModel{
-                Clientes = nivelId.HasValue ? _clienteService.ObterClientesPremiacao().Where(c => c.NivelId == nivelId) : 
-                                              _clienteService.ObterClientesPremiacao(),
+        //     var model =  new ClienteNivelPremiacaoViewModel{
+        //         Clientes = nivelId.HasValue ? _clienteService.ObterClientesPremiacao().Where(c => c.NivelId == nivelId) : 
+        //                                       _clienteService.ObterClientesPremiacao(),
 
-                Niveis = _nivelService.PopularSelect().Where( n => n.Id != 1)
-            };
+        //         Niveis = _nivelService.PopularSelect().Where( n => n.Id != 1)
+        //     };
 
-            return View(model);
-        }
+        //     return View(model);
+        // }
 
         [HttpPost]
         [ValidateAntiForgeryToken]

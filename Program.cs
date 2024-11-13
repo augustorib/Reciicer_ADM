@@ -3,10 +3,6 @@ using Reciicer.Data;
 using Reciicer.Repository;
 using Reciicer.Repository.Interface;
 using Reciicer.Service.Cliente;
-using Reciicer.Service.Reciclagem;
-using Reciicer.Service.Material;
-using Reciicer.Service.TipoMaterial;
-using Reciicer.Service.Nivel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Reciicer.Service.Email;
@@ -17,20 +13,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 //Repository Interface
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
-builder.Services.AddScoped<INivelRepository, NivelRepository>();
-builder.Services.AddScoped<IReciclagemRepository, ReciclagemRepository>();
-builder.Services.AddScoped<IMaterialRepository, MaterialRepository>();
-builder.Services.AddScoped<ITipoMaterialRepository, TipoMaterialRepository>();
-builder.Services.AddScoped<IMaterial_ReciclagemRepository, Material_ReciclagemRepository>();
-builder.Services.AddScoped<IPontuacaoMaterialRepository, PontuacaoMaterialRepository>();
-builder.Services.AddScoped<IPremiacaoRepository, PremiacaoRepository>();
 
 //Services
 builder.Services.AddScoped<ClienteService>();
-builder.Services.AddScoped<MaterialService>();
-builder.Services.AddScoped<ReciclagemService>();
-builder.Services.AddScoped<TipoMaterialService>();
-builder.Services.AddScoped<NivelService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 
 // Add services to the container.

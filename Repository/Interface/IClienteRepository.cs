@@ -11,7 +11,6 @@ namespace Reciicer.Repository.Interface
         void RegistrarCliente(Cliente cliente); 
         void AtualizarCliente(Cliente cliente);
         void AtualizarClientesNivelProc();
-        Cliente DetalharCliente(int id);
         void ExcluirCliente(int id);
 
     }

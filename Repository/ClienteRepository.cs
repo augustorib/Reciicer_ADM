@@ -19,7 +19,7 @@ namespace Reciicer.Repository
 
         public IEnumerable<Cliente> ListarCliente()
         {
-            var clientes = _context.Cliente.Include(n => n.Nivel).ToList();
+            var clientes = _context.Cliente.ToList();
 
             return clientes;
         }     
@@ -29,7 +29,7 @@ namespace Reciicer.Repository
 
             _context.Database.ExecuteSqlRaw("EXEC UpdateClientePontuacaoTotal");
 
-            var clientes = _context.Cliente.Include(n => n.Nivel).ToList();
+            var clientes = _context.Cliente.ToList();
 
             return clientes;
         }
@@ -42,7 +42,7 @@ namespace Reciicer.Repository
         public void RegistrarCliente(Cliente model)
         {
            
-            var cliente = new Cliente(model.Nome, model.Email, model.Telefone, model.CPF, 1);
+            var cliente = new Cliente(model.Nome, model.Email, model.Telefone, model.CPF);
  
             _context.Cliente.Add(cliente);
             _context.SaveChanges();
@@ -51,16 +51,14 @@ namespace Reciicer.Repository
         public Cliente DetalharCliente(int id)
         {
            
-            var clienteBD = _context.Cliente
-                                    .Include(n => n.Nivel)
-                                    .FirstOrDefault(c => c.Id == id);
+            var clienteBD = _context.Cliente.FirstOrDefault(c => c.Id == id);
                 
             if(clienteBD is not null)
             {
                 return clienteBD;
             }
 
-            return null;
+            return new Cliente();
 
         }
 
@@ -111,10 +109,7 @@ namespace Reciicer.Repository
 
         public IEnumerable<Cliente> ListarClienteNivelPremiacao()
         {
-            return _context.Cliente.Include(c => c.Nivel)
-                                   .ThenInclude(n => n.Premiacao)
-                                   .Where(c => c.Nivel.Id != 1)
-                                   .ToList();
+            return _context.Cliente.ToList();
         }
     }
 }

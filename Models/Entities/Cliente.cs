@@ -18,27 +18,27 @@ namespace Reciicer.Models.Entities
         [Required]
         public string? Telefone { get; set; }
 
-        [Required]
-        public string? CPF { get; set; }
+        
+        public string? CPF { get; set; } = default!;
+        
+        public string? CNPJ { get; set; } = default!;
 
         [DisplayName("Pontuação")]
         public int PontuacaoTotal { get; set; }
-        public int NivelId { get; set; }
-        public Nivel? Nivel { get; set; }// Navigation
-        public ICollection<Reciclagem>? Reciclagems { get; set; }// Navigation
+
 
         public Cliente()
         {
             
         }
         
-        public Cliente(string nome, string email, string telefone, string cpf, int nivelId = 1)
+        public Cliente(string nome, string email, string telefone, string cpf = default!, string cnpj = default!)
         {
             Nome= nome;
             Email = email;
             Telefone = telefone;
             CPF = cpf;
-            NivelId = nivelId;
+            CNPJ = cnpj;
         }
     }
 }

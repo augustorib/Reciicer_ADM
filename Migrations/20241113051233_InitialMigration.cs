@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Reciicer.Migrations
 {
     /// <inheritdoc />
-    public partial class IdentityMigration : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -48,6 +50,24 @@ namespace Reciicer.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Cliente",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Telefone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CPF = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CNPJ = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PontuacaoTotal = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cliente", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -156,19 +176,16 @@ namespace Reciicer.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.UpdateData(
-                table: "Reciclagem",
-                keyColumn: "Id",
-                keyValue: 1,
-                column: "DataOperacao",
-                value: new DateTime(2024, 6, 5, 0, 13, 14, 204, DateTimeKind.Local).AddTicks(5668));
-
-            migrationBuilder.UpdateData(
-                table: "Reciclagem",
-                keyColumn: "Id",
-                keyValue: 2,
-                column: "DataOperacao",
-                value: new DateTime(2024, 6, 5, 0, 13, 14, 204, DateTimeKind.Local).AddTicks(5679));
+            migrationBuilder.InsertData(
+                table: "Cliente",
+                columns: new[] { "Id", "CNPJ", "CPF", "Email", "Nome", "PontuacaoTotal", "Telefone" },
+                values: new object[,]
+                {
+                    { 1, null, "48906785062", "jurandir@gmail.com", "Jurandir", 0, "(85)98792-0782" },
+                    { 2, null, "48517494067", "judit@gmail.com", "Judit", 0, "(69)99727-2310" },
+                    { 3, null, "71134549504", "astolfo@gmail.com", "Astolfo", 0, "(92)98308-7102" },
+                    { 4, "55434549711", null, "manoel@padaria.com", "Padaria Manoel", 0, "(31)98371-8402" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -229,24 +246,13 @@ namespace Reciicer.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Cliente");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.UpdateData(
-                table: "Reciclagem",
-                keyColumn: "Id",
-                keyValue: 1,
-                column: "DataOperacao",
-                value: new DateTime(2024, 6, 3, 21, 31, 48, 285, DateTimeKind.Local));
-
-            migrationBuilder.UpdateData(
-                table: "Reciclagem",
-                keyColumn: "Id",
-                keyValue: 2,
-                column: "DataOperacao",
-                value: new DateTime(2024, 6, 3, 21, 31, 48, 285, DateTimeKind.Local).AddTicks(13));
         }
     }
 }

@@ -3,28 +3,6 @@
     ViewData["Title"] = "Listar Clientes";
 }
 
-@functions{
-    public string ColorirNivel(int id)
-    {
-        switch(id)
-        {
-            case 1:
-                return "bg-secondary";
-            case 2:
-                return "bg-info";
-            case 3:
-                return "bg-warning ";
-            case 4:
-                return "bg-success ";
-            case 5:
-                 return "bg-primary ";
-            case 6:
-                 return "bg-danger ";
-            default:
-                return "none";   
-        }
-    }
-}
 
 <h1>@ViewData["Title"]</h1>
 
@@ -39,7 +17,7 @@
                     <th>@Html.DisplayNameFor(model => model.Telefone)</th>
                     <th>@Html.DisplayNameFor(model => model.Email)</th>
                     <th>@Html.DisplayNameFor(model => model.PontuacaoTotal)</th>
-                    <th>@Html.DisplayNameFor(model => model.Nivel.Descricao)</th>
+                
                     <th>Ações</th>
             </tr>
         </thead>
@@ -50,7 +28,7 @@
                 <td>@Html.DisplayFor(modelItem => item.Telefone)</td>
                 <td>@Html.DisplayFor(modelItem => item.Email)</td>
                 <td>@Html.DisplayFor(modelItem => item.PontuacaoTotal)</td>
-                <td class="@ColorirNivel(item.Nivel.Id)">@Html.DisplayFor(modelItem => item.Nivel.Descricao)</td>
+                
 
                 <td>
                 <a class="btn btn-primary " asp-action="Read" asp-route-Id="@item.Id">

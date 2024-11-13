@@ -20,9 +20,7 @@
     <label asp-for="CPF" class="col-form-label">@Html.DisplayNameFor(model => model.CPF)</label>
     <input asp-for="CPF" class="form-control" type="text" disabled>
 
-    <label asp-for="Nivel.Descricao" class="col-form-label">@Html.DisplayNameFor(model => model.Nivel.Descricao)</label>
-    <input asp-for="Nivel.Descricao" class="form-control" type="text" disabled>
-
+   
     <a asp-action="Update" asp-route-Id="@Model.Id" class="btn btn-warning mt-2 text-white ">Atualizar <i class="fa-solid fa-user-pen"></i></a>
     <a asp-action="Index" class="btn btn-secondary mt-2">Voltar <i class="fa-solid fa-rotate-left"></i></a>
 </div>
