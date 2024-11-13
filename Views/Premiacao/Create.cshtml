@@ -1,0 +1,40 @@
+@model Reciicer.Models.Entities.Premiacao
+@{
+    ViewData["Title"] = "Criar Premiação";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <form method="post" asp-action="Create">
+          
+        <div class="form-group row">
+            <div class="col-md-3">
+                <label asp-for="Nome" class="form-label">@Html.DisplayNameFor(model => model.Nome):</label>
+                <input asp-for="Nome" class="form-control">
+            </div>
+            <div class="col-md-5">
+                <label asp-for="Descricao" class="form-label">@Html.DisplayNameFor(model => model.Descricao):</label>
+                <input asp-for="Descricao" class="form-control">
+            </div>
+        </div>
+
+        <div class="form-group row mt-2">
+            <div class="col-md-4">
+                <label asp-for="PontuacaoRequerida" class="form-label">@Html.DisplayNameFor(model => model.PontuacaoRequerida):</label>
+                <input asp-for="PontuacaoRequerida" class="form-control">
+            </div>
+            <div class="col-md-3">
+                <label asp-for="Ativo">@Html.DisplayNameFor(model => model.Ativo):</label>
+                <div class="mt-3 px-3">
+                    <input asp-for="Ativo" >
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group mt-2">
+            <input type="submit" class="btn btn-primary" value="Confirmar">
+            <a asp-action="Index" class="btn btn-secondary">Voltar <i class="fa-solid fa-rotate-left"></i></a>
+        </div>
+    </form>
+</div>

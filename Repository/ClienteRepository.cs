@@ -27,7 +27,7 @@ namespace Reciicer.Repository
         public IEnumerable<Cliente> ListarClienteComPontuacaoTotal()
         {
 
-            _context.Database.ExecuteSqlRaw("EXEC UpdateClientePontuacaoTotal");
+           // _context.Database.ExecuteSqlRaw("EXEC UpdateClientePontuacaoTotal");
 
             var clientes = _context.Cliente.ToList();
 
@@ -106,7 +106,6 @@ namespace Reciicer.Repository
            }
 
         }
-
         public IEnumerable<Cliente> ListarClienteNivelPremiacao()
         {
             return _context.Cliente.ToList();

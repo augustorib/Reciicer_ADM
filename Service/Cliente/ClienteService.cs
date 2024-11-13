@@ -1,5 +1,5 @@
 using Reciicer.Repository.Interface;
-using  Model = Reciicer.Models.Entities;
+using  Entities = Reciicer.Models.Entities;
 
 
 
@@ -14,17 +14,17 @@ namespace Reciicer.Service.Cliente
             _clienteRepository = clienteRepository;
         }
 
-        public void RegistrarCliente(Model.Cliente cliente)
+        public void RegistrarCliente(Entities.Cliente cliente)
         {
             _clienteRepository.RegistrarCliente(cliente);
         }
 
-        public Model.Cliente ObterClientePorId(int id)
+        public Entities.Cliente ObterClientePorId(int id)
         {
            return _clienteRepository.ObterClientePorId(id);
         }
 
-        public void AtualizarCliente(Model.Cliente cliente)
+        public void AtualizarCliente(Entities.Cliente cliente)
         {
             _clienteRepository.AtualizarCliente(cliente);
         }
@@ -34,17 +34,16 @@ namespace Reciicer.Service.Cliente
             _clienteRepository.ExcluirCliente(id);
         }
 
-        public IEnumerable<Models.Entities.Cliente> CalcularPontuacaoTotalCliente()
+        public IEnumerable<Entities.Cliente> CalcularPontuacaoTotalCliente()
         {
+            var clientesComPontuacaoENivelAtualizados =_clienteRepository.ListarClienteComPontuacaoTotal();
+            
+            //AtualizarClientesNivel();
 
-        var clientesComPontuacaoENivelAtualizados =_clienteRepository.ListarClienteComPontuacaoTotal();
-        
-        AtualizarClientesNivel();
-
-        return clientesComPontuacaoENivelAtualizados;
+            return clientesComPontuacaoENivelAtualizados;
         }
 
-        public IEnumerable<Models.Entities.Cliente> ObterClientesOrdenadoPorPontuação()
+        public IEnumerable<Entities.Cliente> ObterClientesOrdenadoPorPontuação()
         {
             var  clientesTop3 = _clienteRepository.ListarCliente()
                                                   .OrderByDescending(c => c.PontuacaoTotal)
@@ -64,7 +63,7 @@ namespace Reciicer.Service.Cliente
              return _clienteRepository.ListarCliente().Count();
          }
 
-         public IEnumerable<Models.Entities.Cliente> ObterClientesPremiacao()
+         public IEnumerable<Entities.Cliente> ObterClientesPremiacao()
          {
              return _clienteRepository.ListarClienteNivelPremiacao();
          }

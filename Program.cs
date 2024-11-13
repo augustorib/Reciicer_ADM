@@ -6,6 +6,7 @@ using Reciicer.Service.Cliente;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Reciicer.Service.Email;
+using Reciicer.Service.Premiacao;
 
 
 
@@ -13,10 +14,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 //Repository Interface
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
+builder.Services.AddScoped<IPremiacaoRepository, PremiacaoRepository>();
 
 //Services
-builder.Services.AddScoped<ClienteService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<ClienteService>();
+builder.Services.AddScoped<PremiacaoService>();
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

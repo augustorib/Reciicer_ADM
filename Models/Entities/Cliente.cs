@@ -17,7 +17,6 @@ namespace Reciicer.Models.Entities
 
         [Required]
         public string? Telefone { get; set; }
-
         
         public string? CPF { get; set; } = default!;
         
@@ -25,6 +24,8 @@ namespace Reciicer.Models.Entities
 
         [DisplayName("Pontuação")]
         public int PontuacaoTotal { get; set; }
+
+        public ICollection<Premiacao>? Premios { get; set; }
 
 
         public Cliente()
