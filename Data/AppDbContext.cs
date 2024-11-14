@@ -34,10 +34,18 @@ namespace Reciicer.Data
             );
 
             modelBuilder.Entity<Material>().HasData(
-                new Material{Id = 1, Nome = "Papelão", Descricao ="Papelão", TempoDegradacao= 162000, PontuacaoPeso = 20, PontuacaoUnidade=2},
-                new Material{Id = 2, Nome = "Papel Presente", Descricao ="Papel de presente", TempoDegradacao= 150, PontuacaoPeso = 10, PontuacaoUnidade=5},
-                new Material{Id = 3, Nome = "PET", Descricao ="Garrafa PET - Polietileno Tereftalato", TempoDegradacao= 18000, PontuacaoPeso = 15, PontuacaoUnidade=3},
-                new Material{Id = 4, Nome = "Copo", Descricao ="Copo de Vidro", TempoDegradacao= 1000000, PontuacaoPeso = 25, PontuacaoUnidade= 10}     
+                new Material{Id = 1, Nome = "Papelão", Descricao ="Papelão", TempoDegradacao= 162000, PontuacaoPeso = 20, PontuacaoUnidade=2, TipoMaterialId =2},
+                new Material{Id = 2, Nome = "Papel Presente", Descricao ="Papel de presente", TempoDegradacao= 150, PontuacaoPeso = 10, PontuacaoUnidade=5, TipoMaterialId=2},
+                new Material{Id = 3, Nome = "PET", Descricao ="Garrafa PET - Polietileno Tereftalato", TempoDegradacao= 18000, PontuacaoPeso = 15, PontuacaoUnidade=3, TipoMaterialId=1},
+                new Material{Id = 4, Nome = "Copo", Descricao ="Copo de Vidro", TempoDegradacao= 1000000, PontuacaoPeso = 25, PontuacaoUnidade= 10, TipoMaterialId=3}     
+            );
+
+            modelBuilder.Entity<TipoMaterial>().HasData(
+                new TipoMaterial{Id = 1, Nome = "Plástico", Descricao = "Plástico",  Ativo = true },
+                new TipoMaterial{Id = 2, Nome = "Papel", Descricao = "Papel",  Ativo = true },
+                new TipoMaterial{Id = 3, Nome = "Vidro", Descricao = "Vidro",  Ativo = true },
+                new TipoMaterial{Id = 4, Nome = "Metal", Descricao = "Metal",  Ativo = true }
+  
             );
 
  
@@ -46,8 +54,8 @@ namespace Reciicer.Data
         public DbSet<Cliente> Cliente {get; set;}
         public DbSet<Premiacao> Premiacao {get; set;}
         public DbSet<Material> Material {get; set;}
+        public DbSet<TipoMaterial> TipoMaterial {get; set;}
 
-        
         
     }
 }

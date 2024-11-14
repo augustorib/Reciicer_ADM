@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Reciicer.Service.Email;
 using Reciicer.Service.Premiacao;
 using Reciicer.Service.Material;
+using Reciicer.Service.TipoMaterial;
+
 
 
 
@@ -17,12 +19,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 builder.Services.AddScoped<IPremiacaoRepository, PremiacaoRepository>();
 builder.Services.AddScoped<IMaterialRepository, MaterialRepository>();
+builder.Services.AddScoped<ITipoMaterialRepository, TipoMaterialRepository>();
 
 //Services
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<ClienteService>();
 builder.Services.AddScoped<PremiacaoService>();
 builder.Services.AddScoped<MaterialService>();
+builder.Services.AddScoped<TipoMaterialService>();
 
 
 // Add services to the container.

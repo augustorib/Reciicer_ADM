@@ -20,5 +20,10 @@ namespace Reciicer.Models.Entities
         public int PontuacaoPeso { get; set; } = 0;
         public int PontuacaoUnidade { get; set; } = 0;
 
+        public int TipoMaterialId { get; set; }
+
+        //Navigation
+        public TipoMaterial? TipoMaterial { get; set; }
+
     }
 }
