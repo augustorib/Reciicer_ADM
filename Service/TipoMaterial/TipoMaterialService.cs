@@ -38,6 +38,6 @@ namespace Reciicer.Service.TipoMaterial
             _tipoMaterialrepository.ExcluirTipoMaterial(id);
         }
     
-
+  
     }
 }

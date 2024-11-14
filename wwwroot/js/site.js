@@ -54,23 +54,23 @@ $(document).ready(function (){
 
 });
 
-$("#MaterialId").change(function(){
-    ObterTipoMaterialByMaterialId();
+$("#TipoMaterialId").change(function(){
+    ObterMaterialByTipoMaterialId();
    
 });
 
-var ObterTipoMaterialByMaterialId = function(){
+var ObterMaterialByTipoMaterialId = function(){
     $.ajax({
-        url: 'ObterTipoMaterialByMaterialId',
+        url: 'ObterMaterialByTipoMaterialId',
         type: 'GET',
         data: {
-            materialId : $('#MaterialId').val(),
+            tipoMaterialId : $('#TipoMaterialId').val(),
         },
         success: function(data){
-            $('#TipoMaterialId').find('option').remove();
+            $('#MaterialId').find('option').remove();
             $(data).each(
                 function(index,item){
-                    $('#TipoMaterialId').append('<option value="'+item.id+'">'+item.nome+'</option>');
+                    $('#MaterialId').append('<option value="'+item.id+'">'+item.nome+'</option>');
                 }
            
             )

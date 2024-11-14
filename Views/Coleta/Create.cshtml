@@ -1,0 +1,160 @@
+@model Reciicer.Models.ColetaViewModels.ColetaCreateViewModel;
+@{
+    ViewData["Title"] = "Adicionar Coleta";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col">
+        <form method="post" asp-action="AdicionarColetaCliente">    
+
+            <input type="hidden" name="coletaId" value="@Model.ColetaId" />
+            
+
+            @if(Model.Coleta == null)
+            {
+                <div class="form-group row">
+                    <div class="col-md-5">
+                        <label  asp-for="ClienteId" class="control-label">Escolha um cliente: </label>
+                        <select asp-for="ClienteId" asp-items="@(new SelectList(Model.Clientes, "Id", "Nome"))" class="form-select form-select-md ">
+                            <option value=""selected>Selecione um Cliente</option>
+
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label  asp-for="Coleta.DataOperacao" class="control-label">Data: </label>
+                        <input  asp-for="Coleta.DataOperacao" class="form-control" >
+                    </div>
+
+                    <div class="col-md-2 align-self-end">
+                        <button type="submit" class="btn btn-primary">OK</button>
+                    </div> 
+                </div>
+            }else
+            {
+                <div class="form-group row">
+                    <div class="col-md-7">
+                        <label asp-for="Coleta.Cliente.Nome" class="control-label">Cliente: </label>
+                        <input asp-for="Coleta.Cliente.Nome" class="form-control" disabled>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label  asp-for="Coleta.DataOperacao" class="control-label">Data: </label>
+                        <input  asp-for="Coleta.DataOperacao" class="form-control" disabled  >
+                    </div>
+                </div>
+            }
+        </form>
+
+        <hr class="my-4">
+
+        <form method="post" asp-action="AdicionarColetaTabela">  
+
+
+            @Html.HiddenFor(model => model.ClienteId)
+            <input type="hidden" name="coletaId" value="@Model.ColetaId" />
+            
+            <div class="form-group row mt-2">
+                <div class="col-md-3">
+                    <label  asp-for="TipoMaterialId" class="form-label">Escolha um Tipo Material: </label>
+                    <select asp-for="TipoMaterialId" asp-items="@(new SelectList(Model.TipoMateriais, "Id", "Nome"))" class="form-select form-select-md">
+                        <option value=""selected>Selecione um Tipo Material</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label  asp-for="MaterialId" class="form-label">Escolha um Tipo de material: </label>
+                    <select asp-for="MaterialId" class="form-select form-select-md">
+                    </select>
+                </div> 
+
+                <div class="col-md-2">
+                    <label asp-for="Peso" class="form-label">@Html.DisplayNameFor(model => model.Peso):</label>
+                    <input asp-for="Peso" class="form-control">
+                </div>
+
+                <div class="col-md-2    ">
+                    <label asp-for="Quantidade" class="form-label">Quantidade:</label>
+                    <input asp-for="Quantidade" class="form-control">
+                </div> 
+
+                <div class="col-md-2 align-self-end">
+                    <button type="submit" class="btn btn-primary">OK</button>
+                </div> 
+
+            </div>
+        </form>
+
+
+        <div class="mt-5">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                            <th>Material</th>
+                            <th>Tipo Material</th>
+                            <th>@Html.DisplayNameFor(model => model.Peso)</th>
+                            <th>Quantidade</th>
+                            <th></th>
+                    </tr>
+                </thead>
+                <tbody> 
+                @if(Model.Material_Coletas != null)
+                {
+                    @foreach (var item in Model.Material_Coletas) 
+                    {   
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Material.Nome)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Material.TipoMaterial.Nome)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Peso)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Quantidade)</td>
+                            <td>
+                                
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#DeleteModal-@item.Id">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="DeleteModal-@item.Id" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="deleteModalLabel">Excluir Coleta?</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body text-center">
+                                            Esta operação não poderá ser revertida!<br><br>Deseja realmente excluir ?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-rotate-left"></i> Não</button>
+
+                                            @*checkpoint form ----------------*@
+                                            <form  method="post" asp-action="DeletarMaterialColeta">
+                                                    @Html.HiddenFor(model => model.ClienteId)
+                                                    <input type="hidden" name="coletaId" value="@Model.ColetaId" />
+                                                    <input type="hidden" name="id" value="@item.Id" />
+                                                    <button type="submit"class="btn btn-danger"> <i class="fa-solid fa-trash"></i> Sim</button>
+                                            </form>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <td>
+                        </tr>
+                    }
+                }
+                </tbody>
+            </table>
+        </div> 
+
+        <form method="post" asp-action="CalcularPontuacaoColeta">  
+            <input type="hidden" name="coletaId" value="@Model.ColetaId" />
+            <div class="form-group mt-2">
+                <input type="submit" class="btn btn-primary" value="Confirmar">
+                <a asp-action="Index" class="btn btn-secondary">Voltar <i class="fa-solid fa-rotate-left"></i></a>
+            </div>
+        </form>
+
+    </div>
+</div>

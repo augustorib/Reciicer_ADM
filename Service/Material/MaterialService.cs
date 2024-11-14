@@ -36,5 +36,12 @@ namespace Reciicer.Service.Material
             _materialRepository.ExcluirMaterial(id);
         }
 
+        public IEnumerable<Entities.Material> PopularSelectFiltrandoPorTipoMaterialId(int tipoMaterialId)
+        {
+            //return _materialRepsitory.ListarTipoMaterialPorMaterialId(tipoMaterialId);
+            return _materialRepository.ListarMaterial()
+                                      .Where(m => m.TipoMaterialId == tipoMaterialId);
+        } 
+
     }
 }

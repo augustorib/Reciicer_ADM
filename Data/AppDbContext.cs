@@ -48,6 +48,17 @@ namespace Reciicer.Data
   
             );
 
+            modelBuilder.Entity<Coleta>().HasData(
+                new Coleta{Id = 1, DataOperacao = DateTime.Now, PontuacaoGanha = 10, ClienteId = 1 },
+                new Coleta{Id = 2, DataOperacao = DateTime.Now, PontuacaoGanha = 5, ClienteId = 1 }
+  
+            );
+
+            modelBuilder.Entity<Material_Coleta>().HasData(
+                new Material_Coleta{Id = 1, Peso = 5, Quantidade = 0, ColetaId = 1, MaterialId = 3}
+                
+            );
+
  
         }
         
@@ -55,6 +66,8 @@ namespace Reciicer.Data
         public DbSet<Premiacao> Premiacao {get; set;}
         public DbSet<Material> Material {get; set;}
         public DbSet<TipoMaterial> TipoMaterial {get; set;}
+        public DbSet<Coleta> Coleta {get; set;}
+        public DbSet<Material_Coleta> Material_Coleta {get; set;}
 
         
     }

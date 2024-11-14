@@ -14,6 +14,10 @@ namespace Reciicer.Service.Cliente
             _clienteRepository = clienteRepository;
         }
 
+        public IEnumerable<Entities.Cliente> ListarCliente()
+        {
+           return _clienteRepository.ListarCliente();
+        }
         public void RegistrarCliente(Entities.Cliente cliente)
         {
             _clienteRepository.RegistrarCliente(cliente);
