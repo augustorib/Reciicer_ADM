@@ -2,11 +2,8 @@ using Reciicer.Repository.Interface;
 using Reciicer.Models.ColetaViewModels;
 using Entities = Reciicer.Models.Entities;
 using Reciicer.Service.Cliente;
-using Reciicer.Service.Material;
 using Reciicer.Service.TipoMaterial;
-using Reciicer.Models.Entities;
 using Reciicer.Service.Material_Coleta;
-using Reciicer.Controllers;
 
 namespace Reciicer.Service.Coleta
 {
@@ -43,32 +40,6 @@ namespace Reciicer.Service.Coleta
             _coletaRepository.RegistrarColeta(coleta);
         }
 
-        
-        public void EfetuarMaterialColeta(ColetaCreateViewModel coletaCreateViewModel)
-        {
-            var reciclagemCliente =_coletaRepository.ObterClienteUltimaColeta(coletaCreateViewModel.ClienteId);
-            var pesoColeta = coletaCreateViewModel.Peso;
-            var quantidadeColeta = coletaCreateViewModel.Quantidade;
-            var materialId = coletaCreateViewModel.MaterialId;
-            var tipoMaterialId = coletaCreateViewModel.TipoMaterialId;
-
-            SalvarMaterialColeta(reciclagemCliente.Id, materialId, tipoMaterialId, pesoColeta, quantidadeColeta);
-        }
-
-        public void SalvarMaterialColeta(int coletaId, int materialId, int tipoMaterialId, int peso, int quantidade)
-        {
-            // var materialColeta = new Material_Coleta{
-            //     MaterialId = materialId,
-            //     ColetaId = coletaId,
-            //     TipoMaterialId = tipoMaterialId,
-            //     Peso = peso,
-            //     Quantidade = quantidade
-            // };
-
-            //_material_ColetaRepository.RegistrarMaterialColeta(materialColeta);
-        }
-
-
         //Método Para calcular a quantidade de pontos que foi feita na recilagem
         public void CalcularPontuacaoColeta(int coletaId)
         {
@@ -84,7 +55,6 @@ namespace Reciicer.Service.Coleta
             AtualizarColeta(coleta)                                 ;
         }
 
-    
 
         public int ObterTotalMaterialColeta()
         {
@@ -92,13 +62,12 @@ namespace Reciicer.Service.Coleta
             return 22;
         }
 
-        public DateTime ObterDataUltimaReciclagem()
+        public DateTime ObterDataUltimaColeta()
         {
             return _coletaRepository.ListarColeta().Max(r => r.DataOperacao);
            
         }
 
-        
         public IEnumerable<Entities.Coleta> ListarColeta()
         {
             return _coletaRepository.ListarColeta();
@@ -157,11 +126,32 @@ namespace Reciicer.Service.Coleta
             if(materialColeta != null)
                 _material_ColetaService.RegistrarMaterialColeta(materialColeta);
 
-            //TODO:
-            //coletaCreateViewModel.Material_coleta = _material_coletaRepository.ListarMaterialColetaPorcoletaId(coletaCliente.Id);
             viewColetaMateriasColeta.Material_Coletas = _material_ColetaService.ListarMaterialColetaPorColetaId(viewColetaMateriasColeta.ColetaId);
 
+            viewColetaMateriasColeta.ClienteId = clienteId;
+
             return viewColetaMateriasColeta;
+        }
+
+        public ColetaReadViewModel ObterColetaReadViewModel(int coletaId)
+        {
+            var coletaReadViewModel = new ColetaReadViewModel{
+                Coleta = ObterColetaPorId(coletaId),
+                Material_Coletas = _material_ColetaService.ListarMaterialColetaPorColetaId(coletaId)
+            };
+
+            return coletaReadViewModel;
+        }
+
+        public ColetaUpdateViewModel ObterUpdateViewModel(int coletaId)
+        {
+            var updateView = new ColetaUpdateViewModel{
+                Coleta = ObterColetaPorId(coletaId),
+                TipoMateriais = _tipoMaterialService.ListarTipoMaterial(),
+                Material_Coletas = _material_ColetaService.ListarMaterialColetaPorColetaId(coletaId)
+            };
+
+            return updateView;
         }
     }
 }

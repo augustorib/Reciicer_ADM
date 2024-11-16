@@ -42,25 +42,6 @@ namespace Reciicer.Repository
 
         }
 
-
-        // public ColetaReadViewModel DetalharColeta(int id)
-        // {   
-        //     var reciclagem = _context.Coleta.Find(id);
-
-        //     var materiaisColeta = _context.Material_Coleta.Include( m => m.Material)
-        //                                                           .Include(m => m.TipoMaterial).Where(mr => mr.ColetaId == reciclagem.Id)
-        //                                                           .ToList();
-    
-        //     var reciclagemReadViewModel = new ColetaReadViewModel{
-        //         Cliente = _context.Cliente.Find(reciclagem.ClienteId),
-        //         Coleta = reciclagem,
-        //         Materiais_Coleta = materiaisColeta
-
-        //     };
-
-        //     return reciclagemReadViewModel;
-        // }
-
         public void RegistrarColeta(Coleta coleta)
         {   
              var transaction = _context.Database.BeginTransaction();

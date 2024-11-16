@@ -45,11 +45,13 @@ namespace Reciicer.Controllers
 
             var coletaCreateViewCliente =_coletaService.ObterColetaCreateViewModelComUltimaColeta(coletaCreateViewModel.ClienteId);
     
+            //TODO: Desacoplar coleta do cliente
             return View("Create", coletaCreateViewCliente);
+            
         }
 
         //Carregar drop Material de acordo com o Tipo Material selecionado
-        // dinamicamente na view Reciclagem/Create
+        // dinamicamente na view Coleta/Create
         [HttpGet]
         public JsonResult ObterMaterialByTipoMaterialId(int tipoMaterialId)
         {
@@ -60,17 +62,6 @@ namespace Reciicer.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AdicionarColetaTabela(ColetaCreateViewModel coletaCreateViewModel)
         {
-                // var coletaCliente = _reciclagemService.ObterClienteUltimaReciclagem(coletaCreateViewModel.ClienteId);
-
-                // var tipoMateriais = _materialRepository.ListarMaterial();
-                
-                //  _coletaService.EfetuarColetaMaterial(coletaCreateViewModel);
-
-                // coletaCreateViewModel.Materiais = materiais;
-                // coletaCreateViewModel.Coleta = coletaCliente;
-                // coletaCreateViewModel.Material_coleta = _material_coletaRepository.ListarMaterialColetaPorcoletaId(coletaCliente.Id);
-                // coletaCreateViewModel.coletaId = coletaCliente.Id;
-
                 var materialColeta =  new Material_Coleta{
                     Peso = coletaCreateViewModel.Peso,
                     Quantidade = coletaCreateViewModel.Quantidade,
@@ -80,29 +71,21 @@ namespace Reciicer.Controllers
 
                 var viewModel = _coletaService.ObterColetaCreateViewModelComMaterialColeta(coletaCreateViewModel.ClienteId, materialColeta);
 
-                return View("Create", viewModel);          
+                //return View("Create", viewModel);        
+                //TODO: Desacoplar coleta do cliente
+                return View("Create", viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult DeletarMaterialColeta(int id, int clienteId)
         {
-
             _material_ColetaService.ExcluirMaterialColeta(id);
 
-            // var reciclagemCliente = _reciclagemService.ObterClienteUltimaReciclagem(clienteId);
-            // var materiais = _materialRepository.ListarMaterial();
-
-            // var reciclagemCreateViewModel = new ReciclagemCreateViewModel{
-            //     Materiais = materiais,
-            //     Reciclagem = reciclagemCliente,
-            //     Material_Reciclagem = _material_ReciclagemRepository.ListarMaterialReciclagemPorReciclagemId(reciclagemCliente.Id),
-            //     ClienteId = reciclagemCliente.ClienteId,
-            //     ReciclagemId = reciclagemCliente.Id
-            
-            // };
             var coletaCreateViewModel = _coletaService.ObterColetaCreateViewModelComMaterialColeta(clienteId);
             
+            //return View("Create", coletaCreateViewModel);
+            //TODO: Desacoplar coleta do cliente
             return View("Create", coletaCreateViewModel);
         }
 
@@ -114,5 +97,58 @@ namespace Reciicer.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public IActionResult Read(int id)
+        { 
+            return View(_coletaService.ObterColetaReadViewModel(id));
+        }
+
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            //var coleta = _coletaService.ObterColetaPorId(id);
+
+            return View(_coletaService.ObterUpdateViewModel(id));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AtualizarColetaTabela(ColetaUpdateViewModel viewModel)
+        {
+            var materialColeta = new Material_Coleta
+            {
+                ColetaId = viewModel.ColetaId,
+                MaterialId = viewModel.MaterialId,
+                Peso = viewModel.Peso,
+                Quantidade = viewModel.Quantidade
+            };
+
+            _material_ColetaService.RegistrarMaterialColeta(materialColeta);
+
+            var viewModelUpdate = _coletaService.ObterUpdateViewModel(viewModel.ColetaId);
+
+            return View("Update", viewModelUpdate);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult RemoverMaterialColetaTabelaViewUpdate(int id, int coletaId)
+        {
+            _material_ColetaService.ExcluirMaterialColeta(id);
+
+            var viewModel = _coletaService.ObterUpdateViewModel(coletaId);
+
+            return View("Update", viewModel);
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            _coletaService.ExcluirColeta(id);
+
+            return RedirectToAction("Index");
+        }
+
     }
 }

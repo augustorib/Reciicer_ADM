@@ -1,0 +1,61 @@
+@model Reciicer.Models.ColetaViewModels.ColetaReadViewModel;
+@{
+    ViewData["Title"] = "Detalhes Coleta";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col">
+        
+        <input type="hidden" name="coletaId" value="@Model.Coleta.Id" />
+        
+            <div class="form-group row">
+                <div class="col-md-7">
+                    <label asp-for="Coleta.Cliente.Nome" class="control-label">Cliente: </label>
+                    <input asp-for="Coleta.Cliente.Nome" class="form-control" disabled>
+                </div>
+
+                <div class="col-md-4">
+                    <label  asp-for="Coleta.DataOperacao" class="control-label">Data: </label>
+                    <input  asp-for="Coleta.DataOperacao" class="form-control" disabled  >
+                </div>
+            </div>
+            
+        <hr class="my-4">
+
+        <div class="mt-5">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                            <th>Material</th>
+                            <th>Tipo Material</th>
+                            <th>Peso</th>
+                            <th>Quantidade</th>
+                            <th></th>
+                    </tr>
+                </thead>
+                <tbody> 
+                @if(Model.Material_Coletas != null)
+                {
+                    @foreach (var item in Model.Material_Coletas) 
+                    {   
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Material.Nome)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Material.TipoMaterial.Nome)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Peso)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Quantidade)</td>
+                        </tr>
+                    }
+                }
+                </tbody>
+            </table>
+        </div> 
+
+        <div class="form-group mt-2">
+            <a asp-action="Update" asp-route-Id="@Model.Coleta.Id" class="btn btn-warning text-white ">Atualizar <i class="fa-solid fa-pen"></i></a>
+            <a asp-action="Index" class="btn btn-secondary">Voltar <i class="fa-solid fa-rotate-left"></i></a>
+        </div>
+
+    </div>
+</div>

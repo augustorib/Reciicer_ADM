@@ -20,10 +20,13 @@
 //     });
 // });
 
-//Drop down em cascata Reciclagem/Create
+//Drop down em cascata Coleta/Create
 $(document).ready(function (){
 
-    ObterTipoMaterialByMaterialId();
+    ObterMaterialByTipoMaterialId();
+    $('#Peso').val('');
+    $('#Quantidade').val('');
+    
 
     $('#dataTableInit').DataTable({
       "language": {
@@ -52,11 +55,17 @@ $(document).ready(function (){
         "order": []
       });
 
+    $('#Peso').on('input', function () {
+        $('#Quantidade').prop('disabled', $(this).val().trim() !== '');
+    });
+
+    $('#Quantidade').on('input', function () {
+        $('#Peso').prop('disabled', $(this).val().trim() !== '');
+    });
 });
 
 $("#TipoMaterialId").change(function(){
-    ObterMaterialByTipoMaterialId();
-   
+    ObterMaterialByTipoMaterialId(); 
 });
 
 var ObterMaterialByTipoMaterialId = function(){

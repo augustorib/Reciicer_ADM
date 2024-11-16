@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Reciicer.Models.Entities
@@ -6,6 +7,7 @@ namespace Reciicer.Models.Entities
     {
         [Key]
         public int Id { get; set; }
+        [DisplayName("Peso (g)")]
         public int Peso { get; set; }
         public int Quantidade { get; set; }     
         public int ColetaId { get; set; }

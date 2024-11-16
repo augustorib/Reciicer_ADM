@@ -1,84 +1,55 @@
-@model Reciicer.Models.ColetaViewModels.ColetaCreateViewModel;
+@model Reciicer.Models.ColetaViewModels.ColetaUpdateViewModel;
 @{
-    ViewData["Title"] = "Adicionar Coleta";
+    ViewData["Title"] = "Atualizar Coleta";
 }
 
 <h1>@ViewData["Title"]</h1>
 
 <div class="row">
     <div class="col">
-        <form method="post" asp-action="AdicionarColetaCliente">    
+           
+        <div class="form-group row">
+            <div class="col-md-7">
+                <label asp-for="Coleta.Cliente.Nome" class="control-label">Cliente: </label>
+                <input asp-for="Coleta.Cliente.Nome" class="form-control" disabled>
+            </div>
 
-            <input type="hidden" name="coletaId" value="@Model.ColetaId" />
-            
-            
-            @if(Model.Coleta == null)
-            {
-                <div class="form-group row">
-                    <div class="col-md-5">
-                        <label  asp-for="ClienteId" class="control-label">Escolha um cliente: </label>
-                        <select asp-for="ClienteId" asp-items="@(new SelectList(Model.Clientes, "Id", "Nome"))" class="form-select form-select-md ">
-                            <option value=""selected>Selecione um Cliente</option>
-
-                        </select>
-                    </div>
-
-                    <div class="col-md-4">
-                        <label  asp-for="Coleta.DataOperacao" class="control-label">Data: </label>
-                        <input  asp-for="Coleta.DataOperacao" class="form-control" >
-                    </div>
-
-                    <div class="col-md-2 align-self-end">
-                        <button type="submit" class="btn btn-primary">OK</button>
-                    </div> 
-                </div>
-            }else
-            {
-                <div class="form-group row">
-                    <div class="col-md-7">
-                        <label asp-for="Coleta.Cliente.Nome" class="control-label">Cliente: </label>
-                        <input asp-for="Coleta.Cliente.Nome" class="form-control" disabled>
-                    </div>
-
-                    <div class="col-md-4">
-                        <label  asp-for="Coleta.DataOperacao" class="control-label">Data: </label>
-                        <input  asp-for="Coleta.DataOperacao" class="form-control" disabled  >
-                    </div>
-                </div>
-            }
-        </form>
-
+            <div class="col-md-4">
+                <label  asp-for="Coleta.DataOperacao" class="control-label">Data: </label>
+                <input  asp-for="Coleta.DataOperacao" class="form-control" disabled  >
+            </div>
+        </div>
+ 
         <hr class="my-4">
 
-        <form method="post" asp-action="AdicionarColetaTabela">  
+        <form method="post" asp-action="AtualizarColetaTabela">  
 
 
-            @Html.HiddenFor(model => model.ClienteId)
-            <input type="hidden" name="coletaId" value="@Model.ColetaId" />
+            <input type="hidden" name="coletaId" value="@Model.Coleta.Id" />
             
             <div class="form-group row mt-2">
                 <div class="col-md-3">
-                    <label  asp-for="TipoMaterialId" class="form-label">Escolha um Tipo Material: </label>
-                    <select asp-for="TipoMaterialId" asp-items="@(new SelectList(Model.TipoMateriais, "Id", "Nome"))" class="form-select form-select-md">
+                    <label  asp-for="Material_Coletas.First().Material.TipoMaterialId" class="form-label">Escolha um Tipo Material: </label>
+                    <select asp-for="Material_Coletas.First().Material.TipoMaterialId" asp-items="@(new SelectList(Model.TipoMateriais, "Id", "Nome"))" class="form-select form-select-md">
                         <option value=""selected>Selecione um Tipo Material</option>
                     </select>
                 </div>
 
                 <div class="col-md-3">
-                    <label  asp-for="MaterialId" class="form-label">Escolha um Tipo de material: </label>
-                    <select asp-for="MaterialId" class="form-select form-select-md">
+                    <label  asp-for="Material_Coletas.First().MaterialId" class="form-label">Escolha um Tipo de material: </label>
+                    <select asp-for="Material_Coletas.First().MaterialId" class="form-select form-select-md">
                     </select>
                 </div> 
-
+                
                 <div class="col-md-2">
-                    <label asp-for="Peso" class="form-label">@Html.DisplayNameFor(model => model.Peso):</label>
-                    <input asp-for="Peso" class="form-control">
+                    <label asp-for="Material_Coletas.First().Peso" class="form-label">@Html.DisplayNameFor(model => model.Material_Coletas.First().Peso):</label>
+                    <input asp-for="Material_Coletas.First().Peso" class="form-control">
                 </div>
 
                 <div class="col-md-2    ">
-                    <label asp-for="Quantidade" class="form-label">Quantidade:</label>
-                    <input asp-for="Quantidade" class="form-control">
-                </div> 
+                    <label asp-for="Material_Coletas.First().Quantidade" class="form-label">Quantidade:</label>
+                    <input asp-for="Material_Coletas.First().Quantidade" class="form-control">
+                </div>  
 
                 <div class="col-md-2 align-self-end">
                     <button type="submit" class="btn btn-primary">OK</button>
@@ -87,14 +58,13 @@
             </div>
         </form>
 
-
         <div class="mt-5">
             <table class="table table-striped">
                 <thead>
                     <tr>
                             <th>Material</th>
                             <th>Tipo Material</th>
-                            <th>@Html.DisplayNameFor(model => model.Peso)</th>
+                            <th>@Html.DisplayNameFor(model => model.Material_Coletas.First().Peso)</th>
                             <th>Quantidade</th>
                             <th></th>
                     </tr>
@@ -129,10 +99,9 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-rotate-left"></i> Não</button>
 
-                                            @*checkpoint form ----------------*@
-                                            <form  method="post" asp-action="DeletarMaterialColeta">
-                                                    @Html.HiddenFor(model => model.ClienteId)
-                                                    <input type="hidden" name="coletaId" value="@Model.ColetaId" />
+                                            
+                                            <form  method="post" asp-action="RemoverMaterialColetaTabelaViewUpdate">
+                                                    <input type="hidden" name="coletaId" value="@Model.Coleta.Id" />
                                                     <input type="hidden" name="id" value="@item.Id" />
                                                     <button type="submit"class="btn btn-danger"> <i class="fa-solid fa-trash"></i> Sim</button>
                                             </form>
@@ -146,15 +115,19 @@
                 }
                 </tbody>
             </table>
-        </div> 
+        </div>  
 
         <form method="post" asp-action="CalcularPontuacaoColeta">  
-            <input type="hidden" name="coletaId" value="@Model.ColetaId" />
+            <input type="hidden" name="coletaId" value="@Model.Coleta.Id" />
             <div class="form-group mt-2">
-                <input type="submit" class="btn btn-primary" value="Confirmar">
+                <button type="submit" class="btn btn-warning text-white">Atualizar <i class="fa-solid fa-pen"></i></button>
                 <a asp-action="Index" class="btn btn-secondary">Voltar <i class="fa-solid fa-rotate-left"></i></a>
             </div>
         </form>
 
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/js/pages/coletaUpdate.js"></script>
+}
