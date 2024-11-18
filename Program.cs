@@ -12,6 +12,7 @@ using Reciicer.Service.TipoMaterial;
 using Reciicer.Service.Coleta;
 using Reciicer.Service.Material_Coleta;
 using Reciicer.Service.PontoColeta;
+using Reciicer.Service.Endereco;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +25,7 @@ builder.Services.AddScoped<ITipoMaterialRepository, TipoMaterialRepository>();
 builder.Services.AddScoped<IColetaRepository, ColetaRepository>();
 builder.Services.AddScoped<IMaterial_ColetaRepository, Material_ColetaRepository>();
 builder.Services.AddScoped<IPontoColetaRepository, PontoColetaRepository>();
+builder.Services.AddScoped<IEnderecoRepository, EnderecoRepository>();
 
 //Services
 builder.Services.AddScoped<IEmailService, EmailService>();
@@ -34,6 +36,7 @@ builder.Services.AddScoped<TipoMaterialService>();
 builder.Services.AddScoped<ColetaService>();
 builder.Services.AddScoped<Material_ColetaService>();
 builder.Services.AddScoped<PontoColetaService>();
+builder.Services.AddScoped<EnderecoService>();
 
 
 // Add services to the container.
@@ -75,6 +78,7 @@ builder.Services.Configure<IdentityOptions>(options =>
    options.Password.RequireUppercase = false;
    options.Password.RequiredLength = 1;
    options.Password.RequiredUniqueChars = 1;
+   
 });
 
 builder.Services.AddLogging( config => config.AddConsole());

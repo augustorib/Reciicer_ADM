@@ -19,5 +19,6 @@ namespace Reciicer.Models.Entities
 
         //Navigation
         public ICollection<Material>? Materiais { get; set; }
+        
     }
 }

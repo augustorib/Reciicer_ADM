@@ -60,9 +60,14 @@ namespace Reciicer.Data
             );
 
             modelBuilder.Entity<PontoColeta>().HasData(
-                new PontoColeta{Id = 1, Nome = "Parmê"},
-                new PontoColeta{Id = 2, Nome = "Supermercado Guanabara"}
+                new PontoColeta{Id = 1, Nome = "Parmê", EnderecoId = 1},
+                new PontoColeta{Id = 2, Nome = "Supermercado Guanabara", EnderecoId = 2}
                   
+            );
+
+            modelBuilder.Entity<Endereco>().HasData(
+                new Endereco{Id = 1, Rua = "Rua 1", Bairro = "Bairro 1", Numero = 1, Cidade = "Cidade 1", Estado = "Estado 1", Cep = "60000-000"},
+                new Endereco{Id = 2, Rua = "Rua 2", Bairro = "Bairro 2", Numero = 2, Cidade = "Cidade 2", Estado = "Estado 2", Cep = "60000-001"}       
             );
 
  
@@ -75,6 +80,7 @@ namespace Reciicer.Data
         public DbSet<Coleta> Coleta {get; set;}
         public DbSet<Material_Coleta> Material_Coleta {get; set;}
         public DbSet<PontoColeta> PontoColeta {get; set;}
+        public DbSet<Endereco> Endereco {get; set;}
 
         
     }

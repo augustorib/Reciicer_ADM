@@ -23,8 +23,9 @@ namespace Reciicer.Models.Entities
 
         //Navigation
         public Cliente? Cliente { get; set; } 
-
+        public PontoColeta? PontoColeta { get; set; }
         public ICollection<Material_Coleta>? Material_Coletas { get; set; }
+
         
     }
 }

@@ -12,9 +12,11 @@ namespace Reciicer.Models.Entities
         [DisplayName("Local: ")]
         public string? Nome { get; set; }
         
+        public int EnderecoId { get; set; }
 
         //Navigation
-        public ICollection<Coleta> Coletas { get; set; }
+        public Endereco? Endereco { get; set; }
+        public ICollection<Coleta>? Coletas { get; set; }
 
     }
 }
