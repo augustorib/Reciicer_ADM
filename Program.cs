@@ -28,7 +28,6 @@ builder.Services.AddScoped<IPontoColetaRepository, PontoColetaRepository>();
 builder.Services.AddScoped<IEnderecoRepository, EnderecoRepository>();
 
 //Services
-builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<ClienteService>();
 builder.Services.AddScoped<PremiacaoService>();
 builder.Services.AddScoped<MaterialService>();
@@ -37,6 +36,7 @@ builder.Services.AddScoped<ColetaService>();
 builder.Services.AddScoped<Material_ColetaService>();
 builder.Services.AddScoped<PontoColetaService>();
 builder.Services.AddScoped<EnderecoService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 
 // Add services to the container.

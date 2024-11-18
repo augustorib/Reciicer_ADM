@@ -1,39 +1,45 @@
 @model Reciicer.Models.LoginViewModels.LoginViewModel
-@{
-    ViewData["Title"] = "Reciicer";
-}
 
-<h1 class="text-center">@ViewData["Title"]</h1>
 
-<div>
-        <form asp-action="Login" method="post" class="text-center mt-3">
-            <div class="mt-2 row">
-                <div class="col-md-5 mx-auto">
-                    <label asp-for="Email" class="col-form-label"></label>
-            
-                    <input asp-for="Email" class="form-control" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
+<div class="page-wrapper">
+    <div class="page-content--bge5">
+        <div class="container">
+            <div class="login-wrap">
+                <div class="login-content">
+                    @* <div class="login-logo">
+                        <a href="#">
+                            <img src="images/icon/logo.png" alt="CoolAdmin">
+                        </a>
+                    </div> *@
+                    <div class="login-logo">
+                        <h2>Reciicer</h2>
+                    </div>
+                    <div class="login-form">
+                        <form asp-action="Login" method="post">
+                            <div class="my-3">
+                                <label asp-for="Email" class="mb-2"></label>
+                                <input asp-for="Email" class="au-input au-input--full" placeholder="E-mail">
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="my-3">
+                                <label asp-for="Password" class="mb-2"></label>
+                                <input asp-for="Password" class="au-input au-input--full" type="password"  placeholder="Senha">
+                                <span  asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                            <div class=" my-3">
+                                <input  asp-for="RememberMe">
+                                <label asp-for="RememberMe"></label> 
+                            </div>
+                            <button class="au-btn au-btn--block au-btn--blue m-b-20" type="submit">Login</button>
+                        </form>
+                        <div class="register-link">
+                            <a asp-action="Register"> Deseja se cadastrar? </a>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="mt-2 row">
-                 <div class="col-md-5 mx-auto ">
-                    <label asp-for="Password" class="col-form-label"></label>
-               
-                    <input asp-for="Password" class="form-control" />
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="form-group my-2">
-                <input asp-for="RememberMe" />
-                <label asp-for="RememberMe"></label>
-            </div>
-            <button type="submit" class="btn btn-primary mt-2 col-md-5">Login</button>
-        </form>
-
-        <div class="text-center my-2">
-            <a asp-action="Register">Deseja se Cadastrar?</a>
         </div>
-  
+    </div>
 </div>
 
 @section Scripts {

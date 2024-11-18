@@ -19,7 +19,7 @@ namespace Reciicer.Models.Entities
         public int? ClienteId { get; set; } 
 
         //Navigation
-        public Cliente? cliente {get; set;} 
+        public Cliente? Cliente {get; set;} 
 
 
     }

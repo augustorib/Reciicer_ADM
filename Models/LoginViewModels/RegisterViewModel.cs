@@ -5,6 +5,11 @@ namespace Reciicer.Models.LoginViewModels
 {
     public class RegisterViewModel
     {
+    
+        [Required(ErrorMessage ="Nomde de usuário deve ser informado")]
+        [Display(Name = "Usuário:")]
+        public string? UserName { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "E-mail:")]
