@@ -59,6 +59,12 @@ namespace Reciicer.Data
                 
             );
 
+            modelBuilder.Entity<PontoColeta>().HasData(
+                new PontoColeta{Id = 1, Nome = "Parmê"},
+                new PontoColeta{Id = 2, Nome = "Supermercado Guanabara"}
+                  
+            );
+
  
         }
         
@@ -68,6 +74,7 @@ namespace Reciicer.Data
         public DbSet<TipoMaterial> TipoMaterial {get; set;}
         public DbSet<Coleta> Coleta {get; set;}
         public DbSet<Material_Coleta> Material_Coleta {get; set;}
+        public DbSet<PontoColeta> PontoColeta {get; set;}
 
         
     }

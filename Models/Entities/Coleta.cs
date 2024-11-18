@@ -10,7 +10,6 @@ namespace Reciicer.Models.Entities
 
         [Required]
         [DisplayName("Data Operação")]
-        // [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime DataOperacao { get; set;}
 
         [Required]
@@ -18,10 +17,14 @@ namespace Reciicer.Models.Entities
         public int PontuacaoGanha { get; set; }
 
         public int ClienteId { get; set; }
+            
+        [DisplayName("Data Recolhimento")]
+        public DateOnly? DataRecolhimento { get; set; } = default!;
 
         //Navigation
         public Cliente? Cliente { get; set; } 
 
+        public ICollection<Material_Coleta>? Material_Coletas { get; set; }
         
     }
 }
