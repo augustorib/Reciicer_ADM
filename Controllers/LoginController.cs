@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Reciicer.Models.LoginViewModels;
+using System.Security.Claims;
 
 
 namespace Reciicer.Controllers
@@ -56,11 +57,14 @@ namespace Reciicer.Controllers
             if (ModelState.IsValid)
             {
                 var user = new IdentityUser { UserName = model.UserName, Email = model.Email };
+                
                 var result = await _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
+                    await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "Operador"));
                     await _signInManager.SignInAsync(user, isPersistent: false);
+
                     return RedirectToAction("Index", "Home");
                 }
 
