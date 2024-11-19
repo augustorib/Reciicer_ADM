@@ -40,7 +40,7 @@ namespace Reciicer.Service.Coleta
             _coletaRepository.RegistrarColeta(coleta);
         }
 
-        //Método Para calcular a quantidade de pontos que foi feita na recilagem
+        //Método Para calcular a quantidade de pontos que foi feita na Coleta
         public void CalcularPontuacaoColeta(int coletaId)
         {
             var pontuacaoGanha =  _material_ColetaService
@@ -58,8 +58,7 @@ namespace Reciicer.Service.Coleta
 
         public int ObterTotalMaterialColeta()
         {
-            //eturn _material_ReciclagemRepository.ListarMaterialReciclagem().Count();
-            return 22;
+            return _material_ColetaService.ListarMaterialColeta().Count();
         }
 
         public DateTime ObterDataUltimaColeta()
