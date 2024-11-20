@@ -70,7 +70,7 @@ $("#TipoMaterialId").change(function(){
 
 var ObterMaterialByTipoMaterialId = function(){
     $.ajax({
-        url: 'ObterMaterialByTipoMaterialId',
+        url: '/Coleta/ObterMaterialByTipoMaterialId',
         type: 'GET',
         data: {
             tipoMaterialId : $('#TipoMaterialId').val(),

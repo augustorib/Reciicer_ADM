@@ -51,7 +51,7 @@ namespace Reciicer.Service.Cliente
         {
             var  clientesTop3 = _clienteRepository.ListarCliente()
                                                   .OrderByDescending(c => c.PontuacaoTotal)
-                                                  .Take(3)
+                                                  .Take(10)
                                                   .ToList();
             return clientesTop3;
         }

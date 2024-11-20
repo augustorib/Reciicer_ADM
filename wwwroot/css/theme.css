@@ -3185,7 +3185,8 @@ section {
     margin-right: 15px;
 }
 
-.overview-box .icon i {
+.overview-box .icon i,
+.overview-box .icon svg {
     font-size: 60px;
     color: #fff;
 }
@@ -4138,11 +4139,15 @@ section {
 }
 
 .dot--green {
-    background: #00ad5f;
+    background: #51f590;
 }
 
 .dot--red {
     background: #fa4251;
+}
+
+.dot--yellow {
+    background: #f7f763;
 }
 
 .chart-note-wrap {

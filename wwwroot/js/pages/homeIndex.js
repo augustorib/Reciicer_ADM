@@ -1,7 +1,7 @@
 (function ($) {
     // USE STRICT
     "use strict";
-    console.log(intTeste);
+
     try {
       //WidgetChart 1
       var ctx = document.getElementById("widgetChart1");
@@ -70,5 +70,56 @@
     } catch (error) {
       console.log(error);
     }
-  })(jQuery);
+
+    try {
+    // Percent Chart
+    var ctx = document.getElementById("percent-chart");
+    if (ctx) {
+      ctx.height = 280;
+      var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          datasets: [
+            {
+              label: "Tipo materiais quantidade",
+              data: quantidadeMateriaisChart,
+              backgroundColor: ObterCoresParaTipoMaterial(labelsChart),
+              hoverBackgroundColor: ObterCoresParaTipoMaterial(labelsChart),
+              borderWidth: [
+                0, 0
+              ],
+              hoverBorderColor: [
+                'transparent',
+                'transparent'
+              ]
+            }
+          ],
+          labels: labelsChart
+        },
+        options: {
+          maintainAspectRatio: false,
+          responsive: true,
+          cutoutPercentage: 55,
+          animation: {
+            animateScale: true,
+            animateRotate: true
+          },
+          legend: {
+            display: false
+          },
+          tooltips: {
+            titleFontFamily: "Poppins",
+            xPadding: 15,
+            yPadding: 10,
+            caretPadding: 0,
+            bodyFontSize: 16
+          }
+        }
+      });
+    }
+  } catch (error) {
+  console.log(error);
+  }
+  
+})(jQuery);
   

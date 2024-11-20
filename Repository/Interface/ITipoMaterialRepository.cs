@@ -1,7 +1,5 @@
-
-
-
 using Reciicer.Models.Entities;
+using Reciicer.Models.HomeViewModels;
 
 namespace Reciicer.Repository.Interface
 {
@@ -12,5 +10,6 @@ namespace Reciicer.Repository.Interface
         void RegistrarTipoMaterial(TipoMaterial tipoMaterial); 
         void AtualizarTipoMaterial(TipoMaterial tipoMaterial);
         void ExcluirTipoMaterial(int id);
+        public IEnumerable<TipoMaterialQuantidadeChart> ObterNomeQuantidadeTipoMaterialGrafico();
     }
 }

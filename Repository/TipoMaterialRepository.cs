@@ -1,5 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Reciicer.Data;
 using Reciicer.Models.Entities;
+using Reciicer.Models.HomeViewModels;
 using Reciicer.Repository.Interface;
 
 namespace Reciicer.Repository
@@ -55,6 +57,22 @@ namespace Reciicer.Repository
             }
         }
 
+        public IEnumerable<TipoMaterialQuantidadeChart> ObterNomeQuantidadeTipoMaterialGrafico()
+        {
+            var sql = @"Select 
+                            TM.Id, TM.Nome AS TipoMaterialNome, Count(MC.Id) AS Quantidade
+                        FROM 
+                            TipoMaterial TM
+                            left JOIN Material_Coleta MC ON MC.MaterialId = TM.id
+                        GROUP BY
+                            TM.Nome, TM.id
+                        ORDER BY 
+                            TM.id";
+
+            var result = _context.Database.SqlQueryRaw<TipoMaterialQuantidadeChart>(sql).ToList();
+            
+            return result;
+        }
 
     }
 }

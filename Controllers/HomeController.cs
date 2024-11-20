@@ -5,6 +5,7 @@ using Reciicer.Models;
 using Reciicer.Models.HomeViewModels;
 using Reciicer.Service.Cliente;
 using Reciicer.Service.Coleta;
+using Reciicer.Service.TipoMaterial;
 
 
 namespace Reciicer.Controllers;
@@ -16,12 +17,15 @@ public class HomeController : Controller
 
     private readonly ClienteService _clienteService;
     private readonly ColetaService _coletaService;
+    private readonly TipoMaterialService _tipoMaterialService;
 
-    public HomeController(ILogger<HomeController> logger, ClienteService clienteService, ColetaService coletaService)
+    public HomeController(ILogger<HomeController> logger, ClienteService clienteService, ColetaService coletaService,
+                          TipoMaterialService tipoMaterialService)
     {
         _logger = logger;
         _clienteService = clienteService;
         _coletaService  = coletaService;
+        _tipoMaterialService  = tipoMaterialService;
 
     }
 
@@ -32,9 +36,9 @@ public class HomeController : Controller
             TotalCliente = _clienteService.ObterTotalClientes(),
             TotalColeta = _coletaService.ObterTotalMaterialColeta(),
             // MateriaisNome = _materialService.ListarNomesMaterial(),
-            DataUltimaColeta = _coletaService.ObterDataUltimaColeta()
-            // chartMaterials =  _materialService.ObterMaterialQuantidadeChart(),
-            // Clientes = _clienteService.ObterClientesOrdenadoPorPontuação(),
+            DataUltimaColeta = _coletaService.ObterDataUltimaColeta().ToString("dd/MM/yyyy HH:mm"),
+            TipoMaterialQuantidadeCharts =  _tipoMaterialService.ObterNomeQuantidadeTipoMaterialGrafico(),
+            Top10Clientes = _clienteService.ObterClientesOrdenadoPorPontuação(),
         };
      
         return View(model);

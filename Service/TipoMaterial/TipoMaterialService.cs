@@ -1,3 +1,4 @@
+using Reciicer.Models.HomeViewModels;
 using Reciicer.Repository.Interface;
 using Entities = Reciicer.Models.Entities;
 
@@ -39,5 +40,10 @@ namespace Reciicer.Service.TipoMaterial
         }
     
   
+        public IEnumerable<TipoMaterialQuantidadeChart> ObterNomeQuantidadeTipoMaterialGrafico()
+        {
+            return _tipoMaterialrepository.ObterNomeQuantidadeTipoMaterialGrafico();  
+        }
+
     }
 }

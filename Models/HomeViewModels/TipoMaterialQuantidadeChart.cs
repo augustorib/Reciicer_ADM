@@ -1,8 +1,8 @@
 namespace Reciicer.Models.HomeViewModels
 {
-    public class MaterialQuantidadeChart
+    public class TipoMaterialQuantidadeChart
     {
-        public string Nome { get; set; }
+        public string TipoMaterialNome { get; set; }
 
         public int Quantidade { get; set; }
     }
