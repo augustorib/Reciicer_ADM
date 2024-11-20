@@ -2,6 +2,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Reciicer.Data;
 using Reciicer.Models.Entities;
+using Reciicer.Models.HomeViewModels;
 using Reciicer.Repository.Interface;
 
 
@@ -24,10 +25,9 @@ namespace Reciicer.Repository
             return clientes;
         }     
 
-        public IEnumerable<Cliente> ListarClienteComPontuacaoTotal()
+        public IEnumerable<Cliente> ListarClientesComPontuacaoTotal()
         {
-
-           // _context.Database.ExecuteSqlRaw("EXEC UpdateClientePontuacaoTotal");
+            CalcularPontuacaoTotalClientes();
 
             var clientes = _context.Cliente.ToList();
 
@@ -109,6 +109,29 @@ namespace Reciicer.Repository
         public IEnumerable<Cliente> ListarClienteNivelPremiacao()
         {
             return _context.Cliente.ToList();
+        }
+
+        public void CalcularPontuacaoTotalClientes()
+        {
+            var query = @"select ClienteId, sum(pontuacaoGanha) AS PontuacaoTotal
+                          from Coleta
+                          group by ClienteId
+                          ";
+
+            var clientes =_context.Database.SqlQueryRaw<ClientePontuacaoTotal>(query).ToList(); 
+
+            foreach(var cliente in clientes)
+            {
+                var clienteBd = _context.Cliente.Find(cliente.ClienteId);
+
+                if(clienteBd != null)
+                {
+                    clienteBd.PontuacaoTotal = cliente.PontuacaoTotal;
+                    
+                    _context.Cliente.Update(clienteBd);
+                    _context.SaveChanges();
+                }
+            }
         }
     }
 }

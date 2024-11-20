@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Reciicer - Adm";
 
+    int rank = 1;
     List<string> labelsChart = new List<string>();
     List<int> quantidadeMateriaisChart = new List<int>();
     
@@ -131,7 +132,7 @@
                             <tbody>
                                 @foreach (var item in Model.Top10Clientes)
                                 {
-                                    int rank = 1;
+                                    
 
                                     <tr>
                                         <td>@rank</td>

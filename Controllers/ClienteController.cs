@@ -13,8 +13,10 @@ namespace Reciicer.Controllers
         
         private readonly ClienteService _clienteService;
         private readonly IEmailService _emailService;
+        
 
-        public ClienteController(IClienteRepository clienteRepository, ClienteService clienteService, IEmailService emailService)
+
+        public ClienteController(ClienteService clienteService, IEmailService emailService)
         {
             
             _clienteService = clienteService;
@@ -24,9 +26,8 @@ namespace Reciicer.Controllers
 
         public IActionResult Index()
         {
-            //var clientes = _clienteRepository.ListarCliente();
  
-            return View(_clienteService.CalcularPontuacaoTotalCliente());
+            return View(_clienteService.ListarClientesComPontuacaoTotal());
         }
 
 

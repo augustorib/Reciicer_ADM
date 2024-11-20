@@ -2,16 +2,17 @@ using Reciicer.Repository.Interface;
 using  Entities = Reciicer.Models.Entities;
 
 
-
 namespace Reciicer.Service.Cliente
 {
     public class ClienteService 
     {
         private readonly IClienteRepository _clienteRepository;
+    
 
         public ClienteService(IClienteRepository clienteRepository)
         {
             _clienteRepository = clienteRepository;
+            
         }
 
         public IEnumerable<Entities.Cliente> ListarCliente()
@@ -38,22 +39,20 @@ namespace Reciicer.Service.Cliente
             _clienteRepository.ExcluirCliente(id);
         }
 
-        public IEnumerable<Entities.Cliente> CalcularPontuacaoTotalCliente()
+        public IEnumerable<Entities.Cliente> ListarClientesComPontuacaoTotal()
         {
-            var clientesComPontuacaoENivelAtualizados =_clienteRepository.ListarClienteComPontuacaoTotal();
-            
-            //AtualizarClientesNivel();
+            var clientesComPontuacaoAtualizados =_clienteRepository.ListarClientesComPontuacaoTotal();
 
-            return clientesComPontuacaoENivelAtualizados;
+            return clientesComPontuacaoAtualizados;
         }
 
         public IEnumerable<Entities.Cliente> ObterClientesOrdenadoPorPontuação()
         {
-            var  clientesTop3 = _clienteRepository.ListarCliente()
+            var  clientesTop10 = _clienteRepository.ListarCliente()
                                                   .OrderByDescending(c => c.PontuacaoTotal)
                                                   .Take(10)
                                                   .ToList();
-            return clientesTop3;
+            return clientesTop10;
         }
 
          public void AtualizarClientesNivel()
