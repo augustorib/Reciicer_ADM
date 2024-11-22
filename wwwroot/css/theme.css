@@ -243,7 +243,6 @@ section {
 .section__content {
     position: relative;
     margin: 0 auto;
-    z-index: 1;
 }
 
 .section__content--w1830 {
