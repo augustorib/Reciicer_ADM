@@ -10,7 +10,7 @@ namespace Reciicer.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
-
+    
         public LoginController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
         {
             _userManager = userManager;

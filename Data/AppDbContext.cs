@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -70,7 +71,25 @@ namespace Reciicer.Data
                 new Endereco{Id = 2, Rua = "Rua 2", Bairro = "Bairro 2", Numero = 2, Cidade = "Cidade 2", Estado = "Estado 2", Cep = "60000-001"}       
             );
 
- 
+            var adminRoleId = Guid.NewGuid().ToString();
+            var operadorRoleId = Guid.NewGuid().ToString();
+            var adminUserId = Guid.NewGuid().ToString();
+            var operadorUserId = Guid.NewGuid().ToString();
+
+            modelBuilder.Entity<IdentityRole>().HasData(
+                new IdentityRole { Id = adminRoleId, Name = "Admin", NormalizedName = "ADMIN" },
+                new IdentityRole { Id = operadorRoleId, Name = "Operador", NormalizedName = "OPERADOR" }
+            );
+
+            modelBuilder.Entity<IdentityUser>().HasData(
+                new IdentityUser { Id = adminUserId, UserName = "admin", NormalizedUserName = "ADMIN", Email = "admin@gmail.com", NormalizedEmail ="ADMIN@GMAIL.COM",PasswordHash = "AQAAAAIAAYagAAAAELOGUtUv5slutFj/g2ySNtpAyK6JnEzlfSGIQVH2hL8onfOArNzzqS3hzh4KBbfBlg==" },
+                new IdentityUser { Id = operadorUserId, UserName = "operador", NormalizedUserName = "OPERADOR", Email = "operador@gmail.com", NormalizedEmail ="OPERADOR@GMAIL.COM", PasswordHash = "AQAAAAIAAYagAAAAEHQ7mga+DIAlOUen1rubIYWrGtJL/2ELlGuZQrZgvy/1u0aPPJa1UHG0VWqHJa06uA==" }
+            );
+
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(
+                new IdentityUserRole<string> { UserId = adminUserId, RoleId = adminRoleId },
+                new IdentityUserRole<string> { UserId = operadorUserId, RoleId = operadorRoleId }
+            );
         }
         
         public DbSet<Cliente> Cliente {get; set;}

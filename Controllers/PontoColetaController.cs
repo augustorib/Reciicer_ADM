@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Reciicer.Models.Entities;
 using Reciicer.Service.PontoColeta;

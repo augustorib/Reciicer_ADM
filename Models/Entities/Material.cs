@@ -14,10 +14,12 @@ namespace Reciicer.Models.Entities
         [DisplayName("Descrição")]
         public string? Descricao { get; set; }
 
-        [DisplayName("Tempo Degradação")]
+        [DisplayName("Degradação")]
         public int? TempoDegradacao { get; set; }
        
+        [DisplayName("Pontos/peso(g)")]
         public int PontuacaoPeso { get; set; } = 0;
+        [DisplayName("Pontos/unidade")]
         public int PontuacaoUnidade { get; set; } = 0;
 
         public int TipoMaterialId { get; set; }

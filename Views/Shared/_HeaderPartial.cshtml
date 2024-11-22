@@ -1,8 +1,16 @@
-@using System.Security.Claims
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> _userManager
+@inject SignInManager<IdentityUser> _signInManager
 
 @{
-    var userName = User.Identity.Name;
-    var email = User.FindFirst(ClaimTypes.Email)?.Value;  
+    
+    var userIdentity =  _userManager.GetUserAsync(User).Result;
+
+    var userName = userIdentity.UserName;
+    var email = userIdentity.Email;
+    var roles = _userManager.GetRolesAsync(userIdentity).Result;
+      
+
 }
 
 <!-- HEADER DESKTOP-->
@@ -17,17 +25,16 @@
 
                         <div class="account-item clearfix js-item-menu ">
                             <div class="content">
-                                <a class="js-acc-btn" href="#">@User.Identity.Name</a>
+                                <a class="js-acc-btn" href="#">@userName</a>
                             </div>
                             <div class="account-dropdown js-dropdown">
                                 <div class="info clearfix">
-                                    <div>
+                                    <div class="content">
                                         <h5 class="name">
-                                            <a href="#" class="text-decoration-none text-capitalize ">@User.Identity.Name</a>
+                                            <a href="#" class="text-decoration-none text-capitalize text-primary">@userName</a>
                                         </h5>
-                                        
-                                        <span class="email">@email</span>      
-                                        
+                                            <span class="email">@email</span>      
+                                            <p class="email">@string.Join(", ", roles)</p>      
                                     </div>
                                 </div>
                                 <div class="account-dropdown__footer">

@@ -86,8 +86,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     .AddCookie(options =>
     {
         options.ExpireTimeSpan = TimeSpan.FromMinutes(2);
-        options.SlidingExpiration = true;
-
+        options.SlidingExpiration = true;   
   
     });
 
