@@ -7,6 +7,7 @@ using Reciicer.Service.PontoColeta;
 namespace Reciicer.Controllers
 {
     
+    [Authorize(Roles = "Admin")]
     public class PontoColetaController : Controller
     {
         private readonly PontoColetaService _pontoColetaService;

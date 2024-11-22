@@ -62,8 +62,9 @@ namespace Reciicer.Controllers
 
                 if (result.Succeeded)
                 {
-                    await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "Operador"));
+                    await  _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "Operador"));
                     await _signInManager.SignInAsync(user, isPersistent: false);
+                    await _userManager.AddToRoleAsync(user, "Operador");      
 
                     return RedirectToAction("Index", "Home");
                 }

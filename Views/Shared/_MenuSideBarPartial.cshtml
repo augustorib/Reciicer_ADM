@@ -1,52 +1,66 @@
-        <!-- MENU SIDEBAR-->
-        <aside class="menu-sidebar d-none d-lg-block">
-            <div class="logo">
-                <a asp-action="Index" asp-controller="Home">
-                    <img src="~/img/logo.png" alt="Reciicer - ADM" />
-                </a>
-            </div>
-            <div class="menu-sidebar__content js-scrollbar1">
-                <nav class="navbar-sidebar">
-                    <ul class="list-unstyled navbar__list">
-                        <li class="has-sub">
-                            <a class="js-arrow">
-                                <i class="fa-solid fa-person"></i>Cliente</a>
-                            <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                <li>
-                                    <a asp-controller="Cliente" asp-action="Index"><i class="fa-solid fa-list"></i> Listar</a>
-                                </li>
-                            </ul>
-                        </li>
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> _userManager
+
+@{
+    var userIdentity =  _userManager.GetUserAsync(User).Result;
+    var roles = _userManager.GetRolesAsync(userIdentity).Result;
+
+    var isAdmin = roles.Contains("Admin");
+}
+        
+<!-- MENU SIDEBAR-->
+<aside class="menu-sidebar d-none d-lg-block">
+    <div class="logo">
+        <a asp-action="Index" asp-controller="Home">
+            <img src="~/img/logo.png" alt="Reciicer - ADM" />
+        </a>
+    </div>
+    <div class="menu-sidebar__content js-scrollbar1">
+        <nav class="navbar-sidebar">
+            <ul class="list-unstyled navbar__list">
+                <li class="has-sub">
+                    <a class="js-arrow">
+                        <i class="fa-solid fa-person"></i>Cliente</a>
+                    <ul class="list-unstyled navbar__sub-list js-sub-list">
                         <li>
-                            <a asp-controller="Coleta" asp-action="Index">
-                                <i class="fa-solid fa-recycle "></i>Coleta</a>
-                        </li>
-                        <li>
-                            <a asp-controller="PontoColeta" asp-action="Index">
-                                <i class="fa-solid fa-location-dot"></i>Pontos de Coleta</a>
-                        </li>
-                        <li>
-                            <a asp-controller="Premiacao" asp-action="Index">
-                                <i class="fa-solid fa-ranking-star"></i>Premiação</a>
-                        </li>
-                        <li>
-                            <a asp-controller="Endereco" asp-action="Index">
-                                <i class="fa-solid fa-map-pin"></i>Endereço</a>
-                        </li>
-                        <li class="has-sub">
-                            <a class="js-arrow">
-                                <i class="fa-solid fa-tag"></i>Gestão Materiais</a>
-                            <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                <li>
-                                    <a asp-controller="Material" asp-action="Index"><i class="fa-solid fa-tag"></i>Material</a>
-                                </li>
-                                <li>
-                                    <a asp-controller="TipoMaterial" asp-action="Index"><i class="fa-solid fa-gifts"></i>Tipo</a>
-                                </li>
-                            </ul>
+                            <a asp-controller="Cliente" asp-action="Index"><i class="fa-solid fa-list"></i> Listar</a>
                         </li>
                     </ul>
-                </nav>
-            </div>
-        </aside>
-        <!-- END MENU SIDEBAR-->
+                </li>
+                <li>
+                    <a asp-controller="Coleta" asp-action="Index">
+                        <i class="fa-solid fa-recycle "></i>Coleta</a>
+                </li>
+
+                @if(isAdmin){
+                <li>
+                    <a asp-controller="PontoColeta" asp-action="Index">
+                        <i class="fa-solid fa-location-dot"></i>Pontos de Coleta</a>
+                </li>
+                }
+                
+                <li>
+                    <a asp-controller="Premiacao" asp-action="Index">
+                        <i class="fa-solid fa-ranking-star"></i>Premiação</a>
+                </li>
+                <li>
+                    <a asp-controller="Endereco" asp-action="Index">
+                        <i class="fa-solid fa-map-pin"></i>Endereço</a>
+                </li>
+                <li class="has-sub">
+                    <a class="js-arrow">
+                        <i class="fa-solid fa-tag"></i>Gestão Materiais</a>
+                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                        <li>
+                            <a asp-controller="Material" asp-action="Index"><i class="fa-solid fa-tag"></i>Material</a>
+                        </li>
+                        <li>
+                            <a asp-controller="TipoMaterial" asp-action="Index"><i class="fa-solid fa-gifts"></i>Tipo</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</aside>
+<!-- END MENU SIDEBAR-->
