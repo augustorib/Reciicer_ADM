@@ -1,0 +1,114 @@
+@model Reciicer.Models.ClienteViewModels.ClientePremiacaoViewModel
+@{
+    ViewData["Title"] = "Notificar Cliente Premiação";
+
+    var mensagem = TempData["Mensagem"] as string;
+}
+
+
+<h1>@ViewData["Title"]</h1>
+
+@if (!string.IsNullOrEmpty(mensagem))
+{
+   
+    @if(mensagem[0] == 'F')
+    {
+        <div class="alert alert-danger" id="email-alert" role="alert">
+          <i class="fa-solid fa-circle-xmark"></i> @mensagem
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-success" id="email-alert" role="alert">
+            <i class="fa-solid fa-check"></i> @mensagem
+        </div>
+    }
+}
+
+
+<form action="ClientePremiacao" method="get">
+    <div class="my-4 row">
+            <div class="col-md-5">
+                <label asp-for="PremiacaoId" class="form-label">Escolha um Prêmio: </label>
+                <select asp-for="PremiacaoId" asp-items="@(new SelectList(Model.Premiacoes, "Id", "Descricao", Model.PremiacaoId))" class="form-select form-select-md">
+                    <option value=""selected>Selecione um Prêmio</option>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <label asp-for="Premiacao.PontuacaoRequerida" class="form-label">Pontuação Mínima: </label>
+                <input asp-for="Premiacao.PontuacaoRequerida" class="form-control" disabled />
+            </div>
+            
+            <div class="col-md-2 align-self-end">
+                <button type="submit" class="btn btn-primary" id="clientePremiacaoOkButton">OK</button>
+            </div> 
+    </div>
+</form>
+
+<hr class="my-3">
+
+ <div >
+    <table class="table table-striped text-center" id="dataTableInit">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Clientes.First().Nome)</th>
+                <th>@Html.DisplayNameFor(model => model.Clientes.First().Email)</th>
+                <th>@Html.DisplayNameFor(model => model.Clientes.First().PontuacaoTotal)</th>
+                <th>Enviar Email</th>
+            </tr>
+        </thead>
+        <tbody>
+
+    @foreach (var item in Model.Clientes) 
+    {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                <td>@Html.DisplayFor(modelItem => item.PontuacaoTotal)</td>
+        
+                <td>
+                    <form asp-action="NotificarClientePremiacao" method="post">
+                        <button type="submit" class="btn btn-primary">
+                            <input type="hidden" name="email" value="@item.Email">
+                            <i class="fa-regular fa-envelope"></i>
+                        </button>
+                        <input type="hidden" name="premiacaoId" value="@Model.PremiacaoId">
+                    </form>
+                </td> 
+            </tr>
+        }
+        </tbody>
+    </table>
+</div> 
+
+@section Scripts{
+    
+    <script>
+        $(document).ready(function(){
+            
+            setTimeout(function() {
+                $('#email-alert').fadeOut('slow');
+            }, 3000);
+
+ 
+            var $select = $('#PremiacaoId');
+            var $button = $('#clientePremiacaoOkButton');
+
+            function toggleButton() {
+                if ($select.val()) {
+                    $button.prop('disabled', false);
+                } else {
+                    $button.prop('disabled', true);
+                }
+            }
+
+            // Desabilita o botão se o valor do select for vazio
+            toggleButton();
+
+            // Se mudar o valor do select, chama a função toggleButton
+            $select.on('change', toggleButton);    
+        });
+    </script>
+
+}

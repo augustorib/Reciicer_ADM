@@ -68,7 +68,7 @@ namespace Reciicer.Service.Cliente
 
          public IEnumerable<Entities.Cliente> ObterClientesPremiacao()
          {
-             return _clienteRepository.ListarClienteNivelPremiacao();
+             return _clienteRepository.ListarCliente();
          }
     }
 }

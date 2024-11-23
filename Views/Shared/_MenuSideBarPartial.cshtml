@@ -23,7 +23,10 @@
                         <i class="fa-solid fa-person"></i>Cliente</a>
                     <ul class="list-unstyled navbar__sub-list js-sub-list">
                         <li>
-                            <a asp-controller="Cliente" asp-action="Index"><i class="fa-solid fa-list"></i> Listar</a>
+                            <a asp-controller="Cliente" asp-action="Index"><i class="fa-solid fa-list"></i>Listar</a>
+                        </li>
+                        <li>
+                            <a asp-controller="Cliente" asp-action="ClientePremiacao"><i class="fa-solid fa-envelope"></i>Notificar</a>
                         </li>
                     </ul>
                 </li>
@@ -38,7 +41,7 @@
                         <i class="fa-solid fa-location-dot"></i>Pontos de Coleta</a>
                 </li>
                 }
-                
+
                 <li>
                     <a asp-controller="Premiacao" asp-action="Index">
                         <i class="fa-solid fa-ranking-star"></i>Premiação</a>

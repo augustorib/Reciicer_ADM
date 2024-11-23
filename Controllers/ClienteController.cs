@@ -1,8 +1,10 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Reciicer.Models.Entities;
+using Reciicer.Models.ClienteViewModels;
 using Reciicer.Repository.Interface;
 using Reciicer.Service.Cliente;
+using Reciicer.Service.Premiacao;
 
 namespace Reciicer.Controllers
 {
@@ -12,14 +14,16 @@ namespace Reciicer.Controllers
 
         
         private readonly ClienteService _clienteService;
+        private readonly PremiacaoService _premiacaoService;
         private readonly IEmailService _emailService;
         
 
 
-        public ClienteController(ClienteService clienteService, IEmailService emailService)
+        public ClienteController(ClienteService clienteService, IEmailService emailService, PremiacaoService premiacaoService)
         {
             
             _clienteService = clienteService;
+            _premiacaoService = premiacaoService;
             _emailService = emailService;
             
         }
@@ -83,23 +87,37 @@ namespace Reciicer.Controllers
             return RedirectToAction("Index");
         }
 
-        // [HttpGet]
-        // public IActionResult InformarClientePremiacaoFiltro(int? nivelId )
-        // {   
-      
-        //     var model =  new ClienteNivelPremiacaoViewModel{
-        //         Clientes = nivelId.HasValue ? _clienteService.ObterClientesPremiacao().Where(c => c.NivelId == nivelId) : 
-        //                                       _clienteService.ObterClientesPremiacao(),
+        [HttpGet]
+        public IActionResult ClientePremiacao(int? premiacaoId )
+        {     
+            var premiosDisponiveis = _premiacaoService.ListarPremiacao()
+                                    .Where(p => p.ClienteId == null)
+                                    .ToList();
 
-        //         Niveis = _nivelService.PopularSelect().Where( n => n.Id != 1)
-        //     };
+            var model = new ClientePremiacaoViewModel{
+                Clientes = new List<Cliente>(),
+                Premiacoes = premiosDisponiveis,
+                Premiacao = new Premiacao(),
+                PremiacaoId = premiacaoId ?? 0
+            };
 
-        //     return View(model);
-        // }
+           if(premiacaoId.HasValue) 
+           {
+                model.Premiacao = _premiacaoService.ObterPremiacaoPorId(premiacaoId.Value);
+
+                model.Clientes = _clienteService.ListarCliente()
+                                 .Where(c => c.PontuacaoTotal >= model.Premiacao.PontuacaoRequerida)
+                                 .ToList();
+
+                model.Premiacoes = premiosDisponiveis;
+           }
+
+            return View(model);
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EnviarEmailClientePremiacao(string email, int nivelId)
+        public IActionResult NotificarClientePremiacao(string email, int premiacaoId)
         { 
             
             var emailEnviado =  _emailService.EnviarEmail("guhstudante@gmail.com", "Premiação Disponível",_emailService.MontarEmailBody());
@@ -113,7 +131,7 @@ namespace Reciicer.Controllers
                 TempData["Mensagem"] = $"Falha ao enviar o email para {email}.";
             }
 
-            return RedirectToAction("InformarClientePremiacaoFiltro", new {nivelId});
+            return RedirectToAction("ClientePremiacao", new {premiacaoId});
         }
 
         // [HttpGet]
