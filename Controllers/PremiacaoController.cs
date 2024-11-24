@@ -67,7 +67,29 @@ namespace Reciicer.Controllers
 
             return RedirectToAction("Index");
         }
-        
+
+        [HttpGet]
+        public IActionResult PremiacaoCliente(int? premiacaoId)
+        { 
+            return View(_premiacaoService.MontarViewModelPremiarCliente(premiacaoId));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult PremiarCliente(int clienteId, int premiacaoId)
+        { 
+            
+            if(clienteId != null && premiacaoId != null)
+            {
+               var premiacaoRealizada = _premiacaoService.RealizarPremiacao(premiacaoId, clienteId);
+
+               TempData["Mensagem"] = premiacaoRealizada ? "Premiação realizada com sucesso!" : "Erro ao realizar premiação!";
+            }
+
+            return RedirectToAction("PremiacaoCliente");
+        }
+
+ 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

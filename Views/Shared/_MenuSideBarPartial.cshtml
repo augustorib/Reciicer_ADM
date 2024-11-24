@@ -41,10 +41,17 @@
                         <i class="fa-solid fa-location-dot"></i>Pontos de Coleta</a>
                 </li>
                 }
-
-                <li>
-                    <a asp-controller="Premiacao" asp-action="Index">
-                        <i class="fa-solid fa-ranking-star"></i>Premiação</a>
+                <li class="has-sub">
+                    <a class="js-arrow">
+                        <i class="fa-solid fa-person"></i>Premiação</a>
+                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                        <li>
+                            <a asp-controller="Premiacao" asp-action="Index"><i class="fa-solid fa-list"></i>Listar</a>
+                        </li>
+                        <li>
+                            <a asp-controller="Premiacao" asp-action="PremiacaoCliente"><i class="fa-solid fa-gift"></i>Premiar</a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
                     <a asp-controller="Endereco" asp-action="Index">
