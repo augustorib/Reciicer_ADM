@@ -113,10 +113,20 @@ namespace Reciicer.Repository
 
         public void CalcularPontuacaoTotalClientes()
         {
-            var query = @"select ClienteId, sum(pontuacaoGanha) AS PontuacaoTotal
-                          from Coleta
-                          group by ClienteId
-                          ";
+            var query = @"SELECT 
+                            CL.ID AS ClienteId, 
+                            --Caso o cliente não tenha prêmios trás a sua pontuação total
+                            COALESCE(
+                                SUM(C.PontuacaoGanha) - (SELECT SUM(PR.PontuacaoRequerida) FROM Premiacao PR WHERE PR.ClienteId = CL.Id),
+                                
+                                SUM(C.PontuacaoGanha) 
+                            )
+                                AS PontuacaoTotal
+                        FROM 
+                            Coleta C
+                            JOIN Cliente CL ON CL.Id = C.ClienteId
+                        GROUP BY
+                            CL.Id";
 
             var clientes =_context.Database.SqlQueryRaw<ClientePontuacaoTotal>(query).ToList(); 
 
