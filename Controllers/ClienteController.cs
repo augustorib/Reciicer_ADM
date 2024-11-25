@@ -1,7 +1,6 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Reciicer.Models.Entities;
-using Reciicer.Models.ClienteViewModels;
 using Reciicer.Repository.Interface;
 using Reciicer.Service.Cliente;
 using Reciicer.Service.Premiacao;
