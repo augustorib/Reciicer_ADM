@@ -34,16 +34,19 @@
                     <a asp-controller="Coleta" asp-action="Index">
                         <i class="fa-solid fa-recycle "></i>Coleta</a>
                 </li>
-
                 @if(isAdmin){
                 <li>
                     <a asp-controller="PontoColeta" asp-action="Index">
                         <i class="fa-solid fa-location-dot"></i>Pontos de Coleta</a>
                 </li>
                 }
+                <li>
+                    <a asp-controller="Endereco" asp-action="Index">
+                        <i class="fa-solid fa-map-pin"></i>Endereço</a>
+                </li>
                 <li class="has-sub">
                     <a class="js-arrow">
-                        <i class="fa-solid fa-person"></i>Premiação</a>
+                        <i class="fa-solid fa-trophy"></i>Premiação</a>
                     <ul class="list-unstyled navbar__sub-list js-sub-list">
                         <li>
                             <a asp-controller="Premiacao" asp-action="Index"><i class="fa-solid fa-list"></i>Listar</a>
@@ -53,14 +56,20 @@
                         </li>
                     </ul>
                 </li>
-                <li>
-                    <a asp-controller="Endereco" asp-action="Index">
-                        <i class="fa-solid fa-map-pin"></i>Endereço</a>
+                @if(isAdmin){
+                <li class="has-sub">
+                    <a class="js-arrow">
+                        <i class="fa-solid fa-file"></i>Relatórios</a>
+                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                        <li>
+                            <a asp-controller="Relatorio" asp-action="RelatorioPontuacao"><i class="fa-solid fa-ranking-star"></i>Pontuação</a>
+                        </li>
+                        <li>
+                            <a asp-controller="Relatorio" asp-action="RelatorioRecolhimento"><i class="fa-solid fa-weight-hanging"></i>Recolhimento</a>
+                        </li>
+                    </ul>
                 </li>
-                <li>
-                    <a asp-controller="Relatorio" asp-action="Report">
-                        <i class="fa-solid fa-map-pin"></i>Report</a>
-                </li>
+                }
                 <li class="has-sub">
                     <a class="js-arrow">
                         <i class="fa-solid fa-tag"></i>Gestão Materiais</a>

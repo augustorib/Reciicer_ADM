@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="11/26/2024 02:35:55" ReportInfo.Modified="11/26/2024 03:26:19" ReportInfo.CreatorVersion="2025.1.0.0">
+  <Dictionary>
+    <BusinessObjectDataSource Name="DS_Clientes" ReferenceName="DS_Clientes" DataType="System.Int32" Enabled="true">
+      <Column Name="Id" DataType="System.Int32"/>
+      <Column Name="Nome" DataType="System.String"/>
+      <Column Name="Email" DataType="System.String"/>
+      <Column Name="Telefone" DataType="System.String"/>
+      <Column Name="CPF" DataType="System.String"/>
+      <Column Name="CNPJ" DataType="System.String"/>
+      <Column Name="PontuacaoTotal" Alias="Pontuação" DataType="System.Int32"/>
+      <BusinessObjectDataSource Name="Premios" Enabled="false" DataType="System.Int32"/>
+      <BusinessObjectDataSource Name="Coletas" Enabled="false" DataType="System.Int32"/>
+    </BusinessObjectDataSource>
+    <BusinessObjectDataSource Name="DS_Coletas" ReferenceName="DS_Coletas" DataType="System.Int32" Enabled="true">
+      <Column Name="Id" DataType="System.Int32"/>
+      <Column Name="DataOperacao" Alias="Data Operação" DataType="System.DateTime"/>
+      <Column Name="PontuacaoGanha" Alias="Pontuação" DataType="System.Int32"/>
+      <Column Name="ClienteId" DataType="System.Int32"/>
+      <Column Name="DataRecolhimento" Alias="Data Recolhimento" DataType="System.Int32"/>
+      <Column Name="Cliente" DataType="System.Int32"/>
+      <Column Name="PontoColeta" DataType="System.Int32"/>
+      <BusinessObjectDataSource Name="Material_Coletas" Enabled="false" DataType="System.Int32"/>
+    </BusinessObjectDataSource>
+    <BusinessObjectDataSource Name="DS_Premiacoes" ReferenceName="DS_Premiacoes" DataType="System.Int32" Enabled="true">
+      <Column Name="Id" DataType="System.Int32"/>
+      <Column Name="Nome" DataType="System.String"/>
+      <Column Name="Descricao" DataType="System.String"/>
+      <Column Name="PontuacaoRequerida" DataType="System.Int32"/>
+      <Column Name="Ativo" DataType="System.Boolean" BindableControl="CheckBox"/>
+      <Column Name="ClienteId" DataType="System.Int32"/>
+      <Column Name="Cliente" DataType="System.Int32"/>
+    </BusinessObjectDataSource>
+    <Relation Name="DS_Clientes_DS_Coletas" ParentDataSource="DS_Clientes" ChildDataSource="DS_Coletas" ParentColumns="Id" ChildColumns="ClienteId" Enabled="true"/>
+    <Relation Name="DS_Clientes_DS_Premiacoes" ParentDataSource="DS_Clientes" ChildDataSource="DS_Premiacoes" ParentColumns="Id" ChildColumns="ClienteId" Enabled="true"/>
+    <Total Name="Total" Expression="[DS_Coletas.Pontuação]" Evaluator="Data2" PrintOn="DataFooter1"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="37.8">
+      <TextObject Name="Text1" Width="718.2" Height="37.8" Text="Relatório Recolhimento" HorzAlign="Center" VertAlign="Center" Font="Arial, 20pt, style=Bold"/>
+    </ReportTitleBand>
+    <DataBand Name="Clientes" Top="41.8" Width="718.2" Height="28.35" DataSource="DS_Clientes">
+      <TextObject Name="Text2" Top="9.45" Width="718.2" Height="18.9" Border.Lines="All" Fill.Color="Silver" Text="[DS_Clientes.Nome]" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <DataBand Name="Data2" Restrictions="HideAllProperties" Top="97.05" Width="718.2" Height="18.9" DataSource="DS_Coletas">
+        <TextObject Name="Text3" Width="283.5" Height="18.9" Border.Lines="Left, Right, Bottom" Text="[DS_Coletas.Data Operação]" Format="Date" Format.Format="d" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt"/>
+        <TextObject Name="Text5" Left="283.5" Width="434.7" Height="18.9" Border.Lines="Right, Bottom" Text="[DS_Coletas.Pontuação]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt"/>
+        <DataHeaderBand Name="DataHeader1" Top="74.15" Width="718.2" Height="18.9">
+          <TextObject Name="Text4" Width="283.5" Height="18.9" Border.Lines="Left, Right, Bottom" Fill.Color="Gainsboro" Text="Data Recolhimento" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+          <TextObject Name="Text6" Left="283.5" Width="434.7" Height="18.9" Border.Lines="Left, Right, Bottom" Fill.Color="Gainsboro" Text="Pontuação Obtida" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+        </DataHeaderBand>
+        <DataFooterBand Name="DataFooter1" Top="119.95" Width="718.2" Height="28.35">
+          <TextObject Name="Text12" Left="283.5" Width="434.7" Height="18.9" Border.Lines="Right, Bottom" Text="[Total]" HorzAlign="Center" Font="Arial, 12pt"/>
+          <TextObject Name="Text13" Width="283.5" Height="18.9" Border.Lines="All" Fill.Color="DimGray" HorzAlign="Center" Font="Arial, 10pt"/>
+        </DataFooterBand>
+      </DataBand>
+      <DataBand Name="Data1" Top="175.2" Width="718.2" Height="18.9" DataSource="DS_Premiacoes">
+        <TextObject Name="Text8" Width="283.5" Height="18.9" Border.Lines="All" Text="[DS_Premiacoes.Descricao]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt"/>
+        <TextObject Name="Text9" Left="283.5" Width="434.7" Height="18.9" Border.Lines="All" Text="[DS_Premiacoes.PontuacaoRequerida]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt"/>
+        <DataHeaderBand Name="DataHeader2" Top="152.3" Width="718.2" Height="18.9">
+          <TextObject Name="Text7" Width="718.2" Height="18.9" Border.Lines="All" Fill.Color="PaleGreen" Text="Prêmios Adiquiridos" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt"/>
+        </DataHeaderBand>
+      </DataBand>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="198.1" Width="718.2" Height="18.9">
+      <TextObject Name="Text10" Left="614.25" Width="94.5" Height="18.9" Text="[Page]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+      <TextObject Name="Text11" Left="18.9" Width="189" Height="18.9" Text="[Date]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>
