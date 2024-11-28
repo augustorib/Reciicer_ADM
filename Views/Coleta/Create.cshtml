@@ -17,7 +17,7 @@
                 <div class="form-group row">
                     <div class="col-md-5">
                         <label  asp-for="ClienteId" class="control-label">Escolha um cliente: </label>
-                        <select asp-for="ClienteId" asp-items="@(new SelectList(Model.Clientes, "Id", "Nome"))" class="form-select form-select-md ">
+                        <select asp-for="ClienteId" asp-items="@(new SelectList(Model.Clientes, "Id", "Nome"))" class="clienteCreate" >
                             <option value=""selected>Selecione um Cliente</option>
 
                         </select>
@@ -159,5 +159,5 @@
 </div>
 
 @section Scripts {
-    <script src="~/js/pages/coletaCreate.js"></script>
+     <script src="~/js/pages/coletaCreate.js" asp-append-version="true"></script> 
 }

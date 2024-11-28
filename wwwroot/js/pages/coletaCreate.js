@@ -23,7 +23,17 @@ $(document).ready(function (){
     
     checkFormMaterialColeta();
 
+    new TomSelect('.clienteCreate', {
+        create: false,
+        sortField: {
+            field: "text",
+            direction: "asc"
+        }
+    });
+
 });
+
+
 
 $("#TipoMaterialId").change(function(){
     ObterMaterialByTipoMaterialId(); 
