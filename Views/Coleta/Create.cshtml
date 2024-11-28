@@ -22,14 +22,13 @@
 
                         </select>
                     </div>
-
                     <div class="col-md-4">
                         <label  asp-for="Coleta.DataOperacao" class="control-label">Data: </label>
                         <input  asp-for="Coleta.DataOperacao" class="form-control" >
                     </div>
 
                     <div class="col-md-2 align-self-end">
-                        <button type="submit" class="btn btn-primary">OK</button>
+                        <button type="submit" class="btn btn-primary" id="coletaCreateClienteButtonOK">OK</button>
                     </div> 
                 </div>
             }else
@@ -65,7 +64,7 @@
                 </div>
 
                 <div class="col-md-3">
-                    <label  asp-for="MaterialId" class="form-label">Escolha um Tipo de material: </label>
+                    <label  asp-for="MaterialId" class="form-label">Escolha um material: </label>
                     <select asp-for="MaterialId" class="form-select form-select-md">
                     </select>
                 </div> 
@@ -81,7 +80,7 @@
                 </div> 
 
                 <div class="col-md-2 align-self-end">
-                    <button type="submit" class="btn btn-primary">OK</button>
+                    <button type="submit" class="btn btn-primary" id="coletaCreateMaterialButtonOK">OK</button>
                 </div> 
 
             </div>
@@ -158,3 +157,7 @@
 
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/js/pages/coletaCreate.js"></script>
+}

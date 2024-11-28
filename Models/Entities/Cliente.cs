@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 
@@ -9,20 +8,22 @@ namespace Reciicer.Models.Entities
         [Key]
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Nome deve ser informado")]
+        [MinLength(3, ErrorMessage ="Nome deve ter no mínimo 3 caracteres")]
         public string? Nome { get; set; }
 
-        [Required]
+        [Display(Name = "E-mail:")]
+        [Required(ErrorMessage ="E-mail deve ser informado")]
         public string? Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Telefone deve ser informado")]
         public string? Telefone { get; set; }
         
         public string? CPF { get; set; } = default!;
         
         public string? CNPJ { get; set; } = default!;
 
-        [DisplayName("Pontuação")]
+        [Display(Name ="Pontuação")]
         public int PontuacaoTotal { get; set; }
 
         public ICollection<Premiacao>? Premios { get; set; }

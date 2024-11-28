@@ -42,9 +42,7 @@ namespace Reciicer.Repository
         public void RegistrarCliente(Cliente model)
         {
            
-            var cliente = new Cliente(model.Nome, model.Email, model.Telefone, model.CPF);
- 
-            _context.Cliente.Add(cliente);
+            _context.Cliente.Add(model);
             _context.SaveChanges();
         }
 
@@ -73,6 +71,7 @@ namespace Reciicer.Repository
                 clienteBD.Telefone = cliente.Telefone;
                 clienteBD.CPF = cliente.CPF;
                 clienteBD.Email = cliente.Email;
+                clienteBD.CNPJ = cliente.CNPJ;
 
 
                 _context.Cliente.Update(clienteBD);

@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Reciicer.Models.Entities;
+using Reciicer.Models.MaterialViewModels;
 using Reciicer.Service.Material;
+using Reciicer.Service.TipoMaterial;
 
 namespace Reciicer.Controllers
 {
@@ -8,10 +10,12 @@ namespace Reciicer.Controllers
     public class MaterialController : Controller
     {
         private readonly MaterialService _materialService;
+        private readonly TipoMaterialService _tipoMaterialService;
 
-        public MaterialController(MaterialService materialService)
+        public MaterialController(MaterialService materialService, TipoMaterialService tipoMaterialService)
         {
-            _materialService = materialService;    
+            _materialService = materialService;
+            _tipoMaterialService = tipoMaterialService;    
         }
 
         public IActionResult Index()
@@ -23,7 +27,12 @@ namespace Reciicer.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            var model = new MaterialCreateViewModel
+            {
+                TipoMateriais = _tipoMaterialService.ListarTipoMaterial()
+            };
+
+            return View(model);
         }
         
         [HttpPost]

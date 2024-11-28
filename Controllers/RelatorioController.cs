@@ -4,10 +4,12 @@ using FastReport;
 using FastReport.Export.PdfSimple;
 using Reciicer.Service.Coleta;
 using Reciicer.Service.Premiacao;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace Reciicer.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class RelatorioController : Controller
     {
         private readonly ClienteService _clienteService;
