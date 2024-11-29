@@ -7,13 +7,11 @@ using Reciicer.Service.Material_Coleta;
 
 namespace Reciicer.Service.Coleta
 {
-    public class ColetaService
+    public class ColetaService 
     {
         private readonly IColetaRepository _coletaRepository;
-
         private readonly ClienteService _clienteService;
         private readonly TipoMaterialService _tipoMaterialService;
-
         private readonly Material_ColetaService _material_ColetaService;
 
         public ColetaService(IColetaRepository coletaRepository, ClienteService clienteService, TipoMaterialService tipoMaterialService,
@@ -32,29 +30,12 @@ namespace Reciicer.Service.Coleta
             var coleta = new Entities.Coleta
             {
                 ClienteId = coletaCreateViewModel.ClienteId,
-                //DataOperacao = DateTime.Now,
                 DataOperacao = coletaCreateViewModel.Coleta.DataOperacao,
-                PontuacaoGanha = 0 //Procedure Update UpdateReciclagemPontuacaoGanha
+                PontuacaoGanha = 0
             };
 
             _coletaRepository.RegistrarColeta(coleta);
         }
-
-        //Método Para calcular a quantidade de pontos que foi feita na Coleta
-        public void CalcularPontuacaoColeta(int coletaId)
-        {
-            var pontuacaoGanha =  _material_ColetaService
-                                    .ListarMaterialColetaPorColetaId(coletaId)
-                                    .Sum(mc => (mc.Material.PontuacaoPeso * mc.Peso) 
-                                        + (mc.Quantidade * mc.Material.PontuacaoUnidade)
-                                        );
-                                        
-            var coleta = ObterColetaPorId(coletaId);
-            coleta.PontuacaoGanha = pontuacaoGanha;
-            
-            AtualizarColeta(coleta)                                 ;
-        }
-
 
         public int ObterTotalMaterialColeta()
         {
@@ -151,6 +132,40 @@ namespace Reciicer.Service.Coleta
             };
 
             return updateView;
+        }
+        
+        //Método Para calcular a quantidade de pontos que foi feita na Coleta
+        public void CalcularPontuacaoColeta(int coletaId)
+        {
+            var coleta = ObterColetaPorId(coletaId);
+            
+            var pontuacaoColeta =  _material_ColetaService
+                                    .ListarMaterialColetaPorColetaId(coleta.Id)
+                                    .Sum(mc => (mc.Material.PontuacaoPeso * mc.Peso) 
+                                        + (mc.Quantidade * mc.Material.PontuacaoUnidade)
+                                        );
+
+            var diferencaPontuacao = pontuacaoColeta - coleta.PontuacaoGanha;
+
+            coleta.PontuacaoGanha = pontuacaoColeta;
+            AtualizarColeta(coleta);
+
+            
+            CalcularClientePontuacaoTotalColeta(coleta.Id, diferencaPontuacao);                            
+        }
+
+        public void CalcularClientePontuacaoTotalColeta(int coletaId, int diferencaPontuacao)
+        {       
+            var coleta = _coletaRepository.ObterColetaPorId(coletaId);
+            var cliente = _clienteService.ObterClientePorId(coleta.ClienteId);     
+            
+            if(coleta.PontuacaoGanha != 0)
+            {
+                cliente.PontuacaoTotal += diferencaPontuacao;
+                
+                _clienteService.AtualizarCliente(cliente);
+            }
+
         }
     }
 }

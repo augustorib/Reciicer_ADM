@@ -38,14 +38,7 @@ namespace Reciicer.Service.Cliente
         {
             _clienteRepository.ExcluirCliente(id);
         }
-
-        public IEnumerable<Entities.Cliente> ListarClientesComPontuacaoTotal()
-        {
-            var clientesComPontuacaoAtualizados =_clienteRepository.ListarClientesComPontuacaoTotal();
-
-            return clientesComPontuacaoAtualizados;
-        }
-
+        
         public IEnumerable<Entities.Cliente> ObterClientesOrdenadoPorPontuação()
         {
             var  clientesTop10 = _clienteRepository.ListarCliente()
@@ -54,21 +47,11 @@ namespace Reciicer.Service.Cliente
                                                   .ToList();
             return clientesTop10;
         }
-
-         public void AtualizarClientesNivel()
-         {
-            _clienteRepository.AtualizarClientesNivelProc();
-         }
- 
         
          public int ObterTotalClientes()
          {
              return _clienteRepository.ListarCliente().Count();
          }
 
-         public IEnumerable<Entities.Cliente> ObterClientesPremiacao()
-         {
-             return _clienteRepository.ListarCliente();
-         }
     }
 }

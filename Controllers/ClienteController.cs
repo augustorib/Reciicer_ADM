@@ -30,7 +30,7 @@ namespace Reciicer.Controllers
         public IActionResult Index()
         {
  
-            return View(_clienteService.ListarClientesComPontuacaoTotal());
+            return View(_clienteService.ListarCliente());
         }
 
 

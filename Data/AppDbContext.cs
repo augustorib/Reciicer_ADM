@@ -20,10 +20,10 @@ namespace Reciicer.Data
             base.OnModelCreating(modelBuilder);
             
             modelBuilder.Entity<Cliente>().HasData(
-                new Cliente {Id = 1, Nome= "Jurandir", Email ="jurandir@gmail.com", Telefone ="(85)98792-0782", CPF ="48906785062", PontuacaoTotal = 15},
-                new Cliente {Id = 2, Nome= "Judit", Email ="judit@gmail.com", Telefone ="(69)99727-2310", CPF ="48517494067"},
-                new Cliente {Id = 3, Nome= "Astolfo", Email ="astolfo@gmail.com", Telefone ="(92)98308-7102", CPF ="71134549504"},
-                new Cliente {Id = 4, Nome= "Padaria Manoel", Email ="manoel@padaria.com", Telefone ="(31)98371-8402", CNPJ ="55434549711"}
+                new Cliente {Id = 1, Nome= "Jurandir", Email ="jurandir@gmail.com", Telefone ="(65) 4984-9849", CPF ="777.777.777-77", PontuacaoTotal = 15},
+                new Cliente {Id = 2, Nome= "Judit", Email ="judit@gmail.com", Telefone ="(54) 4545-4544", CPF ="544.894.849-98"},
+                new Cliente {Id = 3, Nome= "Astolfo", Email ="astolfo@gmail.com", Telefone ="(92) 98308-7102", CPF ="894.399.251-32"},
+                new Cliente {Id = 4, Nome= "Padaria Manoel", Email ="manoel@padaria.com", Telefone ="(31) 98371-8402", CNPJ ="54.594.954/9549-89"}
                
             );
 

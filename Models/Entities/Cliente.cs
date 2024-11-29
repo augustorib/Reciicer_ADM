@@ -7,7 +7,6 @@ namespace Reciicer.Models.Entities
     {
         [Key]
         public int Id { get; set; }
-
         [Required(ErrorMessage ="Nome deve ser informado")]
         [MinLength(3, ErrorMessage ="Nome deve ter no mínimo 3 caracteres")]
         public string? Nome { get; set; }
@@ -28,7 +27,6 @@ namespace Reciicer.Models.Entities
 
         public ICollection<Premiacao>? Premios { get; set; }
         public ICollection<Coleta>? Coletas { get; set; }
-
 
         public Cliente()
         {

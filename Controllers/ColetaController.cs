@@ -6,13 +6,13 @@ using Reciicer.Service.Material;
 using Reciicer.Service.Material_Coleta;
 
 
+
 namespace Reciicer.Controllers
 {
     
     public class ColetaController : Controller
     {
         private readonly ColetaService _coletaService;
-        
         private readonly MaterialService _materialService;
         private readonly Material_ColetaService _material_ColetaService;
 
@@ -40,12 +40,11 @@ namespace Reciicer.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AdicionarColetaCliente(ColetaCreateViewModel coletaCreateViewModel)
         {       
-            //Cria a Reciclagem para o cliente
+            //Cria a Coleta para o cliente
             _coletaService.EfetuarColetaCliente(coletaCreateViewModel);
 
             var coletaCreateViewCliente =_coletaService.ObterColetaCreateViewModelComUltimaColeta(coletaCreateViewModel.ClienteId);
     
-            //TODO: Desacoplar coleta do cliente
             return View("Create", coletaCreateViewCliente);
             
         }
@@ -71,8 +70,6 @@ namespace Reciicer.Controllers
 
                 var viewModel = _coletaService.ObterColetaCreateViewModelComMaterialColeta(coletaCreateViewModel.ClienteId, materialColeta);
 
-                //return View("Create", viewModel);        
-                //TODO: Desacoplar coleta do cliente
                 return View("Create", viewModel);
         }
 
@@ -84,8 +81,6 @@ namespace Reciicer.Controllers
 
             var coletaCreateViewModel = _coletaService.ObterColetaCreateViewModelComMaterialColeta(clienteId);
             
-            //return View("Create", coletaCreateViewModel);
-            //TODO: Desacoplar coleta do cliente
             return View("Create", coletaCreateViewModel);
         }
 
@@ -107,8 +102,6 @@ namespace Reciicer.Controllers
         [HttpGet]
         public IActionResult Update(int id)
         {
-            //var coleta = _coletaService.ObterColetaPorId(id);
-
             return View(_coletaService.ObterUpdateViewModel(id));
         }
 
