@@ -16,10 +16,8 @@ namespace Reciicer.Models.Entities
     
         public bool Ativo { get; set; }
 
-        public int? ClienteId { get; set; } 
-
         //Navigation
-        public Cliente? Cliente {get; set;} 
+        public ICollection<ClientePremiacao>? ClientePremiacaos {get; set;} 
 
 
     }

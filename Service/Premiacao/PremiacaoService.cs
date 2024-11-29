@@ -1,6 +1,7 @@
 using Reciicer.Models.ClienteViewModels;
 using Reciicer.Repository.Interface;
 using Reciicer.Service.Cliente;
+using Reciicer.Service.ClientePremiacao;
 using Entities = Reciicer.Models.Entities;
 
 namespace Reciicer.Service.Premiacao
@@ -9,12 +10,14 @@ namespace Reciicer.Service.Premiacao
     {
         private readonly IPremiacaoRepository _premiacaoRepository;
         private readonly ClienteService _clienteService;
+        private readonly ClientePremiacaoService _clientePremiacaoService;
         
 
-        public PremiacaoService(IPremiacaoRepository premiacaoRepository, ClienteService clienteService)
+        public PremiacaoService(IPremiacaoRepository premiacaoRepository, ClienteService clienteService, ClientePremiacaoService clientePremiacaoService)
         {
             _premiacaoRepository = premiacaoRepository;
             _clienteService = clienteService;
+            _clientePremiacaoService = clientePremiacaoService;
         }
 
         public IEnumerable<Entities.Premiacao> ListarPremiacao()
@@ -44,7 +47,7 @@ namespace Reciicer.Service.Premiacao
         public  ClientePremiacaoViewModel MontarViewModelPremiarCliente(int? premiacaoId)
         {
             var premiosDisponiveis = ListarPremiacao()  
-                        .Where(p => p.ClienteId == null && p.Ativo == true)
+                        .Where(p => p.Ativo == true)
                         .ToList();
 
             var model = new ClientePremiacaoViewModel{
@@ -75,9 +78,14 @@ namespace Reciicer.Service.Premiacao
                 var premiacao = ObterPremiacaoPorId(premiacaoId);
                 var cliente = _clienteService.ObterClientePorId(clienteId);
 
-                premiacao.ClienteId = clienteId;
-                premiacao.Ativo = false;
-                AtualizarPremiacao(premiacao);
+                var clientePremiacao = new Entities.ClientePremiacao
+                {
+                    ClienteId = cliente.Id,
+                    PremiacaoId = premiacao.Id,
+                    DataOperacao = DateTime.Now
+                };
+
+                _clientePremiacaoService.RegistrarClientePremiacao(clientePremiacao);
 
                 cliente.PontuacaoTotal -= premiacao.PontuacaoRequerida;
                 _clienteService.AtualizarCliente(cliente);

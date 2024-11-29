@@ -83,7 +83,7 @@ namespace Reciicer.Controllers
             {
                var premiacaoRealizada = _premiacaoService.RealizarPremiacao(premiacaoId, clienteId);
 
-               TempData["Mensagem"] = premiacaoRealizada ? "Premiação realizada com sucesso!" : "Erro ao realizar premiação!";
+               TempData["Mensagem"] = premiacaoRealizada ? "Premiação realizada com sucesso!" : "Falha ao realizar premiação!";
             }
 
             return RedirectToAction("PremiacaoCliente");

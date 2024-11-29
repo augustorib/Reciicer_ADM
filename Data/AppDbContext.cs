@@ -30,7 +30,7 @@ namespace Reciicer.Data
             modelBuilder.Entity<Premiacao>().HasData(
                 new Premiacao {Id = 1, Nome= "Ingresso UCI", Descricao= "Ingresso para 1 sessão de cinema", Ativo = true, PontuacaoRequerida= 1000 },
                 new Premiacao {Id = 2, Nome= "Desconto 10%", Descricao= "Desconto de 10% em compras até R$200,00 ", Ativo = false, PontuacaoRequerida= 100 },
-                new Premiacao {Id = 3, Nome= "Boné", Descricao= "Boné personalizado ", Ativo = true, PontuacaoRequerida= 200, ClienteId =3 }
+                new Premiacao {Id = 3, Nome= "Boné", Descricao= "Boné personalizado ", Ativo = true, PontuacaoRequerida= 200 }
                
             );
 
@@ -90,6 +90,10 @@ namespace Reciicer.Data
                 new IdentityUserRole<string> { UserId = adminUserId, RoleId = adminRoleId },
                 new IdentityUserRole<string> { UserId = operadorUserId, RoleId = operadorRoleId }
             );
+            
+            modelBuilder.Entity<ClientePremiacao>().HasData(
+                new ClientePremiacao{Id = 1, DataOperacao = new DateTime(2024, 11, 21, 4, 23, 6, 153, DateTimeKind.Local), ClienteId = 3, PremiacaoId = 3}
+            );
         }
         
         public DbSet<Cliente> Cliente {get; set;}
@@ -100,7 +104,7 @@ namespace Reciicer.Data
         public DbSet<Material_Coleta> Material_Coleta {get; set;}
         public DbSet<PontoColeta> PontoColeta {get; set;}
         public DbSet<Endereco> Endereco {get; set;}
-
+        public DbSet<ClientePremiacao> ClientePremiacao {get; set;}
         
     }
 }

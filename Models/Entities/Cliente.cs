@@ -25,7 +25,8 @@ namespace Reciicer.Models.Entities
         [Display(Name ="Pontuação")]
         public int PontuacaoTotal { get; set; }
 
-        public ICollection<Premiacao>? Premios { get; set; }
+        //Navigation
+        public ICollection<ClientePremiacao>? ClientePremiacoes { get; set; }
         public ICollection<Coleta>? Coletas { get; set; }
 
         public Cliente()
