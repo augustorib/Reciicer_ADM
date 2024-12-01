@@ -17,10 +17,8 @@ namespace Reciicer.Models.Entities
         public int PontuacaoGanha { get; set; }
 
         public int ClienteId { get; set; }
+        public int PontoColetaId { get; set; }
             
-        [DisplayName("Data Recolhimento")]
-        public DateOnly? DataRecolhimento { get; set; } = default!;
-
         //Navigation
         public Cliente? Cliente { get; set; } 
         public PontoColeta? PontoColeta { get; set; }

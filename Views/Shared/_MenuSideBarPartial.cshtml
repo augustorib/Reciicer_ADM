@@ -1,5 +1,6 @@
 @using Microsoft.AspNetCore.Identity
-@inject UserManager<IdentityUser> _userManager
+@using Reciicer.Models.Entities
+@inject UserManager<UsuarioIdentity> _userManager
 
 @{
     var userIdentity =  _userManager.GetUserAsync(User).Result;

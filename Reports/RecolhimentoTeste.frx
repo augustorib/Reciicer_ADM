@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="11/30/2024 03:32:50" ReportInfo.Modified="12/01/2024 16:08:36" ReportInfo.CreatorVersion="2025.1.0.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <BusinessObjectDataSource Name="DS_PontoColeta" ReferenceName="DS_PontoColeta" DataType="System.Int32" Enabled="true">
+      <Column Name="Id" DataType="System.Int32"/>
+      <Column Name="Nome" Alias="Local: " DataType="System.String"/>
+      <Column Name="EnderecoId" DataType="System.Int32"/>
+      <Column Name="Endereco" DataType="System.Int32"/>
+      <BusinessObjectDataSource Name="UsuarioIdentities" Enabled="false" DataType="System.Int32"/>
+      <BusinessObjectDataSource Name="Coletas" Enabled="false" DataType="System.Int32"/>
+    </BusinessObjectDataSource>
+    <BusinessObjectDataSource Name="DS_Coleta" ReferenceName="DS_Coleta" DataType="System.Int32" Enabled="true">
+      <Column Name="Id" DataType="System.Int32"/>
+      <Column Name="DataOperacao" Alias="Data Operação" DataType="System.DateTime"/>
+      <Column Name="PontuacaoGanha" Alias="Pontuação" DataType="System.Int32"/>
+      <Column Name="ClienteId" DataType="System.Int32"/>
+      <Column Name="PontoColetaId" DataType="System.Int32"/>
+      <Column Name="Cliente" DataType="System.Int32"/>
+      <Column Name="PontoColeta" DataType="System.Int32"/>
+      <BusinessObjectDataSource Name="Material_Coletas" Enabled="false" DataType="System.Int32"/>
+    </BusinessObjectDataSource>
+    <BusinessObjectDataSource Name="DS_MaterialColeta" ReferenceName="DS_MaterialColeta" DataType="System.Int32" Enabled="true">
+      <Column Name="Id" DataType="System.Int32"/>
+      <Column Name="Peso" Alias="Peso (g)" DataType="System.Int32"/>
+      <Column Name="Quantidade" DataType="System.Int32"/>
+      <Column Name="ColetaId" DataType="System.Int32"/>
+      <Column Name="MaterialId" DataType="System.Int32"/>
+      <Column Name="Coleta" DataType="System.Int32"/>
+      <Column Name="Material" DataType="System.Int32"/>
+    </BusinessObjectDataSource>
+    <BusinessObjectDataSource Name="DS_Material" ReferenceName="DS_Material" DataType="System.Int32" Enabled="true">
+      <Column Name="Id" DataType="System.Int32"/>
+      <Column Name="Nome" Alias="Material" DataType="System.String"/>
+      <Column Name="Descricao" Alias="Descrição" DataType="System.String"/>
+      <Column Name="TempoDegradacao" Alias="Degradação" DataType="System.Int32"/>
+      <Column Name="PontuacaoPeso" Alias="Pontos/peso(g)" DataType="System.Int32"/>
+      <Column Name="PontuacaoUnidade" Alias="Pontos/unidade" DataType="System.Int32"/>
+      <Column Name="TipoMaterialId" DataType="System.Int32"/>
+      <Column Name="TipoMaterial" DataType="System.Int32"/>
+      <BusinessObjectDataSource Name="Material_Coletas1" Alias="Material_Coletas" Enabled="false" DataType="System.Int32" PropName="Material_Coletas"/>
+    </BusinessObjectDataSource>
+    <Relation Name="DS_PontoColeta_DS_Coleta" ParentDataSource="DS_PontoColeta" ChildDataSource="DS_Coleta" ParentColumns="Id" ChildColumns="PontoColetaId" Enabled="true"/>
+    <Relation Name="DS_Coleta_DS_MaterialColeta" ParentDataSource="DS_Coleta" ChildDataSource="DS_MaterialColeta" ParentColumns="Id" ChildColumns="ColetaId" Enabled="true"/>
+    <Relation Name="DS_MaterialColeta_DS_Material" ParentDataSource="DS_MaterialColeta" ChildDataSource="DS_Material" ParentColumns="MaterialId" ChildColumns="Id" Enabled="true"/>
+    <Total Name="TotalPeso" Expression="[DS_MaterialColeta.Peso (g)]" Evaluator="Data3" PrintOn="GroupFooter1"/>
+    <Total Name="TotalQuantidadeColeta" Expression="[DS_MaterialColeta.Quantidade]" Evaluator="Data3" PrintOn="GroupFooter2"/>
+    <Total Name="TotalPesoColeta" Expression="[DS_MaterialColeta.Peso (g)]" Evaluator="Data3" PrintOn="GroupFooter2"/>
+    <Total Name="TotalQuantidade" Expression="[DS_MaterialColeta.Quantidade]" Evaluator="Data3" PrintOn="GroupFooter1"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="37.8">
+      <TextObject Name="Text1" Width="718.2" Height="37.8" Text="Relatório Recolhimento" HorzAlign="Center" VertAlign="Center" Font="Arial, 20pt, style=Bold"/>
+    </ReportTitleBand>
+    <GroupHeaderBand Name="GroupHeader1" Top="41.8" Width="718.2" Height="9.45" Condition="[DS_PontoColeta.Local: ]">
+      <DataBand Name="Data1" Top="55.25" Width="718.2" Height="28.35" Border.Lines="All" Fill.Color="WhiteSmoke" DataSource="DS_PontoColeta">
+        <TextObject Name="Text2" Width="718.2" Height="28.35" Border.Lines="All" Fill.Color="DarkGray" Text="Local: [DS_PontoColeta.Local: ]" Font="Arial, 12pt, style=Bold"/>
+        <GroupHeaderBand Name="GroupHeader2" Top="87.6" Width="718.2" Condition="[DS_Coleta.Data Operação]">
+          <DataBand Name="Data2" Top="91.6" Width="718.2" Height="18.9" DataSource="DS_Coleta">
+            <TextObject Name="Text12" Width="718.2" Height="18.9" Border.Lines="All" Fill.Color="Silver" Text="Data da Coleta: [DS_Coleta.Data Operação]" Format="Date" Format.Format="d" Font="Arial, 12pt, style=Bold"/>
+            <DataBand Name="Data3" Top="137.4" Width="718.2" Height="18.9" DataSource="DS_MaterialColeta">
+              <TextObject Name="Text13" Width="340.2" Height="18.9" Border.Lines="All" Text="[DS_Material.Descrição]" Font="Arial, 12pt"/>
+              <TextObject Name="Text14" Left="340.2" Width="198.45" Height="18.9" Border.Lines="All" Text="[DS_MaterialColeta.Peso (g)]" HorzAlign="Center" Font="Arial, 12pt"/>
+              <TextObject Name="Text15" Left="538.65" Width="179.55" Height="18.9" Border.Lines="All" Text="[DS_MaterialColeta.Quantidade]" HorzAlign="Center" Font="Arial, 12pt"/>
+              <DataHeaderBand Name="DataHeader1" Top="114.5" Width="718.2" Height="18.9">
+                <TextObject Name="Text22" Width="340.2" Height="18.9" Border.Lines="All" Fill.Color="LightGray" Text="Material Descrição" HorzAlign="Center" Font="Arial, 12pt, style=Bold"/>
+                <TextObject Name="Text23" Left="340.2" Width="198.45" Height="18.9" Border.Lines="All" Fill.Color="LightGray" Text="Peso(g)" HorzAlign="Center" Font="Arial, 12pt, style=Bold"/>
+                <TextObject Name="Text24" Left="538.65" Width="179.55" Height="18.9" Border.Lines="All" Fill.Color="LightGray" Text="Quantidade" HorzAlign="Center" Font="Arial, 12pt, style=Bold"/>
+              </DataHeaderBand>
+              <DataBand Name="Data4" Top="160.3" Width="718.2" DataSource="DS_Material"/>
+            </DataBand>
+          </DataBand>
+          <GroupFooterBand Name="GroupFooter2" Top="164.3" Width="718.2" Height="18.9">
+            <TextObject Name="Text19" Width="340.2" Height="18.9" Border.Lines="All" Fill.Color="Gainsboro" Text="Total Coleta" HorzAlign="Right" Font="Arial, 12pt, style=Bold"/>
+            <TextObject Name="Text20" Left="340.2" Width="198.45" Height="18.9" Border.Lines="All" Text="[TotalPesoColeta]" HorzAlign="Center" Font="Arial, 12pt"/>
+            <TextObject Name="Text21" Left="538.65" Width="179.55" Height="18.9" Border.Lines="All" Text="[TotalQuantidadeColeta]" HorzAlign="Center" Font="Arial, 12pt"/>
+          </GroupFooterBand>
+        </GroupHeaderBand>
+      </DataBand>
+      <GroupFooterBand Name="GroupFooter1" Top="187.2" Width="718.2" Height="37.8">
+        <TextObject Name="Text25" Width="340.2" Height="18.9" Border.Lines="All" Fill.Color="Gainsboro" Text="Total Ponto Coleta" HorzAlign="Right" Font="Arial, 12pt, style=Bold"/>
+        <TextObject Name="Text26" Left="340.2" Width="198.45" Height="18.9" Border.Lines="All" Text="[TotalPeso]" HorzAlign="Center" Font="Arial, 12pt"/>
+        <TextObject Name="Text27" Left="538.65" Width="179.55" Height="18.9" Border.Lines="All" Text="[TotalQuantidade]" HorzAlign="Center" Font="Arial, 12pt"/>
+      </GroupFooterBand>
+    </GroupHeaderBand>
+    <PageFooterBand Name="PageFooter1" Top="229" Width="718.2" Height="28.35">
+      <TextObject Name="Text10" Left="595.35" Width="94.5" Height="28.35" Text="[PageN]" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text11" Left="9.45" Width="113.4" Height="28.35" Text="[Date]" VertAlign="Center" Font="Arial, 8pt"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

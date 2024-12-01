@@ -1,16 +1,18 @@
 @using Microsoft.AspNetCore.Identity
-@inject UserManager<IdentityUser> _userManager
-@inject SignInManager<IdentityUser> _signInManager
+@using Reciicer.Models.Entities
+@using Reciicer.Service.PontoColeta
+@inject UserManager<UsuarioIdentity> _userManager
+@inject SignInManager<UsuarioIdentity> _signInManager
+@inject PontoColetaService pontoColetaService
 
 @{
-    
     var userIdentity =  _userManager.GetUserAsync(User).Result;
 
     var userName = userIdentity.UserName;
     var email = userIdentity.Email;
     var roles = _userManager.GetRolesAsync(userIdentity).Result;
       
-
+    var pontoColeta = pontoColetaService.ObterPontoColetaPorId(userIdentity.PontoColetaId).Nome;
 }
 
 <!-- HEADER DESKTOP-->
@@ -33,8 +35,9 @@
                                         <h5 class="name">
                                             <a href="#" class="text-decoration-none text-capitalize text-primary">@userName</a>
                                         </h5>
-                                            <span class="email">@email</span>      
+                                            <span class="email">@email</span>     
                                             <p class="email">@string.Join(", ", roles)</p>      
+                                            <p class="email">@pontoColeta</p>     
                                     </div>
                                 </div>
                                 <div class="account-dropdown__footer">

@@ -14,6 +14,8 @@ using Reciicer.Service.Material_Coleta;
 using Reciicer.Service.PontoColeta;
 using Reciicer.Service.Endereco;
 using Reciicer.Service.ClientePremiacao;
+using Reciicer.Service.UsuarioIdentity;
+using Reciicer.Models.Entities;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,6 +41,7 @@ builder.Services.AddScoped<Material_ColetaService>();
 builder.Services.AddScoped<PontoColetaService>();
 builder.Services.AddScoped<EnderecoService>();
 builder.Services.AddScoped<ClientePremiacaoService>();
+builder.Services.AddScoped<UsuarioIdentityService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 
 
@@ -50,9 +53,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
-
+        
 //Identity Login
-builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+builder.Services.AddIdentity<UsuarioIdentity, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
 
 //builder.Services.Configure<IdentityOptions>(options =>
 //{

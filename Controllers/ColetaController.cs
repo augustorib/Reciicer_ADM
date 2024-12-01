@@ -41,7 +41,7 @@ namespace Reciicer.Controllers
         public IActionResult AdicionarColetaCliente(ColetaCreateViewModel coletaCreateViewModel)
         {       
             //Cria a Coleta para o cliente
-            _coletaService.EfetuarColetaCliente(coletaCreateViewModel);
+            _coletaService.EfetuarColetaCliente(coletaCreateViewModel, User);
 
             var coletaCreateViewCliente =_coletaService.ObterColetaCreateViewModelComUltimaColeta(coletaCreateViewModel.ClienteId);
     

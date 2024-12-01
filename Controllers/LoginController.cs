@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Reciicer.Models.Entities;
 using Reciicer.Models.LoginViewModels;
 using System.Security.Claims;
 
@@ -8,13 +9,14 @@ namespace Reciicer.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<UsuarioIdentity> _userManager;
+        private readonly SignInManager<UsuarioIdentity> _signInManager;
     
-        public LoginController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
+        public LoginController(SignInManager<UsuarioIdentity> signInManager, UserManager<UsuarioIdentity> userManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            
         }
 
 
@@ -56,7 +58,7 @@ namespace Reciicer.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = model.UserName, Email = model.Email };
+                var user = new UsuarioIdentity { UserName = model.UserName, Email = model.Email };
                 
                 var result = await _userManager.CreateAsync(user, model.Password);
 

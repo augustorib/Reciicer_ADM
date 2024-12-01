@@ -16,6 +16,7 @@ namespace Reciicer.Models.Entities
 
         //Navigation
         public Endereco? Endereco { get; set; }
+        public ICollection<UsuarioIdentity>? UsuarioIdentities { get; set; }
         public ICollection<Coleta>? Coletas { get; set; }
 
     }

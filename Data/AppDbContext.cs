@@ -6,7 +6,7 @@ using Reciicer.Models.Entities;
 
 namespace Reciicer.Data
 {
-    public class AppDbContext : IdentityDbContext
+    public class AppDbContext : IdentityDbContext<UsuarioIdentity>
     {
 
         public AppDbContext (DbContextOptions<AppDbContext> options) : base(options)
@@ -50,8 +50,8 @@ namespace Reciicer.Data
             );
 
             modelBuilder.Entity<Coleta>().HasData(
-                new Coleta{Id = 1, DataOperacao = DateTime.Now, PontuacaoGanha = 10, ClienteId = 1 },
-                new Coleta{Id = 2, DataOperacao = DateTime.Now, PontuacaoGanha = 5, ClienteId = 1 }
+                new Coleta{Id = 1, DataOperacao = DateTime.Now, PontuacaoGanha = 10, ClienteId = 1, PontoColetaId=2 },
+                new Coleta{Id = 2, DataOperacao = DateTime.Now, PontuacaoGanha = 5, ClienteId = 1, PontoColetaId =2 }
   
             );
 
@@ -81,9 +81,9 @@ namespace Reciicer.Data
                 new IdentityRole { Id = operadorRoleId, Name = "Operador", NormalizedName = "OPERADOR" }
             );
 
-            modelBuilder.Entity<IdentityUser>().HasData(
-                new IdentityUser { Id = adminUserId, UserName = "admin", NormalizedUserName = "ADMIN", Email = "admin@gmail.com", NormalizedEmail ="ADMIN@GMAIL.COM",PasswordHash = "AQAAAAIAAYagAAAAELOGUtUv5slutFj/g2ySNtpAyK6JnEzlfSGIQVH2hL8onfOArNzzqS3hzh4KBbfBlg==" },
-                new IdentityUser { Id = operadorUserId, UserName = "operador", NormalizedUserName = "OPERADOR", Email = "operador@gmail.com", NormalizedEmail ="OPERADOR@GMAIL.COM", PasswordHash = "AQAAAAIAAYagAAAAEHQ7mga+DIAlOUen1rubIYWrGtJL/2ELlGuZQrZgvy/1u0aPPJa1UHG0VWqHJa06uA==" }
+            modelBuilder.Entity<UsuarioIdentity>().HasData(
+                new UsuarioIdentity { Id = adminUserId, UserName = "admin", NormalizedUserName = "ADMIN", Email = "admin@gmail.com", NormalizedEmail ="ADMIN@GMAIL.COM",PasswordHash = "AQAAAAIAAYagAAAAELOGUtUv5slutFj/g2ySNtpAyK6JnEzlfSGIQVH2hL8onfOArNzzqS3hzh4KBbfBlg==", PontoColetaId=1 },
+                new UsuarioIdentity { Id = operadorUserId, UserName = "operador", NormalizedUserName = "OPERADOR", Email = "operador@gmail.com", NormalizedEmail ="OPERADOR@GMAIL.COM", PasswordHash = "AQAAAAIAAYagAAAAEHQ7mga+DIAlOUen1rubIYWrGtJL/2ELlGuZQrZgvy/1u0aPPJa1UHG0VWqHJa06uA==", PontoColetaId = 2 }
             );
 
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(

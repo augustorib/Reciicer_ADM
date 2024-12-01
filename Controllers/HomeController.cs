@@ -46,7 +46,7 @@ public class HomeController : Controller
 
     [AllowAnonymous]
     public IActionResult Privacy()
-    {
+    {    
         return View();
     }
 

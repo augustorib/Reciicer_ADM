@@ -4,6 +4,8 @@ using Entities = Reciicer.Models.Entities;
 using Reciicer.Service.Cliente;
 using Reciicer.Service.TipoMaterial;
 using Reciicer.Service.Material_Coleta;
+using Reciicer.Service.UsuarioIdentity;
+using System.Security.Claims;
 
 namespace Reciicer.Service.Coleta
 {
@@ -13,25 +15,32 @@ namespace Reciicer.Service.Coleta
         private readonly ClienteService _clienteService;
         private readonly TipoMaterialService _tipoMaterialService;
         private readonly Material_ColetaService _material_ColetaService;
+        private readonly UsuarioIdentityService _usuarioIdentityService;
 
         public ColetaService(IColetaRepository coletaRepository, ClienteService clienteService, TipoMaterialService tipoMaterialService,
-                             Material_ColetaService material_ColetaService)
+                             Material_ColetaService material_ColetaService, UsuarioIdentityService usuarioIdentityService)
         {
             _coletaRepository = coletaRepository;
             _material_ColetaService = material_ColetaService;
             _clienteService = clienteService;
             _tipoMaterialService = tipoMaterialService;
+            _usuarioIdentityService = usuarioIdentityService;
         }
 
         
-        public void EfetuarColetaCliente(ColetaCreateViewModel coletaCreateViewModel)
+        public void EfetuarColetaCliente(ColetaCreateViewModel coletaCreateViewModel, ClaimsPrincipal User)
         {
+
+            var userLogadoId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var userLogado = _usuarioIdentityService.ObterUsuarioIdentityPorIdAsync(userLogadoId).Result;
 
             var coleta = new Entities.Coleta
             {
                 ClienteId = coletaCreateViewModel.ClienteId,
                 DataOperacao = coletaCreateViewModel.Coleta.DataOperacao,
-                PontuacaoGanha = 0
+                PontuacaoGanha = 0,
+                PontoColetaId = userLogado.PontoColetaId
             };
 
             _coletaRepository.RegistrarColeta(coleta);
