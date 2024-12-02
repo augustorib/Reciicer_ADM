@@ -4,8 +4,9 @@ namespace Reciicer.Models.HomeViewModels
 {
     public class ClientePorMes
     {
-        public string Mes { get; set; }
+        public string? NomeMes { get; set; }
+        public int Mes { get; set; }
 
-        public int ClienteQtd { get; set; }
+        public int TotalCliente { get; set; }
     }
 }

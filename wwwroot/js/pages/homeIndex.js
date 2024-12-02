@@ -10,10 +10,10 @@
         var myChart = new Chart(ctx, {
           type: 'line',
           data: {
-            labels: ['January', 'February', 'March', 'April', 'May'],
+            labels: nomeMes,
             type: 'line',
             datasets: [{
-              data: [78, 81, 80, 45, 34],
+              data: totalClientesMes,
               label: 'Clientes',
               backgroundColor: 'rgba(255,255,255,.1)',
               borderColor: 'rgba(255,255,255,.55)',
@@ -67,9 +67,55 @@
           }
         });
       }
-    } catch (error) {
+    } 
+    catch (error) {
       console.log(error);
     }
+
+  try{
+   //WidgetChart 4
+   var ctx = document.getElementById("widgetChart4");
+   if (ctx) {
+     ctx.height = 115;
+     var myChart = new Chart(ctx, {
+       type: 'bar',
+       data: {
+         labels: nomeMesColetas,
+         datasets: [
+           {
+             label: "Coletas",
+             data: totalColetasMes,
+             borderColor: "transparent",
+             borderWidth: "0",
+             backgroundColor: "rgba(255,255,255,.3)"
+           }
+         ]
+       },
+       options: {
+         maintainAspectRatio: true,
+         legend: {
+           display: false
+         },
+         scales: {
+           xAxes: [{
+             display: false,
+             categoryPercentage: 1,
+             barPercentage: 0.65
+           }],
+           yAxes: [{
+             display: false,
+             ticks: {  
+               min: 0
+             },
+           }]
+         }
+       }
+     });
+   }
+  } catch (error) {
+    console.log(error);
+  }
+  
 
     try {
     // Percent Chart

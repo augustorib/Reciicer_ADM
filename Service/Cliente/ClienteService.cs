@@ -1,3 +1,5 @@
+using System.Globalization;
+using Reciicer.Models.HomeViewModels;
 using Reciicer.Repository.Interface;
 using  Entities = Reciicer.Models.Entities;
 
@@ -51,6 +53,22 @@ namespace Reciicer.Service.Cliente
          public int ObterTotalClientes()
          {
              return _clienteRepository.ListarCliente().Count();
+         }
+
+         
+         public IEnumerable<ClientePorMes> ObterTotalClientesPorMes()
+         {
+             var clientesPorMes = _clienteRepository.ListarCliente()
+                                                   .GroupBy(c => c.DataCadastro.Month)
+                                                   .Select(c => new ClientePorMes
+                                                   {
+                                                       Mes = c.Key,
+                                                       TotalCliente = c.Count(),
+                                                       NomeMes = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(c.Key),
+                                                   })
+                                                   .OrderBy(g => g.Mes)
+                                                   .ToList();
+             return clientesPorMes;
          }
 
     }

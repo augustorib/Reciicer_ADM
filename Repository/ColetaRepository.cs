@@ -70,6 +70,19 @@ namespace Reciicer.Repository
            }
         }
 
+       public void RecolherColeta(int id)
+        {
+           var recolherColeta = _context.Coleta.Find(id);
+
+           if(recolherColeta != null)
+           {
+                recolherColeta.Ativo = true;
+
+                _context.Coleta.Update(recolherColeta);
+                _context.SaveChanges();
+           }
+        }
+
         public Coleta ObterClienteUltimaColeta(int clienteId)
         {
             return _context.Coleta.Where(r => r.ClienteId == clienteId)

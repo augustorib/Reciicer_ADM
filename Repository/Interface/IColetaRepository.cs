@@ -11,6 +11,7 @@ namespace Reciicer.Repository.Interface
         void RegistrarColeta(Coleta Coleta); 
         void AtualizarColeta(Coleta Coleta);
         void ExcluirColeta(int id);
+        void RecolherColeta(int id);
         Coleta ObterClienteUltimaColeta(int ClienteId);
         void CalcularPontuacaoColeta(int reciclagemId);
     }

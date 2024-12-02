@@ -13,6 +13,26 @@
         quantidadeMateriaisChart.Add(item.Quantidade);
     }
 
+
+    //Clientes por Mês
+    List<string> nomeMes = new List<string>();
+    List<int> totalClientesMes = new List<int>();
+
+    foreach(var item in Model.ClientePorMes)
+    {
+        nomeMes.Add(item.NomeMes);
+        totalClientesMes.Add(item.TotalCliente);
+    }
+
+    //Coletas por Mês
+    List<string> nomeMesColetas = new List<string>();
+    List<int> totalColetasMes = new List<int>();
+
+    foreach(var item in Model.ColetasPorMes)
+    {
+        nomeMesColetas.Add(item.NomeMes);
+        totalColetasMes.Add(item.TotalColetaMes);
+    }
 }
 
 
@@ -39,7 +59,7 @@
                         </div>
                     </div>
                     <div class="overview-chart">
-                        @* <canvas id="widgetChart1"></canvas> *@
+                        <canvas id="widgetChart1"></canvas>
                     </div> 
                 </div>
             </div>
@@ -57,7 +77,7 @@
                         </div>
                     </div>
                     <div class="overview-chart">
-                        @* <canvas id="widgetChart2"></canvas> *@
+                        <canvas id="widgetChart4"></canvas> 
                     </div>
                 </div>
             </div>
@@ -117,7 +137,6 @@
             </div>
         </div>
         <div class="col-lg-6">
-            @* <h2 class="title-1 m-b-25">Top 10</h2> *@
             <div class="au-card au-card--bg-blue au-card-top-countries m-b-40">
                 <div class="au-card-inner">
                     <div class="table-responsive">
@@ -154,7 +173,15 @@
 @section Scripts {
     <script>
         let labelsChart = @Html.Raw(Json.Serialize(labelsChart));
-        let quantidadeMateriaisChart = @Html.Raw(Json.Serialize(quantidadeMateriaisChart));   
+        let quantidadeMateriaisChart = @Html.Raw(Json.Serialize(quantidadeMateriaisChart)); 
+
+        //chart Clientes por mes 
+        let nomeMes = @Html.Raw(Json.Serialize(nomeMes));
+        let totalClientesMes = @Html.Raw(Json.Serialize(totalClientesMes)); 
+
+        //chart Coleta por mês  
+        let nomeMesColetas = @Html.Raw(Json.Serialize(nomeMesColetas));
+        let totalColetasMes = @Html.Raw(Json.Serialize(totalColetasMes));
     </script>
     
     <script src="~/js/utils/colors.js"  asp-append-version="true"></script>  

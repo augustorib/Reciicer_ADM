@@ -138,7 +138,9 @@ namespace Reciicer.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            _coletaService.ExcluirColeta(id);
+            //_coletaService.ExcluirColeta(id);
+
+            _coletaService.RecolherColeta(id);
 
             return RedirectToAction("Index");
         }

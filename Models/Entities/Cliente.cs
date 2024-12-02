@@ -24,6 +24,7 @@ namespace Reciicer.Models.Entities
 
         [Display(Name ="Pontuação")]
         public int PontuacaoTotal { get; set; }
+        public DateTime DataCadastro { get; set; } = DateTime.Now;
 
         //Navigation
         public ICollection<ClientePremiacao>? ClientePremiacoes { get; set; }

@@ -6,6 +6,8 @@ using Reciicer.Service.TipoMaterial;
 using Reciicer.Service.Material_Coleta;
 using Reciicer.Service.UsuarioIdentity;
 using System.Security.Claims;
+using Reciicer.Models.HomeViewModels;
+using System.Globalization;
 
 namespace Reciicer.Service.Coleta
 {
@@ -76,6 +78,26 @@ namespace Reciicer.Service.Coleta
         public void ExcluirColeta(int id)
         {
             _coletaRepository.ExcluirColeta(id);
+        }
+
+        public void RecolherColeta(int id)
+        {
+            _coletaRepository.RecolherColeta(id);
+        }
+
+        public IEnumerable<ColetasPorMes> ObterTotalColetasPorMes()
+        {
+            var coletasPorMes = _coletaRepository.ListarColeta()
+                                .GroupBy(c => c.DataOperacao.Month )
+                                .Select(c => new ColetasPorMes{
+                                    Mes = c.Key,
+                                    NomeMes = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(c.Key),
+                                    TotalColetaMes = c.Count()
+                                })
+                                .OrderBy(g => g.Mes)
+                                .ToList();
+
+            return coletasPorMes;
         }
         public Entities.Coleta ObterClienteUltimaColeta(int clienteId)
         {

@@ -89,6 +89,8 @@ namespace Reciicer.Controllers
         {
             
 	        var pontoColetas = _pontoColetaService.ListarPontoColeta();
+            //TODO: Verificar true = coleta recolhida
+            //var coletas = _coletaService.ListarColeta().Where(c => c.Ativo = true);
             var coletas = _coletaService.ListarColeta();
             var materiaisColeta = _material_Coleta.ListarMaterialColeta();
             var materiais = _materialService.ListarMaterial();

@@ -35,10 +35,11 @@ public class HomeController : Controller
         var model = new HomeIndexViewModel{
             TotalCliente = _clienteService.ObterTotalClientes(),
             TotalColeta = _coletaService.ObterTotalMaterialColeta(),
-            // MateriaisNome = _materialService.ListarNomesMaterial(),
             DataUltimaColeta = _coletaService.ObterDataUltimaColeta().ToString("dd/MM/yyyy HH:mm"),
             TipoMaterialQuantidadeCharts =  _tipoMaterialService.ObterNomeQuantidadeTipoMaterialGrafico(),
             Top10Clientes = _clienteService.ObterClientesOrdenadoPorPontuação(),
+            ClientePorMes = _clienteService.ObterTotalClientesPorMes(),
+            ColetasPorMes = _coletaService.ObterTotalColetasPorMes()
         };
      
         return View(model);
