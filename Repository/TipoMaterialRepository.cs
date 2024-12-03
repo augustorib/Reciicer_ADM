@@ -62,8 +62,9 @@ namespace Reciicer.Repository
             var sql = @"Select 
                             TM.Id, TM.Nome AS TipoMaterialNome, Count(MC.Id) AS Quantidade
                         FROM 
-                            TipoMaterial TM
-                            left JOIN Material_Coleta MC ON MC.MaterialId = TM.id
+                            Material_Coleta MC
+                            left JOIN Material M ON Mc.MaterialId = M.Id
+                            left JOIN TipoMaterial TM ON tm.Id = M.TipoMaterialId
                         GROUP BY
                             TM.Nome, TM.id
                         ORDER BY 
