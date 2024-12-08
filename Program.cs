@@ -85,6 +85,7 @@ builder.Services.Configure<IdentityOptions>(options =>
    options.Password.RequiredLength = 1;
    options.Password.RequiredUniqueChars = 1;
    
+   
 });
 
 builder.Services.AddLogging( config => config.AddConsole());
@@ -95,11 +96,6 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.SlidingExpiration = true;
     });
 
-//    // User settings.
-//    options.User.AllowedUserNameCharacters =
-//    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-//    options.User.RequireUniqueEmail = false;
-//});
 
 var app = builder.Build();
 

@@ -23,6 +23,13 @@ namespace Reciicer.Controllers
         [HttpGet]
         public IActionResult Login()
         {
+            //Caso o usuário tenha um coockie ativo, redireciona para a página inicial. Isso evita a pagina 
+            //de login ser exibida dentro do layout dos menus
+            if (_signInManager.IsSignedIn(User))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
 
@@ -58,17 +65,16 @@ namespace Reciicer.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new UsuarioIdentity { UserName = model.UserName, Email = model.Email };
+                var user = new UsuarioIdentity { UserName = model.UserName, Email = model.Email, PontoColetaId = 1 };
                 
                 var result = await _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
                     await  _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "Operador"));
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    await _userManager.AddToRoleAsync(user, "Operador");      
+                    await  _userManager.AddToRoleAsync(user, "Operador");      
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Login", "Login");
                 }
 
                 foreach (var error in result.Errors)
