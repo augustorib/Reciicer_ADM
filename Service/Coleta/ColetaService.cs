@@ -48,9 +48,20 @@ namespace Reciicer.Service.Coleta
             _coletaRepository.RegistrarColeta(coleta);
         }
 
-        public int ObterTotalMaterialColeta()
+        public int ObterTotalMaterialColeta(int? anoDashBoard)
         {
-            return _material_ColetaService.ListarMaterialColeta().Count();
+            var anoFiltroDashBoard = anoDashBoard ?? DateTime.Now.Year;
+            
+            var coletasNoAnoId = _coletaRepository.ListarColeta()
+                                .Where(c => c.DataOperacao.Year == anoFiltroDashBoard)
+                                .Select(c => c.Id)
+                                .ToList();
+            
+            return _material_ColetaService.ListarMaterialColeta()   
+                    .Where(mc => coletasNoAnoId.Contains(mc.ColetaId))
+                    .Select(mc => mc.ColetaId)
+                    .Distinct()
+                    .Count();
         }
 
         public DateTime ObterDataUltimaColeta()
@@ -85,13 +96,21 @@ namespace Reciicer.Service.Coleta
             _coletaRepository.RecolherColeta(id);
         }
 
-        public IEnumerable<ColetasPorMes> ObterTotalColetasPorMes()
+        public IEnumerable<ColetasPorMes> ObterTotalColetasPorMes(int? anoFiltroDashBoard)
         {
-            var coletasPorMes = _coletaRepository.ListarColeta()
-                                .GroupBy(c => c.DataOperacao.Month )
+            var query = _coletaRepository.ListarColeta().AsQueryable();
+            
+            if (anoFiltroDashBoard.HasValue)
+            {
+                query = query.Where(c => c.DataOperacao.Year == anoFiltroDashBoard.Value);
+            }
+
+            var coletasPorMes =  query
+                                .GroupBy(c => new {c.DataOperacao.Month, c.DataOperacao.Year}) 
                                 .Select(c => new ColetasPorMes{
-                                    Mes = c.Key,
-                                    NomeMes = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(c.Key),
+                                    Mes = c.Key.Month,
+                                    Ano = c.Key.Year,
+                                    NomeMes = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(c.Key.Month),
                                     TotalColetaMes = c.Count()
                                 })
                                 .OrderBy(g => g.Mes)

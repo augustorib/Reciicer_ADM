@@ -10,6 +10,6 @@ namespace Reciicer.Repository.Interface
         void RegistrarTipoMaterial(TipoMaterial tipoMaterial); 
         void AtualizarTipoMaterial(TipoMaterial tipoMaterial);
         void ExcluirTipoMaterial(int id);
-        public IEnumerable<TipoMaterialQuantidadeChart> ObterNomeQuantidadeTipoMaterialGrafico();
+        public IEnumerable<TipoMaterialQuantidadeChart> ObterNomeQuantidadeTipoMaterialGrafico(int anoDashboard);
     }
 }

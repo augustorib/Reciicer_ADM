@@ -30,16 +30,18 @@ public class HomeController : Controller
     }
 
 
-    public IActionResult Index()
+    public IActionResult Index(int? anoDashboard)
     {
+
         var model = new HomeIndexViewModel{
-            TotalCliente = _clienteService.ObterTotalClientes(),
-            TotalColeta = _coletaService.ObterTotalMaterialColeta(),
+            TotalCliente = _clienteService.ObterTotalClientes(anoDashboard),
+            TotalColeta = _coletaService.ObterTotalMaterialColeta(anoDashboard),
             DataUltimaColeta = _coletaService.ObterDataUltimaColeta().ToString("dd/MM/yyyy HH:mm"),
-            TipoMaterialQuantidadeCharts =  _tipoMaterialService.ObterNomeQuantidadeTipoMaterialGrafico(),
+            TipoMaterialQuantidadeCharts =  _tipoMaterialService.ObterNomeQuantidadeTipoMaterialGrafico(anoDashboard),
             Top10Clientes = _clienteService.ObterClientesOrdenadoPorPontuação(),
-            ClientePorMes = _clienteService.ObterTotalClientesPorMes(),
-            ColetasPorMes = _coletaService.ObterTotalColetasPorMes()
+            ClientePorMes = _clienteService.ObterTotalClientesPorMes(anoDashboard),
+            ColetasPorMes = _coletaService.ObterTotalColetasPorMes(anoDashboard),
+            AnoSelecionado = anoDashboard ?? DateTime.Now.Year
         };
      
         return View(model);

@@ -57,20 +57,21 @@ namespace Reciicer.Repository
             }
         }
 
-        public IEnumerable<TipoMaterialQuantidadeChart> ObterNomeQuantidadeTipoMaterialGrafico()
+        public IEnumerable<TipoMaterialQuantidadeChart> ObterNomeQuantidadeTipoMaterialGrafico(int anoDashboard)
         {
             var sql = @"Select 
                             TM.Id, TM.Nome AS TipoMaterialNome, Count(MC.Id) AS Quantidade
                         FROM 
-                            Material_Coleta MC
-                            left JOIN Material M ON Mc.MaterialId = M.Id
-                            left JOIN TipoMaterial TM ON tm.Id = M.TipoMaterialId
+                            Coleta C
+                            JOIN Material_Coleta MC ON C.Id = MC.ColetaId And Year(C.DataOperacao) = {0}
+                            JOIN Material M ON Mc.MaterialId = M.Id
+                            JOIN TipoMaterial TM ON tm.Id = M.TipoMaterialId										
                         GROUP BY
                             TM.Nome, TM.id
                         ORDER BY 
-                            TM.id";
+                            TM.id;";
 
-            var result = _context.Database.SqlQueryRaw<TipoMaterialQuantidadeChart>(sql).ToList();
+            var result = _context.Database.SqlQueryRaw<TipoMaterialQuantidadeChart>(sql, anoDashboard).ToList();
             
             return result;
         }

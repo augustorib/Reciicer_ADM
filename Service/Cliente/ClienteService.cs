@@ -50,24 +50,36 @@ namespace Reciicer.Service.Cliente
             return clientesTop10;
         }
         
-         public int ObterTotalClientes()
+         public int ObterTotalClientes(int? anoDashboard)
          {
-             return _clienteRepository.ListarCliente().Count();
+            var anoFiltroDashBoard = anoDashboard ?? DateTime.Now.Year;
+            
+            return _clienteRepository.ListarCliente().Where(c => c.DataCadastro.Year == anoFiltroDashBoard).Count();
          }
 
          
-         public IEnumerable<ClientePorMes> ObterTotalClientesPorMes()
+         public IEnumerable<ClientePorMes> ObterTotalClientesPorMes(int? anoFiltroDashBoard)
          {
-             var clientesPorMes = _clienteRepository.ListarCliente()
-                                                   .GroupBy(c => c.DataCadastro.Month)
-                                                   .Select(c => new ClientePorMes
-                                                   {
-                                                       Mes = c.Key,
-                                                       TotalCliente = c.Count(),
-                                                       NomeMes = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(c.Key),
-                                                   })
-                                                   .OrderBy(g => g.Mes)
-                                                   .ToList();
+
+            var query = _clienteRepository.ListarCliente().AsQueryable();
+
+            if (anoFiltroDashBoard.HasValue)
+            {
+                query = query.Where(c => c.DataCadastro.Year == anoFiltroDashBoard);
+            }
+
+            var clientesPorMes = query
+                                    .GroupBy(c => new {c.DataCadastro.Month, c.DataCadastro.Year})
+                                    .Select(c => new ClientePorMes
+                                    {
+                                        Mes = c.Key.Month,
+                                        Ano = c.Key.Year,
+                                        TotalCliente = c.Count(),
+                                        NomeMes = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(c.Key.Month),
+                                    })
+                                    .OrderBy(g => g.Ano)
+                                    .ThenBy(g => g.Mes)
+                                    .ToList();
              return clientesPorMes;
          }
 

@@ -40,9 +40,11 @@ namespace Reciicer.Service.TipoMaterial
         }
     
   
-        public IEnumerable<TipoMaterialQuantidadeChart> ObterNomeQuantidadeTipoMaterialGrafico()
+        public IEnumerable<TipoMaterialQuantidadeChart> ObterNomeQuantidadeTipoMaterialGrafico(int? anoDashboard)
         {
-            return _tipoMaterialrepository.ObterNomeQuantidadeTipoMaterialGrafico();  
+            var anoFiltroDashBoard = anoDashboard ?? DateTime.Now.Year;
+
+            return _tipoMaterialrepository.ObterNomeQuantidadeTipoMaterialGrafico(anoFiltroDashBoard);  
         }
 
     }

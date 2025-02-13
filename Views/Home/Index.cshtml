@@ -45,6 +45,31 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <form action="Index" method="post">
+                <div class="overview-wrap pb-3 ">
+                    <label class="fs-5" for="anoDashboard">Ano: </label>
+                    <select class="form-select ms-2" name="anoDashboard" id="anoDashboard">
+                    @foreach (var ano in Model.ultimosAnos)
+                    {
+                        if(ano == Model.AnoSelecionado)
+                        {
+                            <option value="@ano" selected>@ano</option>
+                        }
+                        else
+                        {
+                            <option value="@ano">@ano</option>
+                        }
+                    }
+                    </select>
+                    <button type="submit" class="btn btn-primary ms-1">OK</button>   
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="row m-t-25 ">
         <div class="col-sm-6 col-lg-4">
             <div class="overview-item overview-item--c1">
