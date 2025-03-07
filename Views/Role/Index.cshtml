@@ -1,0 +1,29 @@
+@model Reciicer.Models.RoleViewModels.UserRoleListViewModel
+@{
+    ViewData["Title"] = "Listar Usuários";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+
+<table class="table table-striped" id="dataTableInit">
+    <thead>
+        <tr>
+            <th>Nome de Usuário</th>
+            <th>Email</th>
+            <th>Ponto de Coleta</th>
+            <th>Roles</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>@user.PontoColeta</td>
+                <td>@string.Join("| ", user.Roles)</td>
+            </tr>
+        }
+    </tbody>
+</table>

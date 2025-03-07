@@ -13,6 +13,7 @@
     var roles = _userManager.GetRolesAsync(userIdentity).Result;
       
     var pontoColeta = pontoColetaService.ObterPontoColetaPorId(userIdentity.PontoColetaId).Nome;
+    var isAdmin = roles.Contains("Admin"); 
 }
 
 <!-- HEADER DESKTOP-->
@@ -40,6 +41,12 @@
                                             <p class="email">@pontoColeta</p>     
                                     </div>
                                 </div>
+                                @if(isAdmin)
+                                {
+                                    <div class="account-dropdown__footer">
+                                        <a asp-action="Index" asp-controller="Role"><i class="zmdi zmdi-settings"></i>Roles</a>
+                                    </div>
+                                }
                                 <div class="account-dropdown__footer">
                                     <a asp-action="Logout" asp-controller="Login"><i class="zmdi zmdi-power"></i>Sair</a>
                                 </div>
