@@ -14,7 +14,7 @@ namespace Reciicer.Models.Entities
         public PontoColeta? PontoColeta { get; set; }
         public Cooperativa? Cooperativa { get; set; }
 
-        public ICollection<Recolhimento_Material>? Recolhimento_Materiais { get; set; }
+        public ICollection<RecolhimentoMaterial>? RecolhimentoMateriais { get; set; }
         
     }
 }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Reciicer.Models.Entities
 {
-    public class Recolhimento_Material
+    public class RecolhimentoMaterial
     {
         [Key]
         public int Id { get; set; }
