@@ -94,6 +94,21 @@ namespace Reciicer.Data
             modelBuilder.Entity<ClientePremiacao>().HasData(
                 new ClientePremiacao{Id = 1, DataOperacao = new DateTime(2024, 11, 21, 4, 23, 6, 153, DateTimeKind.Local), ClienteId = 3, PremiacaoId = 3}
             );
+
+            modelBuilder.Entity<Recolhimento>().HasData(
+                new Recolhimento{Id = 1, DataRecolhimento = new DateTime(2024, 11, 21, 4, 23, 6, 153, DateTimeKind.Local), PontoColetaId = 1, CooperativaId = 1},   
+                new Recolhimento{Id = 2, DataRecolhimento = new DateTime(2025, 02, 21, 6, 23, 6, 153, DateTimeKind.Local), PontoColetaId = 2, CooperativaId = 1}
+            );
+
+            modelBuilder.Entity<Recolhimento_Material>().HasData(
+                new Recolhimento_Material{Id = 1, RecolhimentoId = 1, MaterialId = 1, QuantidadeTotal = 0, PesoTotal = 21},
+                new Recolhimento_Material{Id = 2, RecolhimentoId = 2, MaterialId = 2, QuantidadeTotal = 10, PesoTotal = 0}
+            );
+
+            modelBuilder.Entity<Cooperativa>().HasData(
+                new Cooperativa{Id = 1, Nome = "Cooperativa de Reciclagem", Email = "", CNPJ = "00.000.000/0000-00"}
+            );
+
         }
         
         public DbSet<Cliente> Cliente {get; set;}
@@ -105,6 +120,9 @@ namespace Reciicer.Data
         public DbSet<PontoColeta> PontoColeta {get; set;}
         public DbSet<Endereco> Endereco {get; set;}
         public DbSet<ClientePremiacao> ClientePremiacao {get; set;}
+        public DbSet<Recolhimento> Recolhimento {get; set;}
+        public DbSet<Cooperativa> Cooperativa {get; set;}
+        public DbSet<Recolhimento_Material> Recolhimento_Material {get; set;}
         
     }
 }
