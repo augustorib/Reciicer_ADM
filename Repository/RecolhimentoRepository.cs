@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Reciicer.Data;
 using Reciicer.Models.Entities;
 using Reciicer.Repository.Interface;
@@ -15,12 +16,13 @@ namespace Reciicer.Repository
 
         public IEnumerable<Recolhimento> ListarRecolhimento()
         {
-            return _context.Recolhimento.ToList();
+            return _context.Recolhimento.Include(r => r.PontoColeta).Include(r => r.Cooperativa).ToList();
         }
 
         public Recolhimento ObterRecolhimentoPorId(int id)
         {
-            return _context.Recolhimento.Find(id);
+            return _context.Recolhimento.Include(r => r.PontoColeta).Include(r => r.Cooperativa).FirstOrDefault(r => r.Id == id);
+            
         }
 
         public void RegistrarRecolhimento(Recolhimento recolhimento)

@@ -1,0 +1,29 @@
+@model Reciicer.Models.Entities.Recolhimento
+@{
+    ViewData["Title"] = "Detalhes Recolhimento";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+        <div class="form-group row">
+            <div class="col-md-4">
+                <label asp-for="PontoColeta.Nome" class="form-label">@Html.DisplayNameFor(model => model.PontoColeta.Nome)</label>
+                <input asp-for="PontoColeta.Nome" class="form-control" disabled>
+            </div>
+            <div class="col-md-5">
+                <label asp-for="Cooperativa.Nome" class="form-label">@Html.DisplayNameFor(model => model.Cooperativa.Nome)</label>
+                <input asp-for="Cooperativa.Nome" class="form-control" disabled>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="DataRecolhimento" class="form-label">@Html.DisplayNameFor(model => model.DataRecolhimento):</label>
+                <input asp-for="DataRecolhimento" class="form-control" disabled>
+            </div>
+        </div>
+
+
+        <div class="form-group mt-2">
+            <a asp-action="Update" asp-route-Id="@Model.Id" class="btn btn-warning text-white ">Atualizar <i class="fa-solid fa-pen"></i></a>
+            <a asp-action="Index" class="btn btn-secondary">Voltar <i class="fa-solid fa-rotate-left"></i></a>
+        </div>
+</div>

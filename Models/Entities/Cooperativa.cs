@@ -8,6 +8,7 @@ namespace Reciicer.Models.Entities
         [Key]
         public int Id { get; set; }
 
+        [Display(Name = "Cooperativa")]
         public string? Nome { get; set; }
 
         public string? Email { get; set; }

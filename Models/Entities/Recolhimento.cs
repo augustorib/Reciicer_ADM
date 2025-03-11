@@ -6,6 +6,8 @@ namespace Reciicer.Models.Entities
     {
         [Key]
         public int Id { get; set; }
+
+        [Display(Name = "Data do Recolhimento")]
         public DateTime DataRecolhimento  { get; set; }
 
         public int PontoColetaId { get; set; }
