@@ -1,3 +1,4 @@
+using Reciicer.Models.RecolhimentoViewModels;
 using Reciicer.Repository.Interface;
 using Entities = Reciicer.Models.Entities;
 
@@ -35,6 +36,22 @@ namespace Reciicer.Service.Material_Coleta
              _Material_ColetaRepository.ExcluirMaterialColeta(id);
         }
 
+        public IEnumerable<MaterialTotais> ObterTotaisMaterial()
+        {
 
+           var materialTotais = _Material_ColetaRepository.ListarMaterialColetaMaterial()
+                                      .AsQueryable()
+                                      .GroupBy(mc => new {mc.Material.Id, mc.Material.Nome})
+                                      .Select(g => new MaterialTotais()
+                                        {
+                                            MaterialId = g.Key.Id,
+                                            Material = g.Key.Nome,
+                                            QuantidadeTotal = g.Sum(mc => mc.Quantidade),
+                                            PesoTotal = g.Sum(mc => mc.Peso)
+                                        }).ToList();
+
+            return materialTotais;
+                   
+        }
     }
 }

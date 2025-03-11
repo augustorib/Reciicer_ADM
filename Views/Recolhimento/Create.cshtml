@@ -1,0 +1,85 @@
+@using Reciicer.Models.Entities
+@model Reciicer.Models.RecolhimentoViewModels.RecolhimentoCreateViewModel
+@{
+    ViewData["Title"] = "Criar Recolhimento";
+
+    var listaRecolhimentoMateriais = new List<RecolhimentoMaterial>();
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    
+    <form method="post" asp-action="Create">
+
+        <div class="form-group row my-3">
+            <div class="col-md-5">
+                <label  asp-for="CooperativaId" class="control-label">Escolha uma Cooperativa: </label>
+                <select asp-for="CooperativaId" asp-items="@(new SelectList(Model.Cooperativas, "Id", "Nome"))" class="form-select form-select-md ">
+                    <option value=""selected>Selecione uma Cooperativa </option>
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label  asp-for="Recolhimento.DataRecolhimento" class="control-label">Data: </label>
+                <input  asp-for="Recolhimento.DataRecolhimento" class="form-control" >
+            </div>
+            
+        </div>
+
+        <table class="table table-striped" id="dataTableInit">
+            <thead>
+                <tr>
+                    <th>Material</th>
+                    <th>Quantidade Total</th>
+                    <th>Peso Total</th>
+                    <th>Quantidade</th>
+                    <th>Peso</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.MateriaisTotais.Count(); i++)
+                {
+                    var item = Model.MateriaisTotais.ElementAt(i);
+                    @* var recolhimentoMateriais = Model.RecolhimentoMateriais.ElementAt(i);
+             
+                    recolhimentoMateriais.MaterialId = item.MaterialId; *@
+
+                    listaRecolhimentoMateriais.Add(new RecolhimentoMaterial{
+                        
+                        MaterialId = item.MaterialId
+                    });
+
+                    var recolhimentoAtual = listaRecolhimentoMateriais.ElementAt(i);
+
+                    <tr>
+                        
+                        <td>@item.Material</td>
+                        <td>@item.QuantidadeTotal</td>
+                        <td>@item.PesoTotal</td>
+                        @* <td>
+                            <input type="number" name="MaterialQ0-@(i+1)" id="MaterialQ0-@(i+1)" class="form-control" />
+                        </td>
+                        <td>
+                            <input type="number" name="MaterialP0-@(i+1)" id="MaterialP0-@(i+1)" class="form-control" />
+                        </td> *@
+      
+                        <td>
+                            <input type="number" asp-for="@recolhimentoAtual.QuantidadeTotal" class="form-control" />
+                        </td> 
+                        <td>
+                            <input type="number" asp-for="@recolhimentoAtual.PesoTotal" class="form-control" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="form-group mt-2">
+            <input type="submit" class="btn btn-primary" value="Confirmar">
+            <a asp-action="Index" class="btn btn-secondary">Voltar <i class="fa-solid fa-rotate-left"></i></a>
+        </div>
+
+    </form>
+
+</div>

@@ -18,6 +18,12 @@ namespace Reciicer.Repository
         {
             return _context.Material_Coleta.ToList();
         }
+        
+        public IEnumerable<Material_Coleta> ListarMaterialColetaMaterial()
+        {
+            return _context.Material_Coleta.Include(mc => mc.Material).ToList();
+        }
+        
         public IEnumerable<Material_Coleta> ListarMaterialColetaPorColetaId(int ColetaId)
         {
             return _context.Material_Coleta.Where(mc => mc.ColetaId == ColetaId)
