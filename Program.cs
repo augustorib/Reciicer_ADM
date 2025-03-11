@@ -16,6 +16,7 @@ using Reciicer.Service.Endereco;
 using Reciicer.Service.ClientePremiacao;
 using Reciicer.Service.UsuarioIdentity;
 using Reciicer.Models.Entities;
+using Reciicer.Service.Cooperativa;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +31,7 @@ builder.Services.AddScoped<IMaterial_ColetaRepository, Material_ColetaRepository
 builder.Services.AddScoped<IPontoColetaRepository, PontoColetaRepository>();
 builder.Services.AddScoped<IEnderecoRepository, EnderecoRepository>();
 builder.Services.AddScoped<IClientePremiacaoRepository, ClientePremiacaoRepository>();
+builder.Services.AddScoped<ICooperativaRepository, CooperativaRepository>();
 
 //Services
 builder.Services.AddScoped<ClienteService>();
@@ -42,6 +44,7 @@ builder.Services.AddScoped<PontoColetaService>();
 builder.Services.AddScoped<EnderecoService>();
 builder.Services.AddScoped<ClientePremiacaoService>();
 builder.Services.AddScoped<UsuarioIdentityService>();
+builder.Services.AddScoped<CooperativaService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 
 
