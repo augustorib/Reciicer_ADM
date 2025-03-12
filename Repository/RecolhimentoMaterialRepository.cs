@@ -38,6 +38,10 @@ namespace Reciicer.Repository
             catch (Exception e)
             {
                 transaction.Rollback();
+
+                Console.WriteLine($"Error: {e.Message}");
+                // Optionally, rethrow the exception or handle it as needed
+                throw;
             }
 
         }

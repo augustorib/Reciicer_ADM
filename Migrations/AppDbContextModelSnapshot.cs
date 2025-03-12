@@ -51,13 +51,13 @@ namespace Reciicer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "64e2abe3-53d8-4b78-a4a6-b86549566435",
+                            Id = "7fcd69ce-df50-4572-ae88-691274d7b32f",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "afa8ed0e-50b0-40f6-9ff3-406923de52fd",
+                            Id = "9372600f-97a1-4927-8039-efbcd87049bc",
                             Name = "Operador",
                             NormalizedName = "OPERADOR"
                         });
@@ -152,13 +152,13 @@ namespace Reciicer.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "1d26d406-c4ab-4d7e-a64f-fed9a5c303fd",
-                            RoleId = "64e2abe3-53d8-4b78-a4a6-b86549566435"
+                            UserId = "9f5095a1-0d5b-45b5-aa59-5ebb72a57831",
+                            RoleId = "7fcd69ce-df50-4572-ae88-691274d7b32f"
                         },
                         new
                         {
-                            UserId = "9c95b117-3d26-405b-bd53-aafc2f0af781",
-                            RoleId = "afa8ed0e-50b0-40f6-9ff3-406923de52fd"
+                            UserId = "f43cde04-a3de-4cd6-a515-a1947d7e57f5",
+                            RoleId = "9372600f-97a1-4927-8039-efbcd87049bc"
                         });
                 });
 
@@ -222,7 +222,7 @@ namespace Reciicer.Migrations
                         {
                             Id = 1,
                             CPF = "777.777.777-77",
-                            DataCadastro = new DateTime(2025, 3, 10, 6, 12, 34, 825, DateTimeKind.Local).AddTicks(4724),
+                            DataCadastro = new DateTime(2025, 3, 12, 14, 21, 8, 397, DateTimeKind.Local).AddTicks(8467),
                             Email = "jurandir@gmail.com",
                             Nome = "Jurandir",
                             PontuacaoTotal = 15,
@@ -232,7 +232,7 @@ namespace Reciicer.Migrations
                         {
                             Id = 2,
                             CPF = "544.894.849-98",
-                            DataCadastro = new DateTime(2025, 3, 10, 6, 12, 34, 825, DateTimeKind.Local).AddTicks(4739),
+                            DataCadastro = new DateTime(2025, 3, 12, 14, 21, 8, 397, DateTimeKind.Local).AddTicks(8479),
                             Email = "judit@gmail.com",
                             Nome = "Judit",
                             PontuacaoTotal = 0,
@@ -242,7 +242,7 @@ namespace Reciicer.Migrations
                         {
                             Id = 3,
                             CPF = "894.399.251-32",
-                            DataCadastro = new DateTime(2025, 3, 10, 6, 12, 34, 825, DateTimeKind.Local).AddTicks(4741),
+                            DataCadastro = new DateTime(2025, 3, 12, 14, 21, 8, 397, DateTimeKind.Local).AddTicks(8481),
                             Email = "astolfo@gmail.com",
                             Nome = "Astolfo",
                             PontuacaoTotal = 0,
@@ -252,7 +252,7 @@ namespace Reciicer.Migrations
                         {
                             Id = 4,
                             CNPJ = "54.594.954/9549-89",
-                            DataCadastro = new DateTime(2025, 3, 10, 6, 12, 34, 825, DateTimeKind.Local).AddTicks(4743),
+                            DataCadastro = new DateTime(2025, 3, 12, 14, 21, 8, 397, DateTimeKind.Local).AddTicks(8482),
                             Email = "manoel@padaria.com",
                             Nome = "Padaria Manoel",
                             PontuacaoTotal = 0,
@@ -332,7 +332,7 @@ namespace Reciicer.Migrations
                             Id = 1,
                             Ativo = false,
                             ClienteId = 1,
-                            DataOperacao = new DateTime(2025, 3, 10, 6, 12, 34, 825, DateTimeKind.Local).AddTicks(5010),
+                            DataOperacao = new DateTime(2025, 3, 12, 14, 21, 8, 397, DateTimeKind.Local).AddTicks(8921),
                             PontoColetaId = 2,
                             PontuacaoGanha = 10
                         },
@@ -341,7 +341,7 @@ namespace Reciicer.Migrations
                             Id = 2,
                             Ativo = false,
                             ClienteId = 1,
-                            DataOperacao = new DateTime(2025, 3, 10, 6, 12, 34, 825, DateTimeKind.Local).AddTicks(5012),
+                            DataOperacao = new DateTime(2025, 3, 12, 14, 21, 8, 397, DateTimeKind.Local).AddTicks(8924),
                             PontoColetaId = 2,
                             PontuacaoGanha = 5
                         });
@@ -678,7 +678,7 @@ namespace Reciicer.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Reciicer.Models.Entities.Recolhimento_Material", b =>
+            modelBuilder.Entity("Reciicer.Models.Entities.RecolhimentoMaterial", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -704,7 +704,7 @@ namespace Reciicer.Migrations
 
                     b.HasIndex("RecolhimentoId");
 
-                    b.ToTable("Recolhimento_Material");
+                    b.ToTable("RecolhimentoMaterial");
 
                     b.HasData(
                         new
@@ -851,9 +851,9 @@ namespace Reciicer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1d26d406-c4ab-4d7e-a64f-fed9a5c303fd",
+                            Id = "9f5095a1-0d5b-45b5-aa59-5ebb72a57831",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1cd3ec3b-40a1-49a7-81fd-f1261201a749",
+                            ConcurrencyStamp = "d562986c-a62e-4d9e-9932-9d72f78faebe",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -862,15 +862,15 @@ namespace Reciicer.Migrations
                             PasswordHash = "AQAAAAIAAYagAAAAELOGUtUv5slutFj/g2ySNtpAyK6JnEzlfSGIQVH2hL8onfOArNzzqS3hzh4KBbfBlg==",
                             PhoneNumberConfirmed = false,
                             PontoColetaId = 1,
-                            SecurityStamp = "e7c2ff9b-0aa1-40bb-9083-2efc830377ef",
+                            SecurityStamp = "1e76bdf5-961e-4db1-9776-afbda2a0c47f",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
                         new
                         {
-                            Id = "9c95b117-3d26-405b-bd53-aafc2f0af781",
+                            Id = "f43cde04-a3de-4cd6-a515-a1947d7e57f5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a24c045d-2cd5-47fb-b68c-9e41f50426d0",
+                            ConcurrencyStamp = "ab824a71-0e6a-4321-a05d-6f6667d2c0cd",
                             Email = "operador@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -879,7 +879,7 @@ namespace Reciicer.Migrations
                             PasswordHash = "AQAAAAIAAYagAAAAEHQ7mga+DIAlOUen1rubIYWrGtJL/2ELlGuZQrZgvy/1u0aPPJa1UHG0VWqHJa06uA==",
                             PhoneNumberConfirmed = false,
                             PontoColetaId = 2,
-                            SecurityStamp = "353deaad-a083-42c4-99f2-2354d1109882",
+                            SecurityStamp = "a7835725-1a50-4e85-8b66-69e41053c625",
                             TwoFactorEnabled = false,
                             UserName = "operador"
                         });
@@ -1034,7 +1034,7 @@ namespace Reciicer.Migrations
                     b.Navigation("PontoColeta");
                 });
 
-            modelBuilder.Entity("Reciicer.Models.Entities.Recolhimento_Material", b =>
+            modelBuilder.Entity("Reciicer.Models.Entities.RecolhimentoMaterial", b =>
                 {
                     b.HasOne("Reciicer.Models.Entities.Material", "Material")
                         .WithMany()
@@ -1043,7 +1043,7 @@ namespace Reciicer.Migrations
                         .IsRequired();
 
                     b.HasOne("Reciicer.Models.Entities.Recolhimento", "Recolhimento")
-                        .WithMany("Recolhimento_Materiais")
+                        .WithMany("RecolhimentoMateriais")
                         .HasForeignKey("RecolhimentoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1102,7 +1102,7 @@ namespace Reciicer.Migrations
 
             modelBuilder.Entity("Reciicer.Models.Entities.Recolhimento", b =>
                 {
-                    b.Navigation("Recolhimento_Materiais");
+                    b.Navigation("RecolhimentoMateriais");
                 });
 
             modelBuilder.Entity("Reciicer.Models.Entities.TipoMaterial", b =>

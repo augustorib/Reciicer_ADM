@@ -86,7 +86,7 @@ namespace Reciicer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Recolhimento_Material",
+                name: "RecolhimentoMaterial",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -98,15 +98,15 @@ namespace Reciicer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Recolhimento_Material", x => x.Id);
+                    table.PrimaryKey("PK_RecolhimentoMaterial", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Recolhimento_Material_Material_MaterialId",
+                        name: "FK_RecolhimentoMaterial_Material_MaterialId",
                         column: x => x.MaterialId,
                         principalTable: "Material",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Recolhimento_Material_Recolhimento_RecolhimentoId",
+                        name: "FK_RecolhimentoMaterial_Recolhimento_RecolhimentoId",
                         column: x => x.RecolhimentoId,
                         principalTable: "Recolhimento",
                         principalColumn: "Id",
@@ -118,8 +118,8 @@ namespace Reciicer.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "64e2abe3-53d8-4b78-a4a6-b86549566435", null, "Admin", "ADMIN" },
-                    { "afa8ed0e-50b0-40f6-9ff3-406923de52fd", null, "Operador", "OPERADOR" }
+                    { "7fcd69ce-df50-4572-ae88-691274d7b32f", null, "Admin", "ADMIN" },
+                    { "9372600f-97a1-4927-8039-efbcd87049bc", null, "Operador", "OPERADOR" }
                 });
 
             migrationBuilder.InsertData(
@@ -127,8 +127,8 @@ namespace Reciicer.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "PontoColetaId", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "1d26d406-c4ab-4d7e-a64f-fed9a5c303fd", 0, "1cd3ec3b-40a1-49a7-81fd-f1261201a749", "admin@gmail.com", false, false, null, "ADMIN@GMAIL.COM", "ADMIN", "AQAAAAIAAYagAAAAELOGUtUv5slutFj/g2ySNtpAyK6JnEzlfSGIQVH2hL8onfOArNzzqS3hzh4KBbfBlg==", null, false, 1, "e7c2ff9b-0aa1-40bb-9083-2efc830377ef", false, "admin" },
-                    { "9c95b117-3d26-405b-bd53-aafc2f0af781", 0, "a24c045d-2cd5-47fb-b68c-9e41f50426d0", "operador@gmail.com", false, false, null, "OPERADOR@GMAIL.COM", "OPERADOR", "AQAAAAIAAYagAAAAEHQ7mga+DIAlOUen1rubIYWrGtJL/2ELlGuZQrZgvy/1u0aPPJa1UHG0VWqHJa06uA==", null, false, 2, "353deaad-a083-42c4-99f2-2354d1109882", false, "operador" }
+                    { "9f5095a1-0d5b-45b5-aa59-5ebb72a57831", 0, "d562986c-a62e-4d9e-9932-9d72f78faebe", "admin@gmail.com", false, false, null, "ADMIN@GMAIL.COM", "ADMIN", "AQAAAAIAAYagAAAAELOGUtUv5slutFj/g2ySNtpAyK6JnEzlfSGIQVH2hL8onfOArNzzqS3hzh4KBbfBlg==", null, false, 1, "1e76bdf5-961e-4db1-9776-afbda2a0c47f", false, "admin" },
+                    { "f43cde04-a3de-4cd6-a515-a1947d7e57f5", 0, "ab824a71-0e6a-4321-a05d-6f6667d2c0cd", "operador@gmail.com", false, false, null, "OPERADOR@GMAIL.COM", "OPERADOR", "AQAAAAIAAYagAAAAEHQ7mga+DIAlOUen1rubIYWrGtJL/2ELlGuZQrZgvy/1u0aPPJa1UHG0VWqHJa06uA==", null, false, 2, "a7835725-1a50-4e85-8b66-69e41053c625", false, "operador" }
                 });
 
             migrationBuilder.UpdateData(
@@ -136,42 +136,42 @@ namespace Reciicer.Migrations
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "DataCadastro",
-                value: new DateTime(2025, 3, 10, 6, 12, 34, 825, DateTimeKind.Local).AddTicks(4724));
+                value: new DateTime(2025, 3, 12, 14, 21, 8, 397, DateTimeKind.Local).AddTicks(8467));
 
             migrationBuilder.UpdateData(
                 table: "Cliente",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "DataCadastro",
-                value: new DateTime(2025, 3, 10, 6, 12, 34, 825, DateTimeKind.Local).AddTicks(4739));
+                value: new DateTime(2025, 3, 12, 14, 21, 8, 397, DateTimeKind.Local).AddTicks(8479));
 
             migrationBuilder.UpdateData(
                 table: "Cliente",
                 keyColumn: "Id",
                 keyValue: 3,
                 column: "DataCadastro",
-                value: new DateTime(2025, 3, 10, 6, 12, 34, 825, DateTimeKind.Local).AddTicks(4741));
+                value: new DateTime(2025, 3, 12, 14, 21, 8, 397, DateTimeKind.Local).AddTicks(8481));
 
             migrationBuilder.UpdateData(
                 table: "Cliente",
                 keyColumn: "Id",
                 keyValue: 4,
                 column: "DataCadastro",
-                value: new DateTime(2025, 3, 10, 6, 12, 34, 825, DateTimeKind.Local).AddTicks(4743));
+                value: new DateTime(2025, 3, 12, 14, 21, 8, 397, DateTimeKind.Local).AddTicks(8482));
 
             migrationBuilder.UpdateData(
                 table: "Coleta",
                 keyColumn: "Id",
                 keyValue: 1,
                 columns: new[] { "Ativo", "DataOperacao" },
-                values: new object[] { false, new DateTime(2025, 3, 10, 6, 12, 34, 825, DateTimeKind.Local).AddTicks(5010) });
+                values: new object[] { false, new DateTime(2025, 3, 12, 14, 21, 8, 397, DateTimeKind.Local).AddTicks(8921) });
 
             migrationBuilder.UpdateData(
                 table: "Coleta",
                 keyColumn: "Id",
                 keyValue: 2,
                 columns: new[] { "Ativo", "DataOperacao" },
-                values: new object[] { false, new DateTime(2025, 3, 10, 6, 12, 34, 825, DateTimeKind.Local).AddTicks(5012) });
+                values: new object[] { false, new DateTime(2025, 3, 12, 14, 21, 8, 397, DateTimeKind.Local).AddTicks(8924) });
 
             migrationBuilder.InsertData(
                 table: "Cooperativa",
@@ -183,8 +183,8 @@ namespace Reciicer.Migrations
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[,]
                 {
-                    { "64e2abe3-53d8-4b78-a4a6-b86549566435", "1d26d406-c4ab-4d7e-a64f-fed9a5c303fd" },
-                    { "afa8ed0e-50b0-40f6-9ff3-406923de52fd", "9c95b117-3d26-405b-bd53-aafc2f0af781" }
+                    { "7fcd69ce-df50-4572-ae88-691274d7b32f", "9f5095a1-0d5b-45b5-aa59-5ebb72a57831" },
+                    { "9372600f-97a1-4927-8039-efbcd87049bc", "f43cde04-a3de-4cd6-a515-a1947d7e57f5" }
                 });
 
             migrationBuilder.InsertData(
@@ -197,7 +197,7 @@ namespace Reciicer.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Recolhimento_Material",
+                table: "RecolhimentoMaterial",
                 columns: new[] { "Id", "MaterialId", "PesoTotal", "QuantidadeTotal", "RecolhimentoId" },
                 values: new object[,]
                 {
@@ -216,13 +216,13 @@ namespace Reciicer.Migrations
                 column: "PontoColetaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Recolhimento_Material_MaterialId",
-                table: "Recolhimento_Material",
+                name: "IX_RecolhimentoMaterial_MaterialId",
+                table: "RecolhimentoMaterial",
                 column: "MaterialId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Recolhimento_Material_RecolhimentoId",
-                table: "Recolhimento_Material",
+                name: "IX_RecolhimentoMaterial_RecolhimentoId",
+                table: "RecolhimentoMaterial",
                 column: "RecolhimentoId");
         }
 
@@ -230,7 +230,7 @@ namespace Reciicer.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Recolhimento_Material");
+                name: "RecolhimentoMaterial");
 
             migrationBuilder.DropTable(
                 name: "Recolhimento");
@@ -241,32 +241,32 @@ namespace Reciicer.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetUserRoles",
                 keyColumns: new[] { "RoleId", "UserId" },
-                keyValues: new object[] { "64e2abe3-53d8-4b78-a4a6-b86549566435", "1d26d406-c4ab-4d7e-a64f-fed9a5c303fd" });
+                keyValues: new object[] { "7fcd69ce-df50-4572-ae88-691274d7b32f", "9f5095a1-0d5b-45b5-aa59-5ebb72a57831" });
 
             migrationBuilder.DeleteData(
                 table: "AspNetUserRoles",
                 keyColumns: new[] { "RoleId", "UserId" },
-                keyValues: new object[] { "afa8ed0e-50b0-40f6-9ff3-406923de52fd", "9c95b117-3d26-405b-bd53-aafc2f0af781" });
+                keyValues: new object[] { "9372600f-97a1-4927-8039-efbcd87049bc", "f43cde04-a3de-4cd6-a515-a1947d7e57f5" });
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "64e2abe3-53d8-4b78-a4a6-b86549566435");
+                keyValue: "7fcd69ce-df50-4572-ae88-691274d7b32f");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "afa8ed0e-50b0-40f6-9ff3-406923de52fd");
+                keyValue: "9372600f-97a1-4927-8039-efbcd87049bc");
 
             migrationBuilder.DeleteData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
-                keyValue: "1d26d406-c4ab-4d7e-a64f-fed9a5c303fd");
+                keyValue: "9f5095a1-0d5b-45b5-aa59-5ebb72a57831");
 
             migrationBuilder.DeleteData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
-                keyValue: "9c95b117-3d26-405b-bd53-aafc2f0af781");
+                keyValue: "f43cde04-a3de-4cd6-a515-a1947d7e57f5");
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",

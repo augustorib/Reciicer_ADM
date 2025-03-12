@@ -21,6 +21,10 @@ namespace Reciicer.Service.Recolhimento
         {
             return _recolhimentoRepository.ObterRecolhimentoPorId(id);
         }
+        public Entities.Recolhimento ObterUltimoRecolhimento()
+        {
+            return _recolhimentoRepository.ListarRecolhimento().Last();
+        }
 
         public void RegistrarRecolhimento(Entities.Recolhimento recolhimento)
         {

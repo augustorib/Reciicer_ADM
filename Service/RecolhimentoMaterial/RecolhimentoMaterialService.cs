@@ -32,5 +32,17 @@ namespace Reciicer.Service.RecolhimentoMaterial
             _recolhimentoMaterialRepository.ExcluirRecolhimentoMaterial(id);
         }
         
+        public void RegistrarRecolhimentoMaterial(IList<Entities.RecolhimentoMaterial> recolhimentoMateriais, int recolhimentoId)
+        {
+            foreach (var recolhimentoMaterial in recolhimentoMateriais)
+            {
+                if(recolhimentoMaterial.QuantidadeTotal == 0 && recolhimentoMaterial.PesoTotal==0) 
+                    continue;
+
+                 recolhimentoMaterial.RecolhimentoId = recolhimentoId;
+                _recolhimentoMaterialRepository.RegistrarRecolhimentoMaterial(recolhimentoMaterial);
+            }
+        }
+ 
     }
 }

@@ -5,6 +5,7 @@ using Reciicer.Models.RecolhimentoViewModels;
 using Reciicer.Service.Cooperativa;
 using Reciicer.Service.Material_Coleta;
 using Reciicer.Service.Recolhimento;
+using Reciicer.Service.RecolhimentoMaterial;
 
 
 namespace Reciicer.Controllers
@@ -13,16 +14,19 @@ namespace Reciicer.Controllers
     public class RecolhimentoController : Controller
     {
         private readonly RecolhimentoService _recolhimentoService;
+        private readonly RecolhimentoMaterialService _recolhimentoMaterialService;
         private readonly CooperativaService _cooperativaService;
         private readonly Material_ColetaService _material_ColetaService;
         private readonly UserManager<UsuarioIdentity> _userManager;
 
         public RecolhimentoController(RecolhimentoService recolhimentoService,
+        RecolhimentoMaterialService recolhimentoMaterialService,
         CooperativaService cooperativaService,
         Material_ColetaService material_ColetaService,
         UserManager<UsuarioIdentity> userManager)
         {
             _recolhimentoService = recolhimentoService;
+            _recolhimentoMaterialService = recolhimentoMaterialService;
             _cooperativaService = cooperativaService;
             _material_ColetaService = material_ColetaService;
             _userManager = userManager;
@@ -52,7 +56,13 @@ namespace Reciicer.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(RecolhimentoCreateViewModel model)
         {          
+                     
+            _recolhimentoService.RegistrarRecolhimento(model.Recolhimento);
             
+            var ultimoRecolhimento = _recolhimentoService.ObterUltimoRecolhimento();
+            
+            _recolhimentoMaterialService.RegistrarRecolhimentoMaterial(model.RecolhimentoMateriais.ToList(), ultimoRecolhimento.Id);
+
             return RedirectToAction("Index");
         }
 
