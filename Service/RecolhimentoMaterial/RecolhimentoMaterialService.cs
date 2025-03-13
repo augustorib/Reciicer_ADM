@@ -27,11 +27,6 @@ namespace Reciicer.Service.RecolhimentoMaterial
             _recolhimentoMaterialRepository.RegistrarRecolhimentoMaterial(recolhimentoMaterial);
         }
 
-        public void ExcluirRecolhimentoMaterial(int id)
-        {
-            _recolhimentoMaterialRepository.ExcluirRecolhimentoMaterial(id);
-        }
-        
         public void RegistrarRecolhimentoMaterial(IList<Entities.RecolhimentoMaterial> recolhimentoMateriais, int recolhimentoId)
         {
             foreach (var recolhimentoMaterial in recolhimentoMateriais)
@@ -41,8 +36,27 @@ namespace Reciicer.Service.RecolhimentoMaterial
 
                  recolhimentoMaterial.RecolhimentoId = recolhimentoId;
                 _recolhimentoMaterialRepository.RegistrarRecolhimentoMaterial(recolhimentoMaterial);
+                
+            }
+        }
+
+        public void AtualizarRecolhimentoMaterial(IList<Entities.RecolhimentoMaterial> recolhimentoMateriais)
+        {
+            foreach (var recolhimentoMaterial in recolhimentoMateriais)
+            {
+                if(recolhimentoMaterial.QuantidadeTotal == 0 && recolhimentoMaterial.PesoTotal==0) 
+                    continue;
+
+                _recolhimentoMaterialRepository.AtualizarRecolhimentoMaterial(recolhimentoMaterial);
+                
             }
         }
  
+ 
+        public void ExcluirRecolhimentoMaterial(int id)
+        {
+            _recolhimentoMaterialRepository.ExcluirRecolhimentoMaterial(id);
+        }
+        
     }
 }

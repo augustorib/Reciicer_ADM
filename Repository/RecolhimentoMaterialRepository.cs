@@ -38,12 +38,21 @@ namespace Reciicer.Repository
             catch (Exception e)
             {
                 transaction.Rollback();
-
-                Console.WriteLine($"Error: {e.Message}");
-                // Optionally, rethrow the exception or handle it as needed
-                throw;
             }
+        }
 
+        public void AtualizarRecolhimentoMaterial(RecolhimentoMaterial recolhimentoMaterial)
+        {
+            var recolhimentoMaterialBd = ObterRecolhimentoMaterialPorId(recolhimentoMaterial.Id);
+
+            if (recolhimentoMaterialBd != null)
+            {
+                recolhimentoMaterialBd.QuantidadeTotal = recolhimentoMaterial.QuantidadeTotal;
+                recolhimentoMaterialBd.PesoTotal = recolhimentoMaterial.PesoTotal;
+
+                _context.RecolhimentoMaterial.Update(recolhimentoMaterialBd);
+                _context.SaveChanges();
+            }
         }
 
         public void ExcluirRecolhimentoMaterial(int id)
@@ -56,6 +65,7 @@ namespace Reciicer.Repository
                 _context.SaveChanges();
             }
         }
+
 
     }
 

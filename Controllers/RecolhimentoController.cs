@@ -72,6 +72,20 @@ namespace Reciicer.Controllers
             return View( _recolhimentoService.ObterRecolhimentoPorId(id));
         }
 
-  
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+
+            return View(_recolhimentoService.ObterRecolhimentoPorId(id));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken] 
+        public IActionResult Update(Recolhimento recolhimento)
+        {
+            _recolhimentoMaterialService.AtualizarRecolhimentoMaterial(recolhimento.RecolhimentoMateriais.ToList());
+
+            return RedirectToAction("Index");
+        }
     }
 }

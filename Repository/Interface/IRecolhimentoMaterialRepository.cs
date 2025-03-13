@@ -6,6 +6,7 @@ namespace Reciicer.Repository.Interface
     {
         IEnumerable<RecolhimentoMaterial> ListarRecolhimentoMaterial();    
         RecolhimentoMaterial ObterRecolhimentoMaterialPorId(int id);  
+        void AtualizarRecolhimentoMaterial (RecolhimentoMaterial recolhimentoMaterial);  
         void RegistrarRecolhimentoMaterial(RecolhimentoMaterial recolhimentoMaterial); 
         void ExcluirRecolhimentoMaterial(int id);
     }

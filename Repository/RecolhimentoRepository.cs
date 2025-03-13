@@ -21,7 +21,11 @@ namespace Reciicer.Repository
 
         public Recolhimento ObterRecolhimentoPorId(int id)
         {
-            return _context.Recolhimento.Include(r => r.PontoColeta).Include(r => r.Cooperativa).FirstOrDefault(r => r.Id == id);
+            return _context.Recolhimento.Include(r => r.PontoColeta)
+                                        .Include(r => r.Cooperativa)
+                                        .Include(r => r.RecolhimentoMateriais)
+                                        .ThenInclude(rm => rm.Material)
+                                        .FirstOrDefault(r => r.Id == id);
             
         }
 
