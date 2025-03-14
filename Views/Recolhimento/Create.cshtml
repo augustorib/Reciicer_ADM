@@ -49,10 +49,10 @@
                         <td>@item.PesoTotal</td>
                         <td>
                             <input type="hidden" name="RecolhimentoMateriais[@i].MaterialId" value="@item.MaterialId"/>
-                            <input type="number" name="RecolhimentoMateriais[@i].QuantidadeTotal" class="form-control" />
+                            <input type="number" name="RecolhimentoMateriais[@i].QuantidadeTotal" class="form-control" max="@item.QuantidadeTotal" oninput="validateInput(this)"  />
                         </td> 
                         <td>
-                            <input type="number" name="RecolhimentoMateriais[@i].PesoTotal" class="form-control" />
+                            <input type="number" name="RecolhimentoMateriais[@i].PesoTotal" class="form-control" max="@item.PesoTotal" oninput="validateInput(this)" />
                         </td>
                     </tr>
                 }
@@ -67,3 +67,7 @@
     </form>
 
 </div>
+
+@section Scripts {
+     <script src="~/js/pages/recolhimentoCreate.js" asp-append-version="true"></script> 
+}

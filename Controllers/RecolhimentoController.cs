@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Reciicer.Models.Entities;
@@ -10,7 +11,6 @@ using Reciicer.Service.RecolhimentoMaterial;
 
 namespace Reciicer.Controllers
 {
-    
     public class RecolhimentoController : Controller
     {
         private readonly RecolhimentoService _recolhimentoService;
@@ -84,6 +84,14 @@ namespace Reciicer.Controllers
         public IActionResult Update(Recolhimento recolhimento)
         {
             _recolhimentoMaterialService.AtualizarRecolhimentoMaterial(recolhimento.RecolhimentoMateriais.ToList());
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        { 
+             _recolhimentoService.ExcluirRecolhimento(id);
 
             return RedirectToAction("Index");
         }
