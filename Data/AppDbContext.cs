@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-
 using Reciicer.Models.Entities;
 
 namespace Reciicer.Data
@@ -109,6 +108,11 @@ namespace Reciicer.Data
                 new Cooperativa{Id = 1, Nome = "Cooperativa de Reciclagem", Email = "", CNPJ = "00.000.000/0000-00"}
             );
 
+            modelBuilder.Entity<Estoque>().HasData(
+                new Estoque{Id = 1, Codigo = "PR001", PontoColetaId = 1, Tipo = "Interno"},
+                new Estoque{Id = 2, Codigo = "PRN001", PontoColetaId = 2, Tipo = "Externo"}
+            );
+
         }
         
         public DbSet<Cliente> Cliente {get; set;}
@@ -123,6 +127,8 @@ namespace Reciicer.Data
         public DbSet<Recolhimento> Recolhimento {get; set;}
         public DbSet<Cooperativa> Cooperativa {get; set;}
         public DbSet<RecolhimentoMaterial> RecolhimentoMaterial {get; set;}
+        public DbSet<Estoque> Estoque {get; set;}
+        public DbSet<EstoqueMaterial> EstoqueMaterial {get; set;}
         
     }
 }
