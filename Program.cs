@@ -19,6 +19,7 @@ using Reciicer.Models.Entities;
 using Reciicer.Service.Cooperativa;
 using Reciicer.Service.Recolhimento;
 using Reciicer.Service.RecolhimentoMaterial;
+using Reciicer.Service.Estoque;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,6 +37,7 @@ builder.Services.AddScoped<IClientePremiacaoRepository, ClientePremiacaoReposito
 builder.Services.AddScoped<ICooperativaRepository, CooperativaRepository>();
 builder.Services.AddScoped<IRecolhimentoRepository, RecolhimentoRepository>();
 builder.Services.AddScoped<IRecolhimentoMaterialRepository, RecolhimentoMaterialRepository>();
+builder.Services.AddScoped<IEstoqueRepository, EstoqueRepository>();
 
 //Services
 builder.Services.AddScoped<ClienteService>();
@@ -51,6 +53,7 @@ builder.Services.AddScoped<UsuarioIdentityService>();
 builder.Services.AddScoped<CooperativaService>();
 builder.Services.AddScoped<RecolhimentoService>();
 builder.Services.AddScoped<RecolhimentoMaterialService>();
+builder.Services.AddScoped<EstoqueService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 
 

@@ -1,0 +1,69 @@
+@model IEnumerable<Reciicer.Models.Entities.Estoque>
+@{
+    ViewData["Title"] = "Listar Estoque";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <p>
+        <a class="btn btn-primary" asp-action="Create"><i class="fa-solid fa-user-plus"></i> Adicionar Estoque</a>
+    </p>
+
+    <table class="table table-striped text-center" id="dataTableInit">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Codigo)</th>
+                <th>@Html.DisplayNameFor(model => model.Tipo)</th>
+                <th>@Html.DisplayNameFor(model => model.PontoColeta.Nome)</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Codigo)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Tipo)</td>
+                    <td>@Html.DisplayFor(modelItem => item.PontoColeta.Nome)</td>
+
+                    <td>
+                        <a class="btn btn-primary " asp-action="Read" asp-route-Id="@item.Id">
+                            <i class="fa-solid fa-circle-info text-white"></i>
+                        </a>
+                        <a class="btn btn-warning" asp-action="Update" asp-route-Id="@item.Id">
+                            <i class="fa-solid fa-user-pen text-white"></i>
+                        </a>
+
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                            data-bs-target="#DeleteModal-@item.Id">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="DeleteModal-@item.Id" tabindex="-1" aria-labelledby="deleteModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="deleteModalLabel">Excluir Estoque @item.Codigo ?</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body text-center">
+                                        Esta operação não poderá ser revertida!<br><br>Deseja realmente excluir @item.Codigo ?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-rotate-left"></i> Não</button>
+                                        <a class="btn btn-danger" asp-action="Delete" asp-route-Id="@item.Id"><i class="fa-solid fa-trash"></i> Sim</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
