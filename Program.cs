@@ -20,6 +20,7 @@ using Reciicer.Service.Cooperativa;
 using Reciicer.Service.Recolhimento;
 using Reciicer.Service.RecolhimentoMaterial;
 using Reciicer.Service.Estoque;
+using Reciicer.Service.EstoqueMaterial;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,6 +39,7 @@ builder.Services.AddScoped<ICooperativaRepository, CooperativaRepository>();
 builder.Services.AddScoped<IRecolhimentoRepository, RecolhimentoRepository>();
 builder.Services.AddScoped<IRecolhimentoMaterialRepository, RecolhimentoMaterialRepository>();
 builder.Services.AddScoped<IEstoqueRepository, EstoqueRepository>();
+builder.Services.AddScoped<IEstoqueMaterialRepository, EstoqueMaterialRepository>();
 
 //Services
 builder.Services.AddScoped<ClienteService>();
@@ -54,6 +56,7 @@ builder.Services.AddScoped<CooperativaService>();
 builder.Services.AddScoped<RecolhimentoService>();
 builder.Services.AddScoped<RecolhimentoMaterialService>();
 builder.Services.AddScoped<EstoqueService>();
+builder.Services.AddScoped<EstoqueMaterialService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 
 

@@ -21,6 +21,7 @@ namespace Reciicer.Models.ColetaViewModels
         public int MaterialId { get; set; }
         public int TipoMaterialId { get; set; }
         public int ColetaId { get; set; }
+    
 
     }
 }

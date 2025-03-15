@@ -35,5 +35,19 @@ namespace Reciicer.Service.Estoque
         {
             _estoqueRepository.ExcluirEstoque(id);
         }
+
+        public void ListarEstoquesPorPontoColeta(int pontoColetaId)
+        {
+            
+
+        }
+        
+        public void AdicionarMaterialEstoque(Entities.Material_Coleta material_Coleta)
+        {
+            
+                
+        }
+
+
     }
 }

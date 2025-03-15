@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Reciicer.Models.ColetaViewModels;
 using Reciicer.Models.Entities;
 using Reciicer.Service.Coleta;
+using Reciicer.Service.Estoque;
 using Reciicer.Service.Material;
 using Reciicer.Service.Material_Coleta;
 
@@ -15,12 +16,14 @@ namespace Reciicer.Controllers
         private readonly ColetaService _coletaService;
         private readonly MaterialService _materialService;
         private readonly Material_ColetaService _material_ColetaService;
+        private readonly EstoqueService _estoqueService;
 
-        public ColetaController(ColetaService coletaService, MaterialService materialService, Material_ColetaService  material_ColetaService)
+        public ColetaController(ColetaService coletaService, MaterialService materialService, Material_ColetaService  material_ColetaService, EstoqueService estoqueService)
         {
             _coletaService = coletaService;
             _materialService = materialService;
             _material_ColetaService = material_ColetaService;
+            _estoqueService = estoqueService;
         }
 
         public IActionResult Index()
@@ -67,6 +70,8 @@ namespace Reciicer.Controllers
                     ColetaId = coletaCreateViewModel.ColetaId,
                     MaterialId = coletaCreateViewModel.MaterialId
                 };
+
+                _estoqueService.AdicionarMaterialEstoque(materialColeta);
 
                 var viewModel = _coletaService.ObterColetaCreateViewModelComMaterialColeta(coletaCreateViewModel.ClienteId, materialColeta);
 
