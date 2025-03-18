@@ -12,6 +12,11 @@ namespace Reciicer.Models.Entities
 
         public string? Tipo { get; set; }
 
+        public int QuantidadeArmazenada { get; set; }
+        public int PesoArmazenado { get; set; }
+        
+        public int Capacidade { get; set; }
+
         public int PontoColetaId { get; set; }
 
 

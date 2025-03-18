@@ -1,9 +1,11 @@
 @model Reciicer.Models.Entities.Estoque
 @{
     ViewData["Title"] = "Detalhes Estoque";
+
+    string CapacidadeCheia = Model.PesoArmazenado + Model.QuantidadeArmazenada >= Model.Capacidade ? "text-danger" : "text-success";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1 class="@CapacidadeCheia">@ViewData["Title"] - @Model.Codigo </h1>
 
 <div>
     
@@ -20,6 +22,22 @@
         <div class="col-md-4">
             <label asp-for="PontoColeta!.Nome" class="form-label">@Html.DisplayNameFor(model => model.PontoColeta!.Nome):</label>
             <input asp-for="PontoColeta!.Nome" class="form-control"  disabled>
+        </div>
+    </div>
+
+    <div class="form-group row mt-3">
+        <div class="col-md-3">
+            <label asp-for="PesoArmazenado" class="form-label">@Html.DisplayNameFor(model => model.PesoArmazenado):</label>
+            <input asp-for="PesoArmazenado" class="form-control" disabled>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="QuantidadeArmazenada" class="form-label">@Html.DisplayNameFor(model => model.QuantidadeArmazenada):</label>
+            <input asp-for="QuantidadeArmazenada" class="form-control"  disabled>
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="Capacidade" class="form-label">@Html.DisplayNameFor(model => model.Capacidade):</label>
+            <input asp-for="Capacidade" class="form-control"  disabled>
         </div>
     </div>
 

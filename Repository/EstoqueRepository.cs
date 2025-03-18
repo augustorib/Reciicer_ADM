@@ -38,6 +38,9 @@ namespace Reciicer.Repository
             {
                 estoqueBd.Codigo = estoque.Codigo;
                 estoqueBd.Tipo = estoque.Tipo;
+                estoqueBd.PesoArmazenado = estoque.PesoArmazenado;
+                estoqueBd.QuantidadeArmazenada = estoque.QuantidadeArmazenada;
+                estoqueBd.Capacidade = estoque.Capacidade;
                 estoqueBd.PontoColetaId = estoque.PontoColetaId;
 
                 _context.Estoque.Update(estoqueBd);
@@ -57,5 +60,9 @@ namespace Reciicer.Repository
             }   
         }
 
+        public IEnumerable<Estoque> ListarEstoquePorPontoColetaId(int pontoColetaId)
+        {
+            return _context.Estoque.Where(e => e.PontoColetaId == pontoColetaId).ToList();
+        }
     }
 }

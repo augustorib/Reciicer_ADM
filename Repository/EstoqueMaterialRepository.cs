@@ -57,6 +57,11 @@ namespace Reciicer.Repository
                 _context.EstoqueMaterial.Remove(estoqueMaterialBd);
                 _context.SaveChanges();
             }
+        }  
+
+        public EstoqueMaterial ObterEstoqueMaterialPorMaterialEstoqueArmazenagem(int estoqueId, int materialId, int armazenagem)
+        {
+            return _context.EstoqueMaterial.FirstOrDefault(em => em.EstoqueId == estoqueId && em.MaterialId == materialId && (em.Peso == armazenagem || em.Quantidade == armazenagem));
         }
     }
 }

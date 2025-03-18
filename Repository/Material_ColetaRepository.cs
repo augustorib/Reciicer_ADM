@@ -34,7 +34,7 @@ namespace Reciicer.Repository
 
         public Material_Coleta ObterMaterialColetaPorId(int id)
         {
-            throw new NotImplementedException();
+            return _context.Material_Coleta.Include(mc => mc.Coleta).FirstOrDefault(mc => mc.Id == id);
         }
 
         public void RegistrarMaterialColeta(Material_Coleta materialColeta)
