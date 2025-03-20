@@ -78,9 +78,9 @@ namespace Reciicer.Controllers
                     MaterialId = coletaCreateViewModel.MaterialId
                 };
 
-                _estoqueService.AdicionarMaterialEstoque(materialColeta, usuarioLogado!.PontoColetaId);
-
                 var viewModel = _coletaService.ObterColetaCreateViewModelComMaterialColeta(coletaCreateViewModel.ClienteId, materialColeta);
+
+                _estoqueService.AdicionarMaterialEstoque(materialColeta, usuarioLogado!.PontoColetaId);
 
                 return View("Create", viewModel);
         }
@@ -157,9 +157,11 @@ namespace Reciicer.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            //_coletaService.ExcluirColeta(id);
+            //_coletaService.RecolherColeta(id);
 
-            _coletaService.RecolherColeta(id);
+            _estoqueService.ExcluirMateriaisEstoquePorColetaId(id);
+            
+            _coletaService.ExcluirColeta(id);
 
             return RedirectToAction("Index");
         }

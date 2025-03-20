@@ -1,48 +1,72 @@
-@model Reciicer.Models.Entities.Estoque
+@model Reciicer.Models.EstoqueViewModels.EstoqueReadViewModel
 @{
     ViewData["Title"] = "Detalhes Estoque";
 
-    string CapacidadeCheia = Model.PesoArmazenado + Model.QuantidadeArmazenada >= Model.Capacidade ? "text-danger" : "text-success";
+    string CapacidadeCheia = Model.Estoque!.PesoArmazenado + Model.Estoque!.QuantidadeArmazenada >= Model.Estoque!.Capacidade ? "text-danger" : "text-success";
 }
 
-<h1 class="@CapacidadeCheia">@ViewData["Title"] - @Model.Codigo </h1>
+<h1 class="@CapacidadeCheia">@ViewData["Title"] - @Model.Estoque.Codigo </h1>
 
 <div>
     
     <div class="form-group row">
         <div class="col-md-3">
-            <label asp-for="Codigo" class="form-label">@Html.DisplayNameFor(model => model.Codigo):</label>
-            <input asp-for="Codigo" class="form-control" disabled>
+            <label asp-for="Estoque!.Codigo" class="form-label">@Html.DisplayNameFor(model => model.Estoque!.Codigo):</label>
+            <input asp-for="Estoque!.Codigo" class="form-control" disabled>
         </div>
         <div class="col-md-4">
-            <label asp-for="Tipo" class="form-label">@Html.DisplayNameFor(model => model.Tipo):</label>
-            <input asp-for="Tipo" class="form-control"  disabled>
+            <label asp-for="Estoque!.Tipo" class="form-label">@Html.DisplayNameFor(model => model.Estoque!.Tipo):</label>
+            <input asp-for="Estoque!.Tipo" class="form-control"  disabled>
         </div>
 
         <div class="col-md-4">
-            <label asp-for="PontoColeta!.Nome" class="form-label">@Html.DisplayNameFor(model => model.PontoColeta!.Nome):</label>
-            <input asp-for="PontoColeta!.Nome" class="form-control"  disabled>
+            <label asp-for="Estoque!.PontoColeta!.Nome" class="form-label">@Html.DisplayNameFor(model => model.Estoque!.PontoColeta!.Nome):</label>
+            <input asp-for="Estoque!.PontoColeta!.Nome" class="form-control"  disabled>
         </div>
     </div>
 
     <div class="form-group row mt-3">
         <div class="col-md-3">
-            <label asp-for="PesoArmazenado" class="form-label">@Html.DisplayNameFor(model => model.PesoArmazenado):</label>
-            <input asp-for="PesoArmazenado" class="form-control" disabled>
+            <label asp-for="Estoque!.PesoArmazenado" class="form-label">@Html.DisplayNameFor(model => model.Estoque!.PesoArmazenado):</label>
+            <input asp-for="Estoque!.PesoArmazenado" class="form-control" disabled>
         </div>
         <div class="col-md-3">
-            <label asp-for="QuantidadeArmazenada" class="form-label">@Html.DisplayNameFor(model => model.QuantidadeArmazenada):</label>
-            <input asp-for="QuantidadeArmazenada" class="form-control"  disabled>
+            <label asp-for="Estoque!.QuantidadeArmazenada" class="form-label">@Html.DisplayNameFor(model => model.Estoque!.QuantidadeArmazenada):</label>
+            <input asp-for="Estoque!.QuantidadeArmazenada" class="form-control"  disabled>
         </div>
 
         <div class="col-md-3">
-            <label asp-for="Capacidade" class="form-label">@Html.DisplayNameFor(model => model.Capacidade):</label>
-            <input asp-for="Capacidade" class="form-control"  disabled>
+            <label asp-for="Estoque!.Capacidade" class="form-label">@Html.DisplayNameFor(model => model.Estoque!.Capacidade):</label>
+            <input asp-for="Estoque!.Capacidade" class="form-control"  disabled>
         </div>
     </div>
 
+    <hr class="my-4">
+
+    <div class="mt-5">
+        <table class="table table-striped" id="dataTableInit">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.EstoqueMateriais!.First().Material!.Descricao)</th>
+                    <th>@Html.DisplayNameFor(model => model.EstoqueMateriais!.First().Peso)</th>
+                    <th>@Html.DisplayNameFor(model => model.EstoqueMateriais!.First().Quantidade)</th>
+                </tr>
+            </thead>
+            <tbody> 
+                @foreach (var item in Model.EstoqueMateriais!) 
+                {   
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Material!.Descricao)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Peso)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Quantidade)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div> 
+
     <div class="form-group mt-2">
-        <a asp-action="Update" asp-route-Id="@Model.Id" class="btn btn-warning text-white ">Atualizar <i class="fa-solid fa-pen"></i></a>
+        <a asp-action="Update" asp-route-Id="@Model.Estoque!.Id" class="btn btn-warning text-white ">Atualizar <i class="fa-solid fa-pen"></i></a>
         <a asp-action="Index" class="btn btn-secondary">Voltar <i class="fa-solid fa-rotate-left"></i></a>
     </div>
 </div>

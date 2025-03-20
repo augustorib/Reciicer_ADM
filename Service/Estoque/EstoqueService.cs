@@ -18,8 +18,6 @@ namespace Reciicer.Service.Estoque
             _material_ColetaRepository = material_ColetaRepository;
         }
 
-
-
         public IEnumerable<Entities.Estoque> ListarEstoque()
         {
             return _estoqueRepository.ListarEstoque();
@@ -54,68 +52,51 @@ namespace Reciicer.Service.Estoque
         {
             var estoques = ListarEstoquesPorPontoColetaId(pontoColetaId);
 
-            var pesoExcedente = 0;
-            var quantidadeExcedente = 0;
-
             var PesoParaArmazenar = material_Coleta.Peso;
             var QuantidadeParaArmazenar = material_Coleta.Quantidade;
 
             foreach ( var estoque in estoques)
             {
-                if(estoque.PesoArmazenado + estoque.QuantidadeArmazenada >= estoque.Capacidade)
+                var espacoDisponivelNoEstoque = estoque.Capacidade - (estoque.PesoArmazenado + estoque.QuantidadeArmazenada);
+                
+                if(espacoDisponivelNoEstoque <= 0)
                    continue;
 
                 var estoqueMaterial = new Entities.EstoqueMaterial
                 {
                     MaterialId = material_Coleta.MaterialId,
+                    EstoqueId = estoque.Id
                 };
                 
                 if(PesoParaArmazenar > 0)
                 {
-                    estoque.PesoArmazenado += PesoParaArmazenar;
-                    estoqueMaterial.Peso += PesoParaArmazenar;
-                    pesoExcedente = VerificarExcedente(estoque.PesoArmazenado, estoque.Capacidade);
-
-                    if(pesoExcedente > 0)
-                    {
-                        estoque.PesoArmazenado -= pesoExcedente;
-                        estoqueMaterial.Peso -= pesoExcedente;
-                        PesoParaArmazenar = pesoExcedente;
-                    }
+                    var pesoParaAdicionarNoEstoque = Math.Min(PesoParaArmazenar, espacoDisponivelNoEstoque);
+                    estoque.PesoArmazenado += pesoParaAdicionarNoEstoque;
+                    estoqueMaterial.Peso += pesoParaAdicionarNoEstoque;
+                    
+                    PesoParaArmazenar -= pesoParaAdicionarNoEstoque;
+                    espacoDisponivelNoEstoque -= pesoParaAdicionarNoEstoque;
                 }
                 
                 if(QuantidadeParaArmazenar > 0)
                 {
-                    estoque.QuantidadeArmazenada += QuantidadeParaArmazenar;
-                    estoqueMaterial.Quantidade += QuantidadeParaArmazenar;
-                    quantidadeExcedente = VerificarExcedente(estoque.QuantidadeArmazenada, estoque.Capacidade);
+                    var quantidadeParaAdicionarNoEstoque = Math.Min(QuantidadeParaArmazenar, espacoDisponivelNoEstoque);
+                    estoque.QuantidadeArmazenada += quantidadeParaAdicionarNoEstoque;
+                    estoqueMaterial.Quantidade += quantidadeParaAdicionarNoEstoque;
+                    
+                    QuantidadeParaArmazenar -= quantidadeParaAdicionarNoEstoque;
+                    espacoDisponivelNoEstoque -= quantidadeParaAdicionarNoEstoque;
 
-                    if(quantidadeExcedente > 0)
-                    {
-                        estoque.QuantidadeArmazenada -= quantidadeExcedente;
-                        estoqueMaterial.Quantidade -= quantidadeExcedente;
-                        QuantidadeParaArmazenar = quantidadeExcedente;
-                    }
                 }
-
-                estoqueMaterial.EstoqueId = estoque.Id;
 
                 _estoqueMaterialRepository.RegistrarEstoqueMaterial(estoqueMaterial);
                 
                 AtualizarEstoque(estoque);
+
+                if(PesoParaArmazenar == 0 && QuantidadeParaArmazenar == 0)
+                   break;
             }
                 
-            if (pesoExcedente > 0 || quantidadeExcedente > 0)
-            {
-              //Console.WriteLine("Não há capacidade suficiente para armazenar todo o material coletado.");
-
-              throw new InvalidOperationException("Não há capacidade suficiente para armazenar todo o material coletado.");
-            }
-        }
-
-        public int VerificarExcedente(int armazenagem, int capacidade)
-        {
-            return armazenagem - capacidade > 0 ? armazenagem - capacidade : 0;
         }
 
         public void RemoverMaterialEstoque (int materialColetaId)
@@ -124,58 +105,57 @@ namespace Reciicer.Service.Estoque
 
             var estoques = ListarEstoquesPorPontoColetaId(materialColeta.Coleta!.PontoColetaId);
 
-            var pesoDiferenca = 0;
-            var quantidadeDiferenca = 0;
-
-            var PesoParaRemover = materialColeta.Peso;
-            var QuantidadeParaRemover = materialColeta.Quantidade;
+            var pesoParaRemover = materialColeta.Peso;
+            var quantidadeParaRemover = materialColeta.Quantidade;
 
             foreach (var estoque in estoques)
             {
-                if (PesoParaRemover == 0 && QuantidadeParaRemover == 0)
+                if (pesoParaRemover == 0 && quantidadeParaRemover == 0)
                    break;
           
-                if (PesoParaRemover > 0 )
-                {
-                    estoque.PesoArmazenado -= PesoParaRemover;
-                    pesoDiferenca = VerificarDiferenca(estoque.PesoArmazenado);
-                    
-                    var armazenagem = PesoParaRemover + pesoDiferenca;
-                    var estoqueMaterial = _estoqueMaterialRepository.ObterEstoqueMaterialPorMaterialEstoqueArmazenagem(estoque.Id, materialColeta.MaterialId, armazenagem);
-                    _estoqueMaterialRepository.ExcluirEstoqueMaterial(estoqueMaterial.Id);
+                var estoquesMateriais = _estoqueMaterialRepository.ObterEstoqueMaterialPorMaterialEstoque(estoque.Id, materialColeta.MaterialId);
 
-                    if (pesoDiferenca < 0)
+                foreach (var estoqueMaterial in estoquesMateriais)
+                {
+                    if (pesoParaRemover > 0 )
                     {
-                        estoque.PesoArmazenado = 0;
-                        PesoParaRemover = Math.Abs(pesoDiferenca);
+                        var pesoParaRemoverDoEstoqueMaterial = Math.Min(estoqueMaterial.Peso, pesoParaRemover);
+
+                        estoqueMaterial.Peso -= pesoParaRemoverDoEstoqueMaterial;
+                        estoque.PesoArmazenado -= pesoParaRemoverDoEstoqueMaterial;
+                        pesoParaRemover -= pesoParaRemoverDoEstoqueMaterial;
+                    
                     }
-                }
 
-                if (QuantidadeParaRemover > 0)
-                {
-                    estoque.QuantidadeArmazenada -= QuantidadeParaRemover;
-                    quantidadeDiferenca = VerificarDiferenca(estoque.QuantidadeArmazenada);
+                    if (quantidadeParaRemover > 0)
+                    {
+                        var quantidadeParaRemoverDoEstoqueMaterial = Math.Min(estoqueMaterial.Quantidade, quantidadeParaRemover);
 
-                    var armazenagem = QuantidadeParaRemover + quantidadeDiferenca;
-                    var estoqueMaterial = _estoqueMaterialRepository.ObterEstoqueMaterialPorMaterialEstoqueArmazenagem(estoque.Id, materialColeta.MaterialId, armazenagem);
-                    _estoqueMaterialRepository.ExcluirEstoqueMaterial(estoqueMaterial.Id);
-
-                    if (quantidadeDiferenca < 0)
-                    { 
-                        estoque.QuantidadeArmazenada = 0;
-                        QuantidadeParaRemover = Math.Abs(quantidadeDiferenca);
+                        estoqueMaterial.Quantidade -= quantidadeParaRemoverDoEstoqueMaterial;
+                        estoque.QuantidadeArmazenada -= quantidadeParaRemoverDoEstoqueMaterial;
+                        quantidadeParaRemover -= quantidadeParaRemoverDoEstoqueMaterial;
+                        
                     }
-                }
 
+                    if(estoqueMaterial.Quantidade == 0 && estoqueMaterial.Peso == 0)
+                        _estoqueMaterialRepository.ExcluirEstoqueMaterial(estoqueMaterial.Id);
+                    else
+                        _estoqueMaterialRepository.AtualizarEstoqueMaterial(estoqueMaterial);
+    
+                }
                 AtualizarEstoque(estoque);
             }
 
         }
 
-
-        public int VerificarDiferenca(int armazenagem)
+        public void ExcluirMateriaisEstoquePorColetaId(int coletaId)
         {
-            return armazenagem  < 0 ? armazenagem  : 0;
+           var materiaisColetaDaColeta = _material_ColetaRepository.ListarMaterialColetaPorColetaId(coletaId).OrderBy(mc => mc.Id);
+
+           foreach (var materialColeta in materiaisColetaDaColeta)
+           {
+               RemoverMaterialEstoque(materialColeta.Id);
+           }
         }
 
     }

@@ -26,6 +26,11 @@ namespace Reciicer.Repository
             return _context.EstoqueMaterial.Include(em => em.Material).FirstOrDefault(em => em.Id == id);
         }
 
+        public IEnumerable<EstoqueMaterial> ObterEstoqueMaterialPorEstoqueId(int estoqueId)
+        {
+            return _context.EstoqueMaterial.Include(em => em.Material).Where(em => em.EstoqueId == estoqueId).ToList();
+        }
+
         public void RegistrarEstoqueMaterial(EstoqueMaterial estoqueMaterial)
         {
             _context.EstoqueMaterial.Add(estoqueMaterial);
@@ -59,9 +64,9 @@ namespace Reciicer.Repository
             }
         }  
 
-        public EstoqueMaterial ObterEstoqueMaterialPorMaterialEstoqueArmazenagem(int estoqueId, int materialId, int armazenagem)
+        public IEnumerable<EstoqueMaterial> ObterEstoqueMaterialPorMaterialEstoque(int estoqueId, int materialId)
         {
-            return _context.EstoqueMaterial.FirstOrDefault(em => em.EstoqueId == estoqueId && em.MaterialId == materialId && (em.Peso == armazenagem || em.Quantidade == armazenagem));
+            return _context.EstoqueMaterial.Where(em => em.EstoqueId == estoqueId && em.MaterialId == materialId).ToList();
         }
     }
 }

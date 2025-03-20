@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Reciicer.Models.Entities;
 using Reciicer.Models.EstoqueViewModels;
 using Reciicer.Service.Estoque;
+using Reciicer.Service.EstoqueMaterial;
 using Reciicer.Service.PontoColeta;
 
 
@@ -13,11 +14,13 @@ namespace Reciicer.Controllers
         
         private readonly EstoqueService _estoqueService;
         private readonly PontoColetaService _pontoColetaService;
+        private readonly EstoqueMaterialService _estoqueMaterialService;
 
-        public EstoqueController(EstoqueService estoqueService, PontoColetaService pontoColetaService)
+        public EstoqueController(EstoqueService estoqueService, PontoColetaService pontoColetaService, EstoqueMaterialService estoqueMaterialService)
         {
             _estoqueService = estoqueService;
             _pontoColetaService = pontoColetaService;
+            _estoqueMaterialService = estoqueMaterialService;
         }
 
         public IActionResult Index()
@@ -48,7 +51,12 @@ namespace Reciicer.Controllers
         [HttpGet]
         public IActionResult Read(int id)
         { 
-            return View( _estoqueService.ObterEstoquePorId(id));
+            var model = new EstoqueReadViewModel(){
+                Estoque = _estoqueService.ObterEstoquePorId(id),
+                EstoqueMateriais = _estoqueMaterialService.ObterEstoqueMaterialPorEstoqueId(id)
+            };
+
+            return View(model);
         }
 
         [HttpGet]

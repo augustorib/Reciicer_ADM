@@ -22,6 +22,11 @@ namespace Reciicer.Service.EstoqueMaterial
             return _estoqueMaterialRepository.ObterEstoqueMaterialPorId(id);
         }
 
+        public IEnumerable<Entities.EstoqueMaterial> ObterEstoqueMaterialPorEstoqueId(int id)
+        {
+            return _estoqueMaterialRepository.ObterEstoqueMaterialPorEstoqueId(id);
+        }
+
         public void RegistrarEstoqueMaterial(Entities.EstoqueMaterial EstoqueMaterial)
         {
             _estoqueMaterialRepository.RegistrarEstoqueMaterial(EstoqueMaterial);
