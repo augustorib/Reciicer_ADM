@@ -1,12 +1,11 @@
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Reciicer.Models.Entities;
 using Reciicer.Models.RecolhimentoViewModels;
 using Reciicer.Service.Cooperativa;
-using Reciicer.Service.Material_Coleta;
+using Reciicer.Service.Estoque;
+using Reciicer.Service.EstoqueMaterial;
 using Reciicer.Service.Recolhimento;
-using Reciicer.Service.RecolhimentoMaterial;
+using Reciicer.Service.RecolhimentoEstoqueMaterial;
 
 
 namespace Reciicer.Controllers
@@ -14,22 +13,23 @@ namespace Reciicer.Controllers
     public class RecolhimentoController : Controller
     {
         private readonly RecolhimentoService _recolhimentoService;
-        private readonly RecolhimentoMaterialService _recolhimentoMaterialService;
+        private readonly RecolhimentoEstoqueMaterialService _recolhimentoEstoqueMaterialService;
+        private readonly EstoqueMaterialService _estoqueMaterialService;
         private readonly CooperativaService _cooperativaService;
-        private readonly Material_ColetaService _material_ColetaService;
-        private readonly UserManager<UsuarioIdentity> _userManager;
+        private readonly EstoqueService _estoqueService;
 
         public RecolhimentoController(RecolhimentoService recolhimentoService,
-        RecolhimentoMaterialService recolhimentoMaterialService,
+        RecolhimentoEstoqueMaterialService recolhimentoEstoqueMaterialService,
+        EstoqueMaterialService estoqueMaterialService,
         CooperativaService cooperativaService,
-        Material_ColetaService material_ColetaService,
-        UserManager<UsuarioIdentity> userManager)
+        EstoqueService estoqueService)
         {
             _recolhimentoService = recolhimentoService;
-            _recolhimentoMaterialService = recolhimentoMaterialService;
+            _recolhimentoEstoqueMaterialService = recolhimentoEstoqueMaterialService;
+            _estoqueMaterialService = estoqueMaterialService;
             _cooperativaService = cooperativaService;
-            _material_ColetaService = material_ColetaService;
-            _userManager = userManager;
+            _estoqueService = estoqueService;
+    
         }
 
 
@@ -39,13 +39,11 @@ namespace Reciicer.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             var model = new RecolhimentoCreateViewModel(){
-                PontoColetaId = (await _userManager.GetUserAsync(User)).PontoColetaId,
                 Cooperativas = _cooperativaService.ListarCooperativa(),
-                MateriaisTotais = _material_ColetaService.ObterTotaisMaterial()
-                
+                EstoqueMateriais = _estoqueMaterialService.ListarEstoqueMaterial()             
                 
             };
 
@@ -61,7 +59,9 @@ namespace Reciicer.Controllers
             
             var ultimoRecolhimento = _recolhimentoService.ObterUltimoRecolhimento();
             
-            _recolhimentoMaterialService.RegistrarRecolhimentoMaterial(model.RecolhimentoMateriais.ToList(), ultimoRecolhimento.Id);
+            _recolhimentoEstoqueMaterialService.RegistrarRecolhimentoEstoqueMaterial(model.RecolhimentoEstoqueMateriais.ToList(), ultimoRecolhimento.Id);
+
+            //_estoqueService
 
             return RedirectToAction("Index");
         }
@@ -83,7 +83,7 @@ namespace Reciicer.Controllers
         [ValidateAntiForgeryToken] 
         public IActionResult Update(Recolhimento recolhimento)
         {
-            _recolhimentoMaterialService.AtualizarRecolhimentoMaterial(recolhimento.RecolhimentoMateriais.ToList());
+            //_recolhimentoMaterialService.AtualizarRecolhimentoMaterial(recolhimento.RecolhimentoEstoqueMateriais.ToList());
 
             return RedirectToAction("Index");
         }

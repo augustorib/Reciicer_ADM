@@ -16,15 +16,14 @@ namespace Reciicer.Repository
 
         public IEnumerable<Recolhimento> ListarRecolhimento()
         {
-            return _context.Recolhimento.Include(r => r.PontoColeta).Include(r => r.Cooperativa).ToList();
+            return _context.Recolhimento.Include(r => r.RecolhimentoEstoqueMateriais).Include(r => r.Cooperativa).ToList();
         }
 
         public Recolhimento ObterRecolhimentoPorId(int id)
         {
-            return _context.Recolhimento.Include(r => r.PontoColeta)
-                                        .Include(r => r.Cooperativa)
-                                        .Include(r => r.RecolhimentoMateriais)
-                                        .ThenInclude(rm => rm.Material)
+            return _context.Recolhimento.Include(r => r.Cooperativa)
+                                        .Include(r => r.RecolhimentoEstoqueMateriais)
+                                        .ThenInclude(rem => rem.EstoqueMaterial)
                                         .FirstOrDefault(r => r.Id == id);
             
         }
@@ -42,7 +41,6 @@ namespace Reciicer.Repository
             if(recolhimentoBd != null)
             {
                 recolhimentoBd.DataRecolhimento = recolhimento.DataRecolhimento;
-                recolhimentoBd.PontoColetaId = recolhimento.PontoColetaId;
                 recolhimentoBd.CooperativaId = recolhimento.CooperativaId;
        
 

@@ -18,7 +18,9 @@ namespace Reciicer.Repository
 
         public IEnumerable<EstoqueMaterial> ListarEstoqueMaterial()
         {
-            return _context.EstoqueMaterial.Include(em => em.Material).ToList();
+            return _context.EstoqueMaterial.Include(em => em.Material)
+                                           .Include(em => em.Estoque)
+                                           .ToList();
         }
         
         public EstoqueMaterial ObterEstoqueMaterialPorId(int id)

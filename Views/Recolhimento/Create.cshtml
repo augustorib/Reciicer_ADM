@@ -2,7 +2,6 @@
 @{
     ViewData["Title"] = "Criar Recolhimento";
 
-    
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -13,46 +12,46 @@
         
         <div class="form-group row my-3">
             <div class="col-md-5">
-                <label  asp-for="Recolhimento.CooperativaId" class="control-label">Escolha uma Cooperativa: </label>
-                <select asp-for="Recolhimento.CooperativaId" asp-items="@(new SelectList(Model.Cooperativas, "Id", "Nome"))" class="form-select form-select-md ">
+                <label  asp-for="Recolhimento!.CooperativaId" class="control-label">Escolha uma Cooperativa: </label>
+                <select asp-for="Recolhimento!.CooperativaId" asp-items="@(new SelectList(Model.Cooperativas, "Id", "Nome"))" class="form-select form-select-md ">
                     <option value=""selected>Selecione uma Cooperativa </option>
                 </select>
             </div>
 
             <div class="col-md-4">
-                <label  asp-for="Recolhimento.DataRecolhimento" class="control-label">Data: </label>
-                <input  asp-for="Recolhimento.DataRecolhimento" class="form-control" >
+                <label  asp-for="Recolhimento!.DataRecolhimento" class="control-label">Data: </label>
+                <input  asp-for="Recolhimento!.DataRecolhimento" class="form-control" >
             </div>
-            
-            <input type="hidden" asp-for="Recolhimento.PontoColetaId" value="@Model.PontoColetaId" />
         </div>
 
         <table class="table table-striped" id="dataTableInit">
             <thead>
                 <tr>
                     <th>Material</th>
-                    <th>Quantidade Total</th>
-                    <th>Peso Total</th>
+                    <th>Estoque</th>
+                    <th>Quantidade </th>
+                    <th>Peso</th>
                     <th>Quantidade</th>
                     <th>Peso</th>
                 </tr>
             </thead>
             <tbody>
-                @for (int i = 0; i < Model.MateriaisTotais.Count(); i++)
-                {
+             @for (int i = 0; i < Model.EstoqueMateriais.Count(); i++)
+              {
                     
-                    var item = Model.MateriaisTotais.ElementAt(i);
+                    var item = Model.EstoqueMateriais.ElementAt(i);
 
                     <tr>    
-                        <td>@item.Material</td>
-                        <td>@item.QuantidadeTotal</td>
-                        <td>@item.PesoTotal</td>
+                        <td>@item.Material.Nome</td>
+                        <td>@item.Estoque.Codigo</td>
+                        <td>@item.Quantidade</td>
+                        <td>@item.Peso</td>
                         <td>
-                            <input type="hidden" name="RecolhimentoMateriais[@i].MaterialId" value="@item.MaterialId"/>
-                            <input type="number" name="RecolhimentoMateriais[@i].QuantidadeTotal" class="form-control" max="@item.QuantidadeTotal" oninput="validateInput(this)"  />
+                            <input type="hidden" name="RecolhimentoEstoqueMateriais[@i].EstoqueMaterialId" value="@item.Id"/>
+                            <input type="number" name="RecolhimentoEstoqueMateriais[@i].Quantidade" class="form-control" max="@item.Quantidade" oninput="validateInput(this)"  />
                         </td> 
                         <td>
-                            <input type="number" name="RecolhimentoMateriais[@i].PesoTotal" class="form-control" max="@item.PesoTotal" oninput="validateInput(this)" />
+                            <input type="number" name="RecolhimentoEstoqueMateriais[@i].Peso" class="form-control" max="@item.Peso" oninput="validateInput(this)" />
                         </td>
                     </tr>
                 }

@@ -95,13 +95,8 @@ namespace Reciicer.Data
             );
 
             modelBuilder.Entity<Recolhimento>().HasData(
-                new Recolhimento{Id = 1, DataRecolhimento = new DateTime(2024, 11, 21, 4, 23, 6, 153, DateTimeKind.Local), PontoColetaId = 1, CooperativaId = 1},   
-                new Recolhimento{Id = 2, DataRecolhimento = new DateTime(2025, 02, 21, 6, 23, 6, 153, DateTimeKind.Local), PontoColetaId = 2, CooperativaId = 1}
-            );
-
-            modelBuilder.Entity<RecolhimentoMaterial>().HasData(
-                new RecolhimentoMaterial{Id = 1, RecolhimentoId = 1, MaterialId = 1, QuantidadeTotal = 0, PesoTotal = 21},
-                new RecolhimentoMaterial{Id = 2, RecolhimentoId = 2, MaterialId = 2, QuantidadeTotal = 10, PesoTotal = 0}
+                new Recolhimento{Id = 1, DataRecolhimento = new DateTime(2024, 11, 21, 4, 23, 6, 153, DateTimeKind.Local), CooperativaId = 1},   
+                new Recolhimento{Id = 2, DataRecolhimento = new DateTime(2025, 02, 21, 6, 23, 6, 153, DateTimeKind.Local), CooperativaId = 1}
             );
 
             modelBuilder.Entity<Cooperativa>().HasData(
@@ -125,7 +120,7 @@ namespace Reciicer.Data
         public DbSet<ClientePremiacao> ClientePremiacao {get; set;}
         public DbSet<Recolhimento> Recolhimento {get; set;}
         public DbSet<Cooperativa> Cooperativa {get; set;}
-        public DbSet<RecolhimentoMaterial> RecolhimentoMaterial {get; set;}
+        public DbSet<RecolhimentoEstoqueMaterial> RecolhimentoEstoqueMaterial {get; set;}
         public DbSet<Estoque> Estoque {get; set;}
         public DbSet<EstoqueMaterial> EstoqueMaterial {get; set;}
         

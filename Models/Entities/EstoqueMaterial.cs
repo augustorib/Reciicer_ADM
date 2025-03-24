@@ -20,5 +20,7 @@ namespace Reciicer.Models.Entities
 
         public Estoque? Estoque { get; set; }
 
+        public ICollection<RecolhimentoEstoqueMaterial>? RecolhimentoEstoqueMateriais { get; set; }
+
     }
 }
