@@ -53,7 +53,7 @@ namespace Reciicer.Controllers
         { 
             var model = new EstoqueReadViewModel(){
                 Estoque = _estoqueService.ObterEstoquePorId(id),
-                EstoqueMateriais = _estoqueMaterialService.ObterEstoqueMaterialPorEstoqueId(id)
+                EstoqueMateriais = _estoqueMaterialService.ObterEstoqueMaterialPorEstoqueId(id).Where(em => em.Quantidade != 0 || em.Peso != 0)
             };
 
             return View(model);

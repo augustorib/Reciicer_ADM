@@ -24,6 +24,7 @@ namespace Reciicer.Repository
             return _context.Recolhimento.Include(r => r.Cooperativa)
                                         .Include(r => r.RecolhimentoEstoqueMateriais)
                                         .ThenInclude(rem => rem.EstoqueMaterial)
+                                        .ThenInclude(em => em.Material)
                                         .FirstOrDefault(r => r.Id == id);
             
         }

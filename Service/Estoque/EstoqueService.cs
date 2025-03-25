@@ -105,18 +105,39 @@ namespace Reciicer.Service.Estoque
 
             var estoques = ListarEstoquesPorPontoColetaId(materialColeta.Coleta!.PontoColetaId);
 
-            var pesoParaRemover = materialColeta.Peso;
-            var quantidadeParaRemover = materialColeta.Quantidade;
+            GerenciarRemocaoEstoque(estoques.ToList(), materialColeta.MaterialId, materialColeta.Peso, materialColeta.Quantidade);
+        }
+
+      
+        public void RemoverMaterialEstoque (IList<Entities.RecolhimentoEstoqueMaterial> recolhimentoEstoqueMateriais)
+        {   
+            foreach(var recolhimentoEstoqueMaterial in recolhimentoEstoqueMateriais)
+            {
+                var estoqueMaterial = _estoqueMaterialRepository.ObterEstoqueMaterialPorId(recolhimentoEstoqueMaterial.EstoqueMaterialId);
+
+                var estoques = _estoqueRepository.ListarEstoquePorPontoColetaId(estoqueMaterial.Estoque.PontoColetaId);
+
+                GerenciarRemocaoEstoque(estoques.ToList(), estoqueMaterial.MaterialId, recolhimentoEstoqueMaterial.Peso, recolhimentoEstoqueMaterial.Quantidade);
+            }
+        }
+
+        public void GerenciarRemocaoEstoque(IList<Entities.Estoque> estoques, int materialId, int peso, int quantidade )
+        {
+            var pesoParaRemover = peso;
+            var quantidadeParaRemover = quantidade;
 
             foreach (var estoque in estoques)
             {
                 if (pesoParaRemover == 0 && quantidadeParaRemover == 0)
                    break;
           
-                var estoquesMateriais = _estoqueMaterialRepository.ObterEstoqueMaterialPorMaterialEstoque(estoque.Id, materialColeta.MaterialId);
+                var estoquesMateriais = _estoqueMaterialRepository.ObterEstoqueMaterialPorMaterialEstoque(estoque.Id, materialId).OrderByDescending(em => em.Id);
 
                 foreach (var estoqueMaterial in estoquesMateriais)
                 {
+                    if (pesoParaRemover == 0 && quantidadeParaRemover == 0)
+                    break;
+
                     if (pesoParaRemover > 0 )
                     {
                         var pesoParaRemoverDoEstoqueMaterial = Math.Min(estoqueMaterial.Peso, pesoParaRemover);
@@ -137,15 +158,14 @@ namespace Reciicer.Service.Estoque
                         
                     }
 
-                    if(estoqueMaterial.Quantidade == 0 && estoqueMaterial.Peso == 0)
-                        _estoqueMaterialRepository.ExcluirEstoqueMaterial(estoqueMaterial.Id);
-                    else
+                    // if(estoqueMaterial.Quantidade == 0 && estoqueMaterial.Peso == 0)
+                    //     _estoqueMaterialRepository.ExcluirEstoqueMaterial(estoqueMaterial.Id);
+                    // else
                         _estoqueMaterialRepository.AtualizarEstoqueMaterial(estoqueMaterial);
     
                 }
                 AtualizarEstoque(estoque);
             }
-
         }
 
         public void ExcluirMateriaisEstoquePorColetaId(int coletaId)

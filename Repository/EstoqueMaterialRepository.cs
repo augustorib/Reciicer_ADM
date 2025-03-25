@@ -25,7 +25,7 @@ namespace Reciicer.Repository
         
         public EstoqueMaterial ObterEstoqueMaterialPorId(int id)
         {
-            return _context.EstoqueMaterial.Include(em => em.Material).FirstOrDefault(em => em.Id == id);
+            return _context.EstoqueMaterial.Include(em => em.Material).Include(em => em.Estoque).FirstOrDefault(em => em.Id == id);
         }
 
         public IEnumerable<EstoqueMaterial> ObterEstoqueMaterialPorEstoqueId(int estoqueId)

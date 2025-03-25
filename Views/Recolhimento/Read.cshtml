@@ -26,17 +26,17 @@
                 </tr>
             </thead>
             <tbody>
-                @* @for (int i = 0; i < Model.RecolhimentoMateriais.Count(); i++)
+                @for (int i = 0; i < Model.RecolhimentoEstoqueMateriais.Count() ; i++)
                 {
                     
-                    var item = Model.RecolhimentoMateriais.ElementAt(i);
+                    var item = Model.RecolhimentoEstoqueMateriais.ElementAt(i);
 
                     <tr>    
-                        <td>@item.Material.Nome</td>
-                        <td>@item.QuantidadeTotal</td>
-                        <td>@item.PesoTotal</td>
+                        <td>@item.EstoqueMaterial.Material.Nome</td>
+                        <td>@item.Quantidade</td>
+                        <td>@item.Peso</td>
                     </tr>
-                } *@
+                }
             </tbody>
         </table>
 

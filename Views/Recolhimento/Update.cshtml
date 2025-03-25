@@ -31,24 +31,25 @@
                 </tr>
             </thead>
             <tbody>
-                @* @for (int i = 0; i < Model.RecolhimentoMateriais.Count(); i++)
+                @for (int i = 0; i < Model.RecolhimentoEstoqueMateriais.Count(); i++)
                 {
                     
-                    var item = Model.RecolhimentoMateriais.ElementAt(i);
+                    var item = Model.RecolhimentoEstoqueMateriais.ElementAt(i);
 
                     <tr>    
-                        <td>@item.Material.Nome</td>
-                        <td>@item.QuantidadeTotal</td>
-                        <td>@item.PesoTotal</td>
+                        <td>@item.EstoqueMaterial.Material.Nome</td>
+                        <td>@item.Quantidade</td>
+                        <td>@item.Peso</td>
                         <td>
-                            <input type="hidden" name="RecolhimentoMateriais[@i].Id" value="@item.Id"/>
-                            <input type="number" name="RecolhimentoMateriais[@i].QuantidadeTotal" class="form-control" />
+                            <input type="hidden" name="RecolhimentoEstoqueMateriais[@i].Id" value="@item.Id"/>
+                            <input type="hidden" name="RecolhimentoEstoqueMateriais[@i].EstoqueMaterialId" value="@item.EstoqueMaterialId"/>
+                            <input type="number" name="RecolhimentoEstoqueMateriais[@i].Quantidade" class="form-control" />
                         </td> 
                         <td>
-                            <input type="number" name="RecolhimentoMateriais[@i].PesoTotal" class="form-control" />
+                            <input type="number" name="RecolhimentoEstoqueMateriais[@i].Peso" class="form-control" />
                         </td>
                     </tr>
-                } *@
+                }
             </tbody>
         </table>
 

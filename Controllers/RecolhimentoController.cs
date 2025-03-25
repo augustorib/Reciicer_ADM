@@ -43,7 +43,7 @@ namespace Reciicer.Controllers
         {
             var model = new RecolhimentoCreateViewModel(){
                 Cooperativas = _cooperativaService.ListarCooperativa(),
-                EstoqueMateriais = _estoqueMaterialService.ListarEstoqueMaterial()             
+                EstoqueMateriais = _estoqueMaterialService.ListarEstoqueMaterial().Where(em => em.Quantidade != 0 || em.Peso != 0)            
                 
             };
 
@@ -61,7 +61,8 @@ namespace Reciicer.Controllers
             
             _recolhimentoEstoqueMaterialService.RegistrarRecolhimentoEstoqueMaterial(model.RecolhimentoEstoqueMateriais.ToList(), ultimoRecolhimento.Id);
 
-            //_estoqueService
+           
+            _estoqueService.RemoverMaterialEstoque(model.RecolhimentoEstoqueMateriais.ToList());
 
             return RedirectToAction("Index");
         }
@@ -83,7 +84,7 @@ namespace Reciicer.Controllers
         [ValidateAntiForgeryToken] 
         public IActionResult Update(Recolhimento recolhimento)
         {
-            //_recolhimentoMaterialService.AtualizarRecolhimentoMaterial(recolhimento.RecolhimentoEstoqueMateriais.ToList());
+            _recolhimentoEstoqueMaterialService.AtualizarRecolhimentoEstoqueMaterial(recolhimento.RecolhimentoEstoqueMateriais.ToList());
 
             return RedirectToAction("Index");
         }
