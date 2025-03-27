@@ -90,12 +90,7 @@ namespace Reciicer.Service.Coleta
         {
             _coletaRepository.ExcluirColeta(id);
         }
-
-        public void RecolherColeta(int id)
-        {
-            _coletaRepository.RecolherColeta(id);
-        }
-
+        
         public IEnumerable<ColetasPorMes> ObterTotalColetasPorMes(int? anoFiltroDashBoard)
         {
             var query = _coletaRepository.ListarColeta().AsQueryable();

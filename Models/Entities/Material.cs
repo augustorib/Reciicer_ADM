@@ -27,6 +27,7 @@ namespace Reciicer.Models.Entities
         //Navigation
         public TipoMaterial? TipoMaterial { get; set; }
         public ICollection<Material_Coleta>? Material_Coletas { get; set; }
+        public ICollection<EstoqueMaterial>? EstoqueMateriais { get; set; }
 
     }
 }

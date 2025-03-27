@@ -21,6 +21,7 @@ using Reciicer.Service.Recolhimento;
 using Reciicer.Service.Estoque;
 using Reciicer.Service.EstoqueMaterial;
 using Reciicer.Service.RecolhimentoEstoqueMaterial;
+using Reciicer.Service.Relatorio;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -57,6 +58,7 @@ builder.Services.AddScoped<RecolhimentoService>();
 builder.Services.AddScoped<EstoqueService>();
 builder.Services.AddScoped<EstoqueMaterialService>();
 builder.Services.AddScoped<RecolhimentoEstoqueMaterialService>();
+builder.Services.AddScoped<RelatorioService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 
 

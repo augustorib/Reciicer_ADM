@@ -157,7 +157,6 @@ namespace Reciicer.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            //_coletaService.RecolherColeta(id);
 
             _estoqueService.ExcluirMateriaisEstoquePorColetaId(id);
             
