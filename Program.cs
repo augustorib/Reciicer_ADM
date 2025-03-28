@@ -22,6 +22,8 @@ using Reciicer.Service.Estoque;
 using Reciicer.Service.EstoqueMaterial;
 using Reciicer.Service.RecolhimentoEstoqueMaterial;
 using Reciicer.Service.Relatorio;
+using Reciicer.Service.Error;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -59,6 +61,7 @@ builder.Services.AddScoped<EstoqueService>();
 builder.Services.AddScoped<EstoqueMaterialService>();
 builder.Services.AddScoped<RecolhimentoEstoqueMaterialService>();
 builder.Services.AddScoped<RelatorioService>();
+builder.Services.AddScoped<ErrorHandlingService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 
 
@@ -119,7 +122,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/Error/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
