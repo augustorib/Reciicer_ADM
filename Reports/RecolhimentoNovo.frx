@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="03/25/2025 22:13:49" ReportInfo.Modified="03/26/2025 02:08:34" ReportInfo.CreatorVersion="2025.1.0.0">
+  <Dictionary>
+    <BusinessObjectDataSource Name="DS_Recolhimento" ReferenceName="DS_Recolhimento" DataType="System.Int32" Enabled="true">
+      <Column Name="Nome" DataType="System.String"/>
+      <Column Name="DataRecolhimento" DataType="System.DateTime"/>
+      <Column Name="Descricao" DataType="System.String"/>
+      <Column Name="Peso" DataType="System.Int32"/>
+      <Column Name="Quantidade" DataType="System.Int32"/>
+    </BusinessObjectDataSource>
+    <Total Name="PesoDataTotal" Expression="[DS_Recolhimento.Peso]" Evaluator="Data2" PrintOn="GroupFooter1"/>
+    <Total Name="QuantidadeDataTotal" Expression="[DS_Recolhimento.Quantidade]" Evaluator="Data2" PrintOn="GroupFooter1"/>
+    <Total Name="PesoTotal" Expression="[DS_Recolhimento.Peso]" Evaluator="Data2" PrintOn="GroupFooter2"/>
+    <Total Name="QuantidadeTotal" Expression="[DS_Recolhimento.Quantidade]" Evaluator="Data2" PrintOn="GroupFooter2"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="37.8">
+      <TextObject Name="Text1" Left="160.65" Top="9.45" Width="387.45" Height="28.35" Text="Relatório Recolhimento" HorzAlign="Center" Font="Arial, 18pt, style=Bold"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="41.8" Width="718.2"/>
+    <GroupHeaderBand Name="PontoColeta" Top="45.8" Width="718.2" Height="18.9" Border.Lines="All" Fill.Color="LightGray" Guides="0" Condition="[DS_Recolhimento.Nome]">
+      <TextObject Name="Text18" Width="718.2" Height="18.9" Border.Lines="All" Text="[DS_Recolhimento.Nome]" VertAlign="Center" Font="Arial, 14pt"/>
+      <GroupHeaderBand Name="DataRecolhimento" Top="68.7" Width="718.2" Height="18.9" Condition="[DS_Recolhimento.DataRecolhimento]">
+        <TextObject Name="Text5" Width="718.2" Height="18.9" Border.Lines="All" Fill.Color="Gainsboro" Text="DataRecolhimento" Font="Arial, 12pt"/>
+        <TextObject Name="Text4" Left="151.2" Width="567" Height="18.9" Border.Lines="All" Text="[DS_Recolhimento.DataRecolhimento]" Format="Date" Format.Format="d" Font="Arial, 12pt"/>
+        <DataBand Name="Data2" Top="91.6" Width="718.2" Height="37.8" Guides="37.8" DataSource="DS_Recolhimento">
+          <TextObject Name="Text6" Width="387.45" Height="37.8" Border.Lines="All" Text="[DS_Recolhimento.Descricao]" VertAlign="Center" Font="Arial, 12pt"/>
+          <TextObject Name="Text7" Left="387.45" Width="179.55" Height="37.8" Border.Lines="All" Text="[DS_Recolhimento.Peso]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt"/>
+          <TextObject Name="Text8" Left="567" Width="151.2" Height="37.8" Border.Lines="All" Text="[DS_Recolhimento.Quantidade]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt"/>
+        </DataBand>
+        <GroupFooterBand Name="GroupFooter1" Top="133.4" Width="718.2" Height="18.9">
+          <TextObject Name="Text12" Width="387.45" Height="18.9" Border.Lines="All" Fill.Color="LightGray" Text="Total Data&#13;&#10;" HorzAlign="Center" Font="Arial, 12pt"/>
+          <TextObject Name="Text10" Left="387.45" Width="179.55" Height="18.9" Border.Lines="All" Text="[PesoDataTotal]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt"/>
+          <TextObject Name="Text11" Left="567" Width="151.2" Height="18.9" Border.Lines="All" Text="[QuantidadeDataTotal]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt"/>
+        </GroupFooterBand>
+      </GroupHeaderBand>
+      <GroupFooterBand Name="GroupFooter2" Top="156.3" Width="718.2" Height="18.9" Border.Lines="All">
+        <TextObject Name="Text19" Width="387.45" Height="18.9" Border.Lines="All" Fill.Color="Gainsboro" Text="Total&#13;&#10;" HorzAlign="Center" Font="Arial, 12pt"/>
+        <TextObject Name="Text20" Left="387.45" Width="179.55" Height="18.9" Border.Lines="All" Fill.Color="Gainsboro" Text="[PesoTotal]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt"/>
+        <TextObject Name="Text21" Left="567" Width="151.2" Height="18.9" Border.Lines="All" Fill.Color="Gainsboro" Text="[QuantidadeTotal]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt"/>
+      </GroupFooterBand>
+    </GroupHeaderBand>
+    <PageFooterBand Name="PageFooter1" Top="179.2" Width="718.2" Height="37.8">
+      <TextObject Name="Text16" Left="623.7" Top="18.9" Width="94.5" Height="18.9" Text="[Page]" HorzAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text17" Top="18.9" Width="94.5" Height="18.9" Text="[Date]" HorzAlign="Center" Font="Arial, 10pt"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

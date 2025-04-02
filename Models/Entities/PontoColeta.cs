@@ -9,7 +9,7 @@ namespace Reciicer.Models.Entities
         [Key]
         public int Id { get; set; }
 
-        [DisplayName("Local: ")]
+        [DisplayName("Local ")]
         public string? Nome { get; set; }
         
         public int EnderecoId { get; set; }

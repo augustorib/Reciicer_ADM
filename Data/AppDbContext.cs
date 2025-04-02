@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-
 using Reciicer.Models.Entities;
 
 namespace Reciicer.Data
@@ -71,10 +70,10 @@ namespace Reciicer.Data
                 new Endereco{Id = 2, Rua = "Rua 2", Bairro = "Bairro 2", Numero = 2, Cidade = "Cidade 2", Estado = "Estado 2", Cep = "60000-001"}       
             );
 
-            var adminRoleId = Guid.NewGuid().ToString();
-            var operadorRoleId = Guid.NewGuid().ToString();
-            var adminUserId = Guid.NewGuid().ToString();
-            var operadorUserId = Guid.NewGuid().ToString();
+            var adminRoleId = "298f1256-ec97-4797-966c-d813afa14f70";
+            var operadorRoleId = "8a62bbbf-8420-459c-94d3-9da153f3803f";
+            var adminUserId = "8868b1f4-812f-4bbd-a438-1b25f7241f78";
+            var operadorUserId = "02f34b97-229a-4764-ba00-2298903959c5";
 
             modelBuilder.Entity<IdentityRole>().HasData(
                 new IdentityRole { Id = adminRoleId, Name = "Admin", NormalizedName = "ADMIN" },
@@ -94,6 +93,20 @@ namespace Reciicer.Data
             modelBuilder.Entity<ClientePremiacao>().HasData(
                 new ClientePremiacao{Id = 1, DataOperacao = new DateTime(2024, 11, 21, 4, 23, 6, 153, DateTimeKind.Local), ClienteId = 3, PremiacaoId = 3}
             );
+
+            modelBuilder.Entity<Recolhimento>().HasData(
+                new Recolhimento{Id = 1, DataRecolhimento = new DateTime(2024, 11, 21, 4, 23, 6, 153, DateTimeKind.Local), CooperativaId = 1},   
+                new Recolhimento{Id = 2, DataRecolhimento = new DateTime(2025, 02, 21, 6, 23, 6, 153, DateTimeKind.Local), CooperativaId = 1}
+            );
+
+            modelBuilder.Entity<Cooperativa>().HasData(
+                new Cooperativa{Id = 1, Nome = "Cooperativa de Reciclagem", Email = "", CNPJ = "00.000.000/0000-00"}
+            );
+
+            modelBuilder.Entity<Estoque>().HasData(
+                new Estoque{Id = 1, Codigo = "PR001", PontoColetaId = 1, Tipo = "Interno", PesoArmazenado = 0, QuantidadeArmazenada = 0 ,Capacidade = 10},
+                new Estoque{Id = 2, Codigo = "PRN001", PontoColetaId = 2, Tipo = "Externo", PesoArmazenado = 0, QuantidadeArmazenada = 0 ,Capacidade = 5}            );
+
         }
         
         public DbSet<Cliente> Cliente {get; set;}
@@ -105,6 +118,11 @@ namespace Reciicer.Data
         public DbSet<PontoColeta> PontoColeta {get; set;}
         public DbSet<Endereco> Endereco {get; set;}
         public DbSet<ClientePremiacao> ClientePremiacao {get; set;}
+        public DbSet<Recolhimento> Recolhimento {get; set;}
+        public DbSet<Cooperativa> Cooperativa {get; set;}
+        public DbSet<RecolhimentoEstoqueMaterial> RecolhimentoEstoqueMaterial {get; set;}
+        public DbSet<Estoque> Estoque {get; set;}
+        public DbSet<EstoqueMaterial> EstoqueMaterial {get; set;}
         
     }
 }

@@ -16,9 +16,6 @@ namespace Reciicer.Models.Entities
         [DisplayName("Pontuação")]
         public int PontuacaoGanha { get; set; }
 
-        [DisplayName("Recolhida")]
-        public bool Ativo { get; set; } = false;
-
         public int ClienteId { get; set; }
         public int PontoColetaId { get; set; }
             

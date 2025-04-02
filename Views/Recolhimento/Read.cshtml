@@ -1,0 +1,47 @@
+@model Reciicer.Models.Entities.Recolhimento
+@{
+    ViewData["Title"] = "Detalhes Recolhimento";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+        <div class="form-group row my-4">
+            <div class="col-md-5">
+                <label asp-for="Cooperativa.Nome" class="form-label">@Html.DisplayNameFor(model => model.Cooperativa.Nome)</label>
+                <input asp-for="Cooperativa.Nome" class="form-control" disabled>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="DataRecolhimento" class="form-label">@Html.DisplayNameFor(model => model.DataRecolhimento):</label>
+                <input asp-for="DataRecolhimento" class="form-control" disabled>
+            </div>
+        </div>
+
+        <table class="table table-striped" id="dataTableInit">
+            <thead>
+                <tr>
+                    <th>Material</th>
+                    <th>Qnt Recolhida</th>
+                    <th>(g) Recolhida</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.RecolhimentoEstoqueMateriais.Count() ; i++)
+                {
+                    
+                    var item = Model.RecolhimentoEstoqueMateriais.ElementAt(i);
+
+                    <tr>    
+                        <td>@item.EstoqueMaterial.Material.Nome</td>
+                        <td>@item.Quantidade</td>
+                        <td>@item.Peso</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="form-group mt-2">
+            <a asp-action="Update" asp-route-Id="@Model.Id" class="btn btn-warning text-white ">Atualizar <i class="fa-solid fa-pen"></i></a>
+            <a asp-action="Index" class="btn btn-secondary">Voltar <i class="fa-solid fa-rotate-left"></i></a>
+        </div>
+</div>

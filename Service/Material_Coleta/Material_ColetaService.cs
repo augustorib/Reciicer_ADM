@@ -35,6 +35,5 @@ namespace Reciicer.Service.Material_Coleta
              _Material_ColetaRepository.ExcluirMaterialColeta(id);
         }
 
-
     }
 }

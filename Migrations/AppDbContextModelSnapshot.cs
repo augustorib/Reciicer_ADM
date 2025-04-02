@@ -222,7 +222,7 @@ namespace Reciicer.Migrations
                         {
                             Id = 1,
                             CPF = "777.777.777-77",
-                            DataCadastro = new DateTime(2024, 12, 2, 2, 3, 31, 367, DateTimeKind.Local).AddTicks(1210),
+                            DataCadastro = new DateTime(2025, 3, 24, 16, 50, 54, 765, DateTimeKind.Local).AddTicks(4639),
                             Email = "jurandir@gmail.com",
                             Nome = "Jurandir",
                             PontuacaoTotal = 15,
@@ -232,7 +232,7 @@ namespace Reciicer.Migrations
                         {
                             Id = 2,
                             CPF = "544.894.849-98",
-                            DataCadastro = new DateTime(2024, 12, 2, 2, 3, 31, 367, DateTimeKind.Local).AddTicks(1222),
+                            DataCadastro = new DateTime(2025, 3, 24, 16, 50, 54, 765, DateTimeKind.Local).AddTicks(4651),
                             Email = "judit@gmail.com",
                             Nome = "Judit",
                             PontuacaoTotal = 0,
@@ -242,7 +242,7 @@ namespace Reciicer.Migrations
                         {
                             Id = 3,
                             CPF = "894.399.251-32",
-                            DataCadastro = new DateTime(2024, 12, 2, 2, 3, 31, 367, DateTimeKind.Local).AddTicks(1224),
+                            DataCadastro = new DateTime(2025, 3, 24, 16, 50, 54, 765, DateTimeKind.Local).AddTicks(4653),
                             Email = "astolfo@gmail.com",
                             Nome = "Astolfo",
                             PontuacaoTotal = 0,
@@ -252,7 +252,7 @@ namespace Reciicer.Migrations
                         {
                             Id = 4,
                             CNPJ = "54.594.954/9549-89",
-                            DataCadastro = new DateTime(2024, 12, 2, 2, 3, 31, 367, DateTimeKind.Local).AddTicks(1225),
+                            DataCadastro = new DateTime(2025, 3, 24, 16, 50, 54, 765, DateTimeKind.Local).AddTicks(4654),
                             Email = "manoel@padaria.com",
                             Nome = "Padaria Manoel",
                             PontuacaoTotal = 0,
@@ -330,20 +330,51 @@ namespace Reciicer.Migrations
                         new
                         {
                             Id = 1,
-                            Ativo = true,
+                            Ativo = false,
                             ClienteId = 1,
-                            DataOperacao = new DateTime(2024, 12, 2, 2, 3, 31, 367, DateTimeKind.Local).AddTicks(1402),
+                            DataOperacao = new DateTime(2025, 3, 24, 16, 50, 54, 765, DateTimeKind.Local).AddTicks(4853),
                             PontoColetaId = 2,
                             PontuacaoGanha = 10
                         },
                         new
                         {
                             Id = 2,
-                            Ativo = true,
+                            Ativo = false,
                             ClienteId = 1,
-                            DataOperacao = new DateTime(2024, 12, 2, 2, 3, 31, 367, DateTimeKind.Local).AddTicks(1406),
+                            DataOperacao = new DateTime(2025, 3, 24, 16, 50, 54, 765, DateTimeKind.Local).AddTicks(4856),
                             PontoColetaId = 2,
                             PontuacaoGanha = 5
+                        });
+                });
+
+            modelBuilder.Entity("Reciicer.Models.Entities.Cooperativa", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CNPJ")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cooperativa");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CNPJ = "00.000.000/0000-00",
+                            Email = "",
+                            Nome = "Cooperativa de Reciclagem"
                         });
                 });
 
@@ -401,6 +432,90 @@ namespace Reciicer.Migrations
                             Numero = 2,
                             Rua = "Rua 2"
                         });
+                });
+
+            modelBuilder.Entity("Reciicer.Models.Entities.Estoque", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Capacidade")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Codigo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PesoArmazenado")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PontoColetaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuantidadeArmazenada")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Tipo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PontoColetaId");
+
+                    b.ToTable("Estoque");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Capacidade = 10,
+                            Codigo = "PR001",
+                            PesoArmazenado = 0,
+                            PontoColetaId = 1,
+                            QuantidadeArmazenada = 0,
+                            Tipo = "Interno"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Capacidade = 5,
+                            Codigo = "PRN001",
+                            PesoArmazenado = 0,
+                            PontoColetaId = 2,
+                            QuantidadeArmazenada = 0,
+                            Tipo = "Externo"
+                        });
+                });
+
+            modelBuilder.Entity("Reciicer.Models.Entities.EstoqueMaterial", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("EstoqueId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MaterialId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Peso")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantidade")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EstoqueId");
+
+                    b.HasIndex("MaterialId");
+
+                    b.ToTable("EstoqueMaterial");
                 });
 
             modelBuilder.Entity("Reciicer.Models.Entities.Material", b =>
@@ -605,6 +720,122 @@ namespace Reciicer.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Reciicer.Models.Entities.Recolhimento", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CooperativaId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DataRecolhimento")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("PontoColetaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CooperativaId");
+
+                    b.HasIndex("PontoColetaId");
+
+                    b.ToTable("Recolhimento");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CooperativaId = 1,
+                            DataRecolhimento = new DateTime(2024, 11, 21, 4, 23, 6, 153, DateTimeKind.Local)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CooperativaId = 1,
+                            DataRecolhimento = new DateTime(2025, 2, 21, 6, 23, 6, 153, DateTimeKind.Local)
+                        });
+                });
+
+            modelBuilder.Entity("Reciicer.Models.Entities.RecolhimentoEstoqueMaterial", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("EstoqueMaterialId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Peso")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantidade")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RecolhimentoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EstoqueMaterialId");
+
+                    b.HasIndex("RecolhimentoId");
+
+                    b.ToTable("RecolhimentoEstoqueMaterial");
+                });
+
+            modelBuilder.Entity("Reciicer.Models.Entities.RecolhimentoMaterial", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("MaterialId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PesoTotal")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuantidadeTotal")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RecolhimentoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MaterialId");
+
+                    b.HasIndex("RecolhimentoId");
+
+                    b.ToTable("RecolhimentoMaterial");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            MaterialId = 1,
+                            PesoTotal = 21,
+                            QuantidadeTotal = 0,
+                            RecolhimentoId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            MaterialId = 2,
+                            PesoTotal = 0,
+                            QuantidadeTotal = 10,
+                            RecolhimentoId = 2
+                        });
+                });
+
             modelBuilder.Entity("Reciicer.Models.Entities.TipoMaterial", b =>
                 {
                     b.Property<int>("Id")
@@ -733,7 +964,7 @@ namespace Reciicer.Migrations
                         {
                             Id = "8868b1f4-812f-4bbd-a438-1b25f7241f78",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ddbfd18c-a10a-429d-9524-5b5e5d851135",
+                            ConcurrencyStamp = "42903dbf-3571-45b1-89af-747db8e03ab9",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -742,7 +973,7 @@ namespace Reciicer.Migrations
                             PasswordHash = "AQAAAAIAAYagAAAAELOGUtUv5slutFj/g2ySNtpAyK6JnEzlfSGIQVH2hL8onfOArNzzqS3hzh4KBbfBlg==",
                             PhoneNumberConfirmed = false,
                             PontoColetaId = 1,
-                            SecurityStamp = "c8315ee1-2072-40d3-8750-4ed254c654c8",
+                            SecurityStamp = "2aaf02f3-e468-4835-b70c-204e99e3a6bd",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -750,7 +981,7 @@ namespace Reciicer.Migrations
                         {
                             Id = "02f34b97-229a-4764-ba00-2298903959c5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "55c367b0-d91b-4e42-b337-1155bc64ce73",
+                            ConcurrencyStamp = "cdd0f7b6-9bba-4422-9328-9845eed3d054",
                             Email = "operador@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -759,7 +990,7 @@ namespace Reciicer.Migrations
                             PasswordHash = "AQAAAAIAAYagAAAAEHQ7mga+DIAlOUen1rubIYWrGtJL/2ELlGuZQrZgvy/1u0aPPJa1UHG0VWqHJa06uA==",
                             PhoneNumberConfirmed = false,
                             PontoColetaId = 2,
-                            SecurityStamp = "67a4e605-693b-4d29-9bfe-084295889a4c",
+                            SecurityStamp = "f2f39961-af59-414d-8188-a60913060d00",
                             TwoFactorEnabled = false,
                             UserName = "operador"
                         });
@@ -854,6 +1085,36 @@ namespace Reciicer.Migrations
                     b.Navigation("PontoColeta");
                 });
 
+            modelBuilder.Entity("Reciicer.Models.Entities.Estoque", b =>
+                {
+                    b.HasOne("Reciicer.Models.Entities.PontoColeta", "PontoColeta")
+                        .WithMany()
+                        .HasForeignKey("PontoColetaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PontoColeta");
+                });
+
+            modelBuilder.Entity("Reciicer.Models.Entities.EstoqueMaterial", b =>
+                {
+                    b.HasOne("Reciicer.Models.Entities.Estoque", "Estoque")
+                        .WithMany("EstoqueMateriais")
+                        .HasForeignKey("EstoqueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Reciicer.Models.Entities.Material", "Material")
+                        .WithMany()
+                        .HasForeignKey("MaterialId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Estoque");
+
+                    b.Navigation("Material");
+                });
+
             modelBuilder.Entity("Reciicer.Models.Entities.Material", b =>
                 {
                     b.HasOne("Reciicer.Models.Entities.TipoMaterial", "TipoMaterial")
@@ -895,6 +1156,59 @@ namespace Reciicer.Migrations
                     b.Navigation("Endereco");
                 });
 
+            modelBuilder.Entity("Reciicer.Models.Entities.Recolhimento", b =>
+                {
+                    b.HasOne("Reciicer.Models.Entities.Cooperativa", "Cooperativa")
+                        .WithMany("Recolhimentos")
+                        .HasForeignKey("CooperativaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Reciicer.Models.Entities.PontoColeta", null)
+                        .WithMany("Recolhimentos")
+                        .HasForeignKey("PontoColetaId");
+
+                    b.Navigation("Cooperativa");
+                });
+
+            modelBuilder.Entity("Reciicer.Models.Entities.RecolhimentoEstoqueMaterial", b =>
+                {
+                    b.HasOne("Reciicer.Models.Entities.EstoqueMaterial", "EstoqueMaterial")
+                        .WithMany("RecolhimentoEstoqueMateriais")
+                        .HasForeignKey("EstoqueMaterialId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Reciicer.Models.Entities.Recolhimento", "Recolhimento")
+                        .WithMany("RecolhimentoEstoqueMateriais")
+                        .HasForeignKey("RecolhimentoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("EstoqueMaterial");
+
+                    b.Navigation("Recolhimento");
+                });
+
+            modelBuilder.Entity("Reciicer.Models.Entities.RecolhimentoMaterial", b =>
+                {
+                    b.HasOne("Reciicer.Models.Entities.Material", "Material")
+                        .WithMany()
+                        .HasForeignKey("MaterialId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Reciicer.Models.Entities.Recolhimento", "Recolhimento")
+                        .WithMany()
+                        .HasForeignKey("RecolhimentoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Material");
+
+                    b.Navigation("Recolhimento");
+                });
+
             modelBuilder.Entity("Reciicer.Models.Entities.UsuarioIdentity", b =>
                 {
                     b.HasOne("Reciicer.Models.Entities.PontoColeta", "PontoColeta")
@@ -918,6 +1232,21 @@ namespace Reciicer.Migrations
                     b.Navigation("Material_Coletas");
                 });
 
+            modelBuilder.Entity("Reciicer.Models.Entities.Cooperativa", b =>
+                {
+                    b.Navigation("Recolhimentos");
+                });
+
+            modelBuilder.Entity("Reciicer.Models.Entities.Estoque", b =>
+                {
+                    b.Navigation("EstoqueMateriais");
+                });
+
+            modelBuilder.Entity("Reciicer.Models.Entities.EstoqueMaterial", b =>
+                {
+                    b.Navigation("RecolhimentoEstoqueMateriais");
+                });
+
             modelBuilder.Entity("Reciicer.Models.Entities.Material", b =>
                 {
                     b.Navigation("Material_Coletas");
@@ -927,12 +1256,19 @@ namespace Reciicer.Migrations
                 {
                     b.Navigation("Coletas");
 
+                    b.Navigation("Recolhimentos");
+
                     b.Navigation("UsuarioIdentities");
                 });
 
             modelBuilder.Entity("Reciicer.Models.Entities.Premiacao", b =>
                 {
                     b.Navigation("ClientePremiacaos");
+                });
+
+            modelBuilder.Entity("Reciicer.Models.Entities.Recolhimento", b =>
+                {
+                    b.Navigation("RecolhimentoEstoqueMateriais");
                 });
 
             modelBuilder.Entity("Reciicer.Models.Entities.TipoMaterial", b =>
