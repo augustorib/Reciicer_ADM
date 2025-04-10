@@ -33,7 +33,7 @@ namespace Reciicer.Data
             modelBuilder.ApplyConfiguration(new EstoqueConfiguration());
 
             ClienteSeed.Seed(modelBuilder);
-            IdentitySeed.Seed(modelBuilder);
+            UsuarioIdentitySeed.Seed(modelBuilder);
             PremiacaoSeed.Seed(modelBuilder);
             MaterialSeed.Seed(modelBuilder);
             TipoMaterialSeed.Seed(modelBuilder);

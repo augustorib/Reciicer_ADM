@@ -1,10 +1,11 @@
 using Reciicer.Models.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Reciicer.Data.Seed
 {
-    public static class IdentitySeed
+    public static class UsuarioIdentitySeed
     {
         public static void Seed(ModelBuilder modelBuilder)
         {
@@ -27,6 +28,13 @@ namespace Reciicer.Data.Seed
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(
                 new IdentityUserRole<string> { UserId = adminUserId, RoleId = adminRoleId },
                 new IdentityUserRole<string> { UserId = operadorUserId, RoleId = operadorRoleId }
+            );
+
+            modelBuilder.Entity<IdentityUserClaim<string>>().HasData(
+                new IdentityUserClaim<string> { Id = 1, UserId = adminUserId, ClaimType = ClaimTypes.Role, ClaimValue = "Admin" },
+                new IdentityUserClaim<string> { Id = 2, UserId = adminUserId, ClaimType = "PontoColetaId", ClaimValue = "1" },
+                new IdentityUserClaim<string> { Id = 3, UserId = operadorUserId, ClaimType = ClaimTypes.Role, ClaimValue = "Operador" },
+                new IdentityUserClaim<string> { Id = 4, UserId = operadorUserId, ClaimType = "PontoColetaId", ClaimValue = "2" }
             );
         }
     }

@@ -32,16 +32,17 @@ public class HomeController : Controller
 
     public IActionResult Index(int? anoDashboard)
     {
-
+        var anoSelectDashboard = anoDashboard ?? DateTime.Now.Year;
+        
         var model = new HomeIndexViewModel{
-            TotalCliente = _clienteService.ObterTotalClientes(anoDashboard),
-            TotalColeta = _coletaService.ObterTotalMaterialColeta(anoDashboard),
+            TotalCliente = _clienteService.ObterTotalClientes(anoSelectDashboard),
+            TotalColeta = _coletaService.ObterTotalMaterialColeta(anoSelectDashboard),
             DataUltimaColeta = _coletaService.ObterDataUltimaColeta().ToString("dd/MM/yyyy HH:mm"),
-            TipoMaterialQuantidadeCharts =  _tipoMaterialService.ObterNomeQuantidadeTipoMaterialGrafico(anoDashboard),
+            TipoMaterialQuantidadeCharts =  _tipoMaterialService.ObterNomeQuantidadeTipoMaterialGrafico(anoSelectDashboard),
             Top10Clientes = _clienteService.ObterClientesOrdenadoPorPontuação(),
-            ClientePorMes = _clienteService.ObterTotalClientesPorMes(anoDashboard),
-            ColetasPorMes = _coletaService.ObterTotalColetasPorMes(anoDashboard),
-            AnoSelecionado = anoDashboard ?? DateTime.Now.Year
+            ClientePorMes = _clienteService.ObterTotalClientesPorMes(anoSelectDashboard),
+            ColetasPorMes = _coletaService.ObterTotalColetasPorMes(anoSelectDashboard),
+            AnoSelecionado = anoSelectDashboard 
         };
      
         return View(model);

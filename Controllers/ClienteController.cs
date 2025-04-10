@@ -1,4 +1,5 @@
 
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Reciicer.Models.Entities;
 using Reciicer.Repository.Interface;
@@ -29,7 +30,6 @@ namespace Reciicer.Controllers
 
         public IActionResult Index()
         {
- 
             return View(_clienteService.ListarCliente());
         }
 

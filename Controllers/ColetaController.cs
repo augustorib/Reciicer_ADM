@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Reciicer.Models.ColetaViewModels;
@@ -29,11 +29,16 @@ namespace Reciicer.Controllers
             _material_ColetaService = material_ColetaService;
             _estoqueService = estoqueService;
             _userManager = userManager;
+
         }
+
 
         public IActionResult Index()
         {
-            return View(_coletaService.ListarColeta());
+            
+            var pontoColetaId = Convert.ToInt32(User.FindFirst("PontoColetaId")!.Value);
+            var roleUsuarioLogado = User.FindFirst(ClaimTypes.Role)!.Value;
+            return View(_coletaService.ListarColeta(roleUsuarioLogado, pontoColetaId));
         }
 
         [HttpGet]

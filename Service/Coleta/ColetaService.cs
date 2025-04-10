@@ -52,7 +52,7 @@ namespace Reciicer.Service.Coleta
         {
             var anoFiltroDashBoard = anoDashBoard ?? DateTime.Now.Year;
             
-            var coletasNoAnoId = _coletaRepository.ListarColeta()
+            var coletasNoAnoId = ListarColeta()
                                 .Where(c => c.DataOperacao.Year == anoFiltroDashBoard)
                                 .Select(c => c.Id)
                                 .ToList();
@@ -66,7 +66,7 @@ namespace Reciicer.Service.Coleta
 
         public DateTime ObterDataUltimaColeta()
         {
-            return _coletaRepository.ListarColeta().Max(r => r.DataOperacao);
+            return ListarColeta().Max(r => r.DataOperacao);
            
         }
 
@@ -74,6 +74,19 @@ namespace Reciicer.Service.Coleta
         {
             return _coletaRepository.ListarColeta();
         }  
+
+        public IEnumerable<Entities.Coleta> ListarColeta(string usuarioLogadoRole, int pontoColetaId)
+        {
+            if( usuarioLogadoRole != "Admin")
+            {
+                return _coletaRepository.ListarColeta()
+                        .Where(c => c.PontoColetaId == pontoColetaId)
+                        .OrderByDescending(c => c.DataOperacao);
+            }
+            
+            return _coletaRepository.ListarColeta();
+        }
+
         public Entities.Coleta ObterColetaPorId(int id)
         {
             return _coletaRepository.ObterColetaPorId(id);
