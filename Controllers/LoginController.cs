@@ -51,6 +51,8 @@ namespace Reciicer.Controllers
                     return RedirectToAction("Index", "Home");
                 }
 
+                TempData["Mensagem"] = "Usuário ou senha inválidos!";
+
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             }
 
