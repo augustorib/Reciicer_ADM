@@ -13,6 +13,7 @@
             <th>Email</th>
             <th>Ponto de Coleta</th>
             <th>Roles</th>
+            <th>Ações</th>
         </tr>
     </thead>
     <tbody>
@@ -23,6 +24,38 @@
                 <td>@user.Email</td>
                 <td>@user.PontoColeta</td>
                 <td>@string.Join("| ", user.Roles)</td>
+                <td>
+                    <a class="btn btn-primary " asp-action="Read" asp-route-Id="@user.Id">
+                        <i class="fa-solid fa-circle-info text-white"></i>
+                    </a>
+                    <a class="btn btn-warning" asp-action="Update" asp-route-Id="@user.Id">
+                        <i class="fa-solid fa-user-pen text-white"></i>
+                    </a>
+
+                    
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#DeleteModal-@user.Id">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="DeleteModal-@user.Id" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="deleteModalLabel">Excluir Recolhimento?</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                Esta operação não poderá ser revertida!<br><br>Deseja realmente excluir ?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-rotate-left"></i> Não</button>
+                                <a class="btn btn-danger"  asp-action="Delete" asp-route-Id="@user.Id"><i class="fa-solid fa-trash"></i> Sim</a>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </td> 
             </tr>
         }
     </tbody>
