@@ -48,12 +48,11 @@ namespace Reciicer.Service.Coleta
             _coletaRepository.RegistrarColeta(coleta);
         }
 
-        public int ObterTotalMaterialColeta(int? anoDashBoard)
+        public int ObterTotalMaterialColeta(int anoDashBoard)
         {
-            var anoFiltroDashBoard = anoDashBoard ?? DateTime.Now.Year;
-            
+                       
             var coletasNoAnoId = ListarColeta()
-                                .Where(c => c.DataOperacao.Year == anoFiltroDashBoard)
+                                .Where(c => c.DataOperacao.Year == anoDashBoard)
                                 .Select(c => c.Id)
                                 .ToList();
             
@@ -64,10 +63,34 @@ namespace Reciicer.Service.Coleta
                     .Count();
         }
 
+        public int ObterTotalColeta(int anoDashBoard, int pontoColetaId)
+        {
+            var usuariosPontoColeta = _usuarioIdentityService.ObterUsuariosPorPontoColetaId(pontoColetaId);
+            
+            var coletasTotalNoAno = ListarColeta()
+                                    .Where(
+                                            c => c.DataOperacao.Year == anoDashBoard && 
+                                            usuariosPontoColeta.Any(u => u.PontoColetaId == c.PontoColetaId)
+                                           )
+                                    .Count();
+                                    
+            
+            return coletasTotalNoAno;
+        }
+
         public DateTime ObterDataUltimaColeta()
         {
             return ListarColeta().Max(r => r.DataOperacao);
            
+        }
+
+        public DateTime ObterDataUltimaColeta(int pontoColetaId)
+        {
+            var usuariosPontoColeta = _usuarioIdentityService.ObterUsuariosPorPontoColetaId(pontoColetaId);
+
+            return ListarColeta()
+                   .Where(c => c.PontoColetaId == pontoColetaId && c.CreatedBy is not null) 
+                   .Max(r => r.DataOperacao);
         }
 
         public IEnumerable<Entities.Coleta> ListarColeta()
@@ -75,16 +98,11 @@ namespace Reciicer.Service.Coleta
             return _coletaRepository.ListarColeta();
         }  
 
-        public IEnumerable<Entities.Coleta> ListarColeta(string usuarioLogadoRole, int pontoColetaId)
+        public IEnumerable<Entities.Coleta> ListarColeta(int pontoColetaId)
         {
-            if( usuarioLogadoRole != "Admin")
-            {
-                return _coletaRepository.ListarColeta()
-                        .Where(c => c.PontoColetaId == pontoColetaId)
-                        .OrderByDescending(c => c.DataOperacao);
-            }
-            
-            return _coletaRepository.ListarColeta();
+            return _coletaRepository.ListarColeta()
+                                    .Where(c => c.PontoColetaId == pontoColetaId)
+                                    .OrderByDescending(c => c.DataOperacao);
         }
 
         public Entities.Coleta ObterColetaPorId(int id)
@@ -104,13 +122,14 @@ namespace Reciicer.Service.Coleta
             _coletaRepository.ExcluirColeta(id);
         }
         
-        public IEnumerable<ColetasPorMes> ObterTotalColetasPorMes(int? anoFiltroDashBoard)
+        public IEnumerable<ColetasPorMes> ObterTotalColetasPorMes(int? anoFiltroDashBoard, int pontoColetaId)
         {
             var query = _coletaRepository.ListarColeta().AsQueryable();
             
             if (anoFiltroDashBoard.HasValue)
             {
-                query = query.Where(c => c.DataOperacao.Year == anoFiltroDashBoard.Value);
+                query = query.Where(c => c.DataOperacao.Year == anoFiltroDashBoard.Value
+                                    && c.PontoColetaId == pontoColetaId);
             }
 
             var coletasPorMes =  query

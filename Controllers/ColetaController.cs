@@ -34,11 +34,10 @@ namespace Reciicer.Controllers
 
 
         public IActionResult Index()
-        {
-            
+        { 
             var pontoColetaId = Convert.ToInt32(User.FindFirst("PontoColetaId")!.Value);
-            var roleUsuarioLogado = User.FindFirst(ClaimTypes.Role)!.Value;
-            return View(_coletaService.ListarColeta(roleUsuarioLogado, pontoColetaId));
+            
+            return View(_coletaService.ListarColeta(pontoColetaId));
         }
 
         [HttpGet]

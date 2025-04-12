@@ -13,16 +13,12 @@ namespace Reciicer.Controllers;
 [Authorize]
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
-
     private readonly ClienteService _clienteService;
     private readonly ColetaService _coletaService;
     private readonly TipoMaterialService _tipoMaterialService;
 
-    public HomeController(ILogger<HomeController> logger, ClienteService clienteService, ColetaService coletaService,
-                          TipoMaterialService tipoMaterialService)
+    public HomeController(ClienteService clienteService, ColetaService coletaService, TipoMaterialService tipoMaterialService)
     {
-        _logger = logger;
         _clienteService = clienteService;
         _coletaService  = coletaService;
         _tipoMaterialService  = tipoMaterialService;
@@ -33,15 +29,17 @@ public class HomeController : Controller
     public IActionResult Index(int? anoDashboard)
     {
         var anoSelectDashboard = anoDashboard ?? DateTime.Now.Year;
+
+        var pontoColetaId = Convert.ToInt32(User.FindFirst("PontoColetaId")?.Value);
         
         var model = new HomeIndexViewModel{
-            TotalCliente = _clienteService.ObterTotalClientes(anoSelectDashboard),
-            TotalColeta = _coletaService.ObterTotalMaterialColeta(anoSelectDashboard),
-            DataUltimaColeta = _coletaService.ObterDataUltimaColeta().ToString("dd/MM/yyyy HH:mm"),
-            TipoMaterialQuantidadeCharts =  _tipoMaterialService.ObterNomeQuantidadeTipoMaterialGrafico(anoSelectDashboard),
-            Top10Clientes = _clienteService.ObterClientesOrdenadoPorPontuação(),
-            ClientePorMes = _clienteService.ObterTotalClientesPorMes(anoSelectDashboard),
-            ColetasPorMes = _coletaService.ObterTotalColetasPorMes(anoSelectDashboard),
+            TotalCliente = _clienteService.ObterTotalClientes(anoSelectDashboard, pontoColetaId),
+            TotalColeta = _coletaService.ObterTotalColeta(anoSelectDashboard, pontoColetaId),
+            DataUltimaColeta = _coletaService.ObterDataUltimaColeta(pontoColetaId).ToString("dd/MM/yyyy HH:mm"),
+            TipoMaterialQuantidadeCharts =  _tipoMaterialService.ObterNomeQuantidadeTipoMaterialGrafico(anoSelectDashboard, pontoColetaId),
+            Top10Clientes = _clienteService.ObterClientesOrdenadoPorPontuação(pontoColetaId),
+            ClientePorMes = _clienteService.ObterTotalClientesPorMes(anoSelectDashboard, pontoColetaId),
+            ColetasPorMes = _coletaService.ObterTotalColetasPorMes(anoSelectDashboard, pontoColetaId),
             AnoSelecionado = anoSelectDashboard 
         };
      
