@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Reciicer.Models.Entities
 {
-    public class Cooperativa
+    public class Cooperativa : EntidadeBase
     {
         [Key]
         public int Id { get; set; }

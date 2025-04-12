@@ -3,15 +3,19 @@ using Reciicer.Data.Configurations;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Reciicer.Models.Entities;
+using Reciicer.Service.Audit;
+
 
 namespace Reciicer.Data
 {
     public class AppDbContext : IdentityDbContext<UsuarioIdentity>
     {
 
-        public AppDbContext (DbContextOptions<AppDbContext> options) : base(options)
-        {
+        private readonly AuditService _auditService;
 
+        public AppDbContext (DbContextOptions<AppDbContext> options, AuditService auditService) : base(options)
+        {
+            _auditService = auditService;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -49,6 +53,14 @@ namespace Reciicer.Data
             RecolhimentoEstoqueMaterialSeed.Seed(modelBuilder);
 
         }
+
+        public override int SaveChanges()
+        {
+            _auditService.AplicarInformacoesAudit(ChangeTracker);
+            _auditService.AuditInformacoesLog(ChangeTracker, AuditLog);
+            
+            return base.SaveChanges();
+        }
         
         public DbSet<Cliente> Cliente {get; set;}
         public DbSet<Premiacao> Premiacao {get; set;}
@@ -64,6 +76,7 @@ namespace Reciicer.Data
         public DbSet<RecolhimentoEstoqueMaterial> RecolhimentoEstoqueMaterial {get; set;}
         public DbSet<Estoque> Estoque {get; set;}
         public DbSet<EstoqueMaterial> EstoqueMaterial {get; set;}
+        public DbSet<AuditLog> AuditLog {get; set;}
         
     }
 }

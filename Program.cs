@@ -23,6 +23,7 @@ using Reciicer.Service.EstoqueMaterial;
 using Reciicer.Service.RecolhimentoEstoqueMaterial;
 using Reciicer.Service.Relatorio;
 using Reciicer.Service.Error;
+using Reciicer.Service.Audit;
 
 
 
@@ -62,11 +63,14 @@ builder.Services.AddScoped<EstoqueMaterialService>();
 builder.Services.AddScoped<RecolhimentoEstoqueMaterialService>();
 builder.Services.AddScoped<RelatorioService>();
 builder.Services.AddScoped<ErrorHandlingService>();
+builder.Services.AddScoped<AuditService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddHttpContextAccessor();
 
 // Add Dbcontext
 builder.Services.AddDbContext<AppDbContext>(options => 
