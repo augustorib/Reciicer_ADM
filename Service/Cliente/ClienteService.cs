@@ -1,6 +1,7 @@
 using System.Globalization;
 using Reciicer.Models.HomeViewModels;
 using Reciicer.Repository.Interface;
+using Reciicer.Service.UsuarioIdentity;
 using  Entities = Reciicer.Models.Entities;
 
 
@@ -9,18 +10,27 @@ namespace Reciicer.Service.Cliente
     public class ClienteService 
     {
         private readonly IClienteRepository _clienteRepository;
-    
 
-        public ClienteService(IClienteRepository clienteRepository)
+        private readonly UsuarioIdentityService _usuarioIdentityService;
+    
+        public ClienteService(IClienteRepository clienteRepository, UsuarioIdentityService usuarioIdentityService)
         {
             _clienteRepository = clienteRepository;
-            
-        }
+            _usuarioIdentityService = usuarioIdentityService;
+    }
 
         public IEnumerable<Entities.Cliente> ListarCliente()
         {
            return _clienteRepository.ListarCliente();
         }
+
+        public IEnumerable<Entities.Cliente> ListarCliente(int pontoColetaId)
+        {
+           var usuarios = _usuarioIdentityService.ObterUsuariosPorPontoColetaId(pontoColetaId);  
+
+           return _clienteRepository.ListarCliente().Where(c => usuarios.Any(u => u.Id == c.CreatedBy)).ToList();
+        }
+        
         public void RegistrarCliente(Entities.Cliente cliente)
         {
             _clienteRepository.RegistrarCliente(cliente);

@@ -14,6 +14,7 @@ namespace Reciicer.Data.Seed
             var operadorRoleId = "8a62bbbf-8420-459c-94d3-9da153f3803f";
             var adminUserId = "8868b1f4-812f-4bbd-a438-1b25f7241f78";
             var operadorUserId = "02f34b97-229a-4764-ba00-2298903959c5";
+            var operadorUserId2 = "c6b63962-b8ae-440b-b396-7c279fc00a65";
 
             modelBuilder.Entity<IdentityRole>().HasData(
                 new IdentityRole { Id = adminRoleId, Name = "Admin", NormalizedName = "ADMIN" },
@@ -22,19 +23,23 @@ namespace Reciicer.Data.Seed
 
             modelBuilder.Entity<UsuarioIdentity>().HasData(
                 new UsuarioIdentity { Id = adminUserId, UserName = "admin", NormalizedUserName = "ADMIN", Email = "admin@gmail.com", NormalizedEmail ="ADMIN@GMAIL.COM",PasswordHash = "AQAAAAIAAYagAAAAELOGUtUv5slutFj/g2ySNtpAyK6JnEzlfSGIQVH2hL8onfOArNzzqS3hzh4KBbfBlg==", PontoColetaId=1 },
-                new UsuarioIdentity { Id = operadorUserId, UserName = "operador", NormalizedUserName = "OPERADOR", Email = "operador@gmail.com", NormalizedEmail ="OPERADOR@GMAIL.COM", PasswordHash = "AQAAAAIAAYagAAAAEHQ7mga+DIAlOUen1rubIYWrGtJL/2ELlGuZQrZgvy/1u0aPPJa1UHG0VWqHJa06uA==", PontoColetaId = 2 }
+                new UsuarioIdentity { Id = operadorUserId, UserName = "operador", NormalizedUserName = "OPERADOR", Email = "operador@gmail.com", NormalizedEmail ="OPERADOR@GMAIL.COM", PasswordHash = "AQAAAAIAAYagAAAAEHQ7mga+DIAlOUen1rubIYWrGtJL/2ELlGuZQrZgvy/1u0aPPJa1UHG0VWqHJa06uA==", PontoColetaId = 2 },
+                new UsuarioIdentity { Id = operadorUserId2, UserName = "goku", NormalizedUserName = "GOKU", Email = "goku@gmail.com", NormalizedEmail ="GOKU@GMAIL.COM", PasswordHash = "AQAAAAIAAYagAAAAEFVovPC6/IgInBQyzn23KHGYw8xpexogmm3uwut00seoRzsW0YQW4GHBf1pNtdPl2w==", PontoColetaId = 2 }
             );
 
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(
                 new IdentityUserRole<string> { UserId = adminUserId, RoleId = adminRoleId },
-                new IdentityUserRole<string> { UserId = operadorUserId, RoleId = operadorRoleId }
+                new IdentityUserRole<string> { UserId = operadorUserId, RoleId = operadorRoleId },
+                new IdentityUserRole<string> { UserId = operadorUserId2, RoleId = operadorRoleId }
             );
 
             modelBuilder.Entity<IdentityUserClaim<string>>().HasData(
                 new IdentityUserClaim<string> { Id = 1, UserId = adminUserId, ClaimType = ClaimTypes.Role, ClaimValue = "Admin" },
                 new IdentityUserClaim<string> { Id = 2, UserId = adminUserId, ClaimType = "PontoColetaId", ClaimValue = "1" },
                 new IdentityUserClaim<string> { Id = 3, UserId = operadorUserId, ClaimType = ClaimTypes.Role, ClaimValue = "Operador" },
-                new IdentityUserClaim<string> { Id = 4, UserId = operadorUserId, ClaimType = "PontoColetaId", ClaimValue = "2" }
+                new IdentityUserClaim<string> { Id = 4, UserId = operadorUserId, ClaimType = "PontoColetaId", ClaimValue = "2" },
+                new IdentityUserClaim<string> { Id = 5, UserId = operadorUserId2, ClaimType = ClaimTypes.Role, ClaimValue = "Operador" },
+                new IdentityUserClaim<string> { Id = 6, UserId = operadorUserId2, ClaimType = "PontoColetaId", ClaimValue = "2" }
             );
         }
     }

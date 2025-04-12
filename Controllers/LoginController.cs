@@ -72,7 +72,7 @@ namespace Reciicer.Controllers
             {
                 var user = new UsuarioIdentity { UserName = model.UserName, Email = model.Email, PontoColetaId = 1 };
                 
-                var result = await _userManager.CreateAsync(user, model.Password);
+                var result = await _userManager.CreateAsync(user, model.Password!);
 
                 var pontoColeta = _pontoColetaService.ObterPontoColetaPorId(user.PontoColetaId);
 

@@ -16,6 +16,10 @@ namespace Reciicer.Service.UsuarioIdentity
         {
             return await _userManager.FindByIdAsync(usuarioGuid);
         }
+        public IEnumerable<Entities.UsuarioIdentity> ObterUsuariosPorPontoColetaId(int id)
+        {
+            return _userManager.Users.Where(u => u.PontoColetaId == id).ToList();
+        }
   
         
     }

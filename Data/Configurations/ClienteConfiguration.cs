@@ -17,6 +17,7 @@ namespace Reciicer.Data.Configurations
             builder.Property(c => c.CNPJ).HasMaxLength(18);
             
             builder.Property(c => c.PontuacaoTotal).HasDefaultValue(0);
+            builder.Property(c => c.CreatedBy).HasDefaultValue("8868b1f4-812f-4bbd-a438-1b25f7241f78");
             builder.Property(c => c.DataCadastro).HasDefaultValueSql("GETDATE()");
 
             builder.HasIndex(c => c.Email).IsUnique();
