@@ -39,10 +39,9 @@ namespace Reciicer.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-
             var user = await _userManager.FindByEmailAsync(model.Email);
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && user is not null)
             {
                 var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password,  model.RememberMe, lockoutOnFailure: false);
 
@@ -51,11 +50,11 @@ namespace Reciicer.Controllers
                     return RedirectToAction("Index", "Home");
                 }
 
-                TempData["Mensagem"] = "Usuário ou senha inválidos!";
-
-                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             }
-
+                    
+            TempData["Mensagem"] = "Usuário ou senha inválidos!";
+            
+ 
             return View(model);
         }
 

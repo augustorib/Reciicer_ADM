@@ -7,7 +7,7 @@ namespace Reciicer.Models.LoginViewModels
     {
 
         [Required(ErrorMessage ="E-mail deve ser informado")]
-        [EmailAddress(ErrorMessage ="Insira um e-mail válido")]
+        [EmailAddress(ErrorMessage ="Insira um E-mail válido")]
         [Display(Name = "E-mail:")]
         public string Email { get; set; }
 

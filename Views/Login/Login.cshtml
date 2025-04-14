@@ -2,9 +2,9 @@
 
 @{
     var mensagem = TempData["Mensagem"] as string;
-    var updateUserClaim  = TempData["Update"] as string;
-}
+    var updateUserClaim  = TempData["Update"] as string; 
 
+}
 
 <div class="page-wrapper">
     <div class="page-content--bge5">
@@ -12,20 +12,12 @@
             <div class="login-wrap">
                 <div class="login-content">
                       <div class="text-center">
-                        <img src="img/logo.png" alt="Reciicer" width="280" />
+                        <img src="~/img/logo.png" alt="Reciicer" width="280" />
                       </div>
-                        @if(mensagem != null)
-                        {
-                            <div class="alert alert-danger" id="alert" role="alert">
-                                @mensagem
-                            </div>
-                        }
-                        @if(updateUserClaim != null)
-                        {
-                            <div class="alert alert-success" id="alert" role="alert">
-                                @updateUserClaim
-                            </div>
-                        }
+
+                    @await Html.PartialAsync("_AlertPartial", (mensagem, "danger"))
+                    @await Html.PartialAsync("_AlertPartial", (updateUserClaim, "success"))
+
                     <div class="login-form">
                         <form asp-action="Login" method="post">
                             <div class="my-3">
@@ -56,12 +48,5 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-    <script>
-        $(document).ready(function(){
-            
-            setTimeout(function() {
-                $('#alert').fadeOut('slow');
-            }, 4000);
-        });
-    </script>
+    <script src="~/js/utils/alertTimeout.js" asp-append-version="true"></script> 
 }
