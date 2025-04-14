@@ -4,7 +4,7 @@
 
 @{
     var userIdentity =  _userManager.GetUserAsync(User).Result;
-    var roles = _userManager.GetRolesAsync(userIdentity).Result;
+    var roles = _userManager.GetRolesAsync(userIdentity!).Result;
 
     var isAdmin = roles.Contains("Admin");
 }

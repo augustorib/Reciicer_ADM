@@ -13,15 +13,11 @@
    
     @if(mensagem[0] == 'F')
     {
-        <div class="alert alert-danger" id="email-alert" role="alert">
-          <i class="fa-solid fa-circle-xmark"></i> @mensagem
-        </div>
+        @await Html.PartialAsync("_AlertPartial", (mensagem, "danger", "circle-xmark"))
     }
     else
     {
-        <div class="alert alert-success" id="email-alert" role="alert">
-            <i class="fa-solid fa-check"></i> @mensagem
-        </div>
+        @await Html.PartialAsync("_AlertPartial", (mensagem, "success", "check"))
     }
 }
 

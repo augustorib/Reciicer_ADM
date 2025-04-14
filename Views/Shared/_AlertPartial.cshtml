@@ -1,8 +1,8 @@
-@model (string mensagem, string alertType)
+@model (string mensagem, string alertType, string icon)
 
 @if (!string.IsNullOrEmpty(Model.mensagem))
 {
     <div class="alert alert-@Model.alertType" id="alert" role="alert">
-        @Model.mensagem
+         <i class="fa-solid fa-@Model.icon"></i> @Model.mensagem
     </div>
 }
