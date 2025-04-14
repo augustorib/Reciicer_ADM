@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Reciicer.Models.RoleViewModels;
 using Reciicer.Service.PontoColeta;
+using System.Security.Claims;
 namespace Reciicer.Controllers
 {
 
@@ -12,7 +13,6 @@ namespace Reciicer.Controllers
     {
         private readonly UserManager<UsuarioIdentity> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-
         private readonly PontoColetaService _pontoColetaService;
         
 
@@ -72,14 +72,17 @@ namespace Reciicer.Controllers
         public IActionResult Update(string id)
         { 
             var user = _userManager.Users.FirstOrDefault(u => u.Id == id);
+
+            var userRole = _userManager.GetRolesAsync(user!).Result.FirstOrDefault();
+
             
             var model = new UserRoleViewModel
             {
                 Id = user!.Id,
                 UserName = user.UserName!,
-                PontoColeta = _pontoColetaService.ObterPontoColetaPorId(user.PontoColetaId).Nome ?? string.Empty,
+                PontoColetaId = _pontoColetaService.ObterPontoColetaPorId(user.PontoColetaId).Id,
                 Email = user!.Email ?? string.Empty,
-                Role = _userManager.GetRolesAsync(user).Result.FirstOrDefault() ?? string.Empty,
+                RoleId = _roleManager.FindByNameAsync(userRole).Result.Id,
                 RolesList = _roleManager.Roles.ToList(),
                 PontoColetas = _pontoColetaService.ListarPontoColeta(),
             };
@@ -92,7 +95,6 @@ namespace Reciicer.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(UserRoleViewModel userRoleViewModel)
         { 
-            //TODO: Se for alterar o ponto de Coleta deve ser feito o ajuste na Claim
             var usuarioAtualizar =  _userManager.FindByIdAsync(userRoleViewModel.Id!).Result;
 
             usuarioAtualizar!.UserName = userRoleViewModel.UserName;
@@ -101,10 +103,21 @@ namespace Reciicer.Controllers
             
             await _userManager.UpdateAsync(usuarioAtualizar);
             await _userManager.RemoveFromRolesAsync(usuarioAtualizar, _userManager.GetRolesAsync(usuarioAtualizar).Result);
-            await _userManager.AddToRoleAsync(usuarioAtualizar,  _roleManager.FindByIdAsync(userRoleViewModel.RoleId).Result.NormalizedName);
+            await _userManager.AddToRoleAsync(usuarioAtualizar,  _roleManager.FindByIdAsync(userRoleViewModel.RoleId).Result!.NormalizedName);
 
+            var currentClaims = await _userManager.GetClaimsAsync(usuarioAtualizar);
+            var pontoColetaClaim = currentClaims.FirstOrDefault(c => c.Type == "PontoColetaId");
+            var roleName = currentClaims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
 
-            return RedirectToAction("Index");
+            await _userManager.ReplaceClaimAsync(usuarioAtualizar, pontoColetaClaim!, new Claim("PontoColetaId", userRoleViewModel.PontoColetaId.ToString()));
+            await _userManager.ReplaceClaimAsync(usuarioAtualizar, roleName!, new Claim(ClaimTypes.Role, _roleManager.FindByIdAsync(userRoleViewModel.RoleId).Result!.Name!));
+
+            TempData["Update"] = "Usuário atualizado com sucesso!";
+
+            if(User.FindFirst(ClaimTypes.NameIdentifier)?.Value == usuarioAtualizar.Id)
+                return RedirectToAction("Logout", "Login"); 
+            else    
+                return RedirectToAction("Index");
         }
 
         [HttpGet]

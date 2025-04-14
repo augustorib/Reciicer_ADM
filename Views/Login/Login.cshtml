@@ -2,6 +2,7 @@
 
 @{
     var mensagem = TempData["Mensagem"] as string;
+    var updateUserClaim  = TempData["Update"] as string;
 }
 
 
@@ -15,8 +16,14 @@
                       </div>
                         @if(mensagem != null)
                         {
-                            <div class="alert alert-danger" id="alert-error" role="alert">
+                            <div class="alert alert-danger" id="alert" role="alert">
                                 @mensagem
+                            </div>
+                        }
+                        @if(updateUserClaim != null)
+                        {
+                            <div class="alert alert-success" id="alert" role="alert">
+                                @updateUserClaim
                             </div>
                         }
                     <div class="login-form">
@@ -53,7 +60,7 @@
         $(document).ready(function(){
             
             setTimeout(function() {
-                $('#alert-error').fadeOut('slow');
+                $('#alert').fadeOut('slow');
             }, 4000);
         });
     </script>

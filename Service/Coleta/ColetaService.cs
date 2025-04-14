@@ -86,10 +86,8 @@ namespace Reciicer.Service.Coleta
 
         public DateTime ObterDataUltimaColeta(int pontoColetaId)
         {
-            var usuariosPontoColeta = _usuarioIdentityService.ObterUsuariosPorPontoColetaId(pontoColetaId);
-
             return ListarColeta()
-                   .Where(c => c.PontoColetaId == pontoColetaId && c.CreatedBy is not null) 
+                   .Where(c => c.PontoColetaId == pontoColetaId) 
                    .Max(r => r.DataOperacao);
         }
 
@@ -165,9 +163,34 @@ namespace Reciicer.Service.Coleta
             return coletaCreate;
         }
 
+        public ColetaCreateViewModel ObterColetaCreateViewModel(int pontoColetaId)
+        {
+            var clientes = _clienteService.ListarCliente(pontoColetaId);
+            var tipoMateriais = _tipoMaterialService.ListarTipoMaterial();
+          
+            var coletaCreate = new ColetaCreateViewModel{
+                Clientes = clientes,
+                TipoMateriais = tipoMateriais
+               
+            };
+
+            return coletaCreate;
+        }
+
         public ColetaCreateViewModel ObterColetaCreateViewModelComUltimaColeta(int clienteId)
         {
                 var coletaCreateView = ObterColetaCreateViewModel();
+
+                coletaCreateView.Coleta = ObterClienteUltimaColeta(clienteId);
+
+                coletaCreateView.ColetaId = coletaCreateView.Coleta.Id;
+
+            return coletaCreateView;
+        }
+
+        public ColetaCreateViewModel ObterColetaCreateViewModelComUltimaColeta(int clienteId, int pontoColetaId)
+        {
+                var coletaCreateView = ObterColetaCreateViewModel(pontoColetaId);
 
                 coletaCreateView.Coleta = ObterClienteUltimaColeta(clienteId);
 

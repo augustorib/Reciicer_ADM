@@ -12,7 +12,7 @@
         <div class="form-group row my-4">
             <div class="col-md-4">
                 <label  asp-for="RoleId" class="control-label">Escolha uma função: </label>
-                <select asp-for="RoleId" asp-items="@(new SelectList(Model.RolesList, "Id", "Name", Model.Role))" class="form-select form-select-md ">
+                <select asp-for="RoleId" asp-items="@(new SelectList(Model.RolesList, "Id", "Name", Model.RoleId))" class="form-select form-select-md ">
                 </select>
             </div>
 

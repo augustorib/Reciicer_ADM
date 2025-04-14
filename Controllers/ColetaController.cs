@@ -42,7 +42,9 @@ namespace Reciicer.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var coletaCreate = _coletaService.ObterColetaCreateViewModel();
+            var pontoColetaId = Convert.ToInt32(User.FindFirst("PontoColetaId")!.Value);
+
+            var coletaCreate = _coletaService.ObterColetaCreateViewModel(pontoColetaId);
 
             return View(coletaCreate);
         }
@@ -54,7 +56,7 @@ namespace Reciicer.Controllers
             //Cria a Coleta para o cliente
             _coletaService.EfetuarColetaCliente(coletaCreateViewModel, User);
 
-            var coletaCreateViewCliente =_coletaService.ObterColetaCreateViewModelComUltimaColeta(coletaCreateViewModel.ClienteId);
+            var coletaCreateViewCliente =_coletaService.ObterColetaCreateViewModelComUltimaColeta(coletaCreateViewModel.ClienteId, Convert.ToInt32(User.FindFirst("PontoColetaId")!.Value));
     
             return View("Create", coletaCreateViewCliente);
             
