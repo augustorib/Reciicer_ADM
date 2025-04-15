@@ -47,5 +47,10 @@ namespace Reciicer.Service.TipoMaterial
             return _tipoMaterialrepository.ObterNomeQuantidadeTipoMaterialGrafico(anoFiltroDashBoard);  
         }
 
+        public IEnumerable<TipoMaterialQuantidadeChart> ObterNomeQuantidadeTipoMaterialGrafico(int anoDashboard, int pontoColetaId)
+        {
+            return _tipoMaterialrepository.ObterNomeQuantidadeTipoMaterialGrafico(anoDashboard, pontoColetaId);  
+        }
+
     }
 }

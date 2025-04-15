@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Reciicer.Models.Entities
 {
-    public class ClientePremiacao
+    public class ClientePremiacao : EntidadeBase
     {
 
         [Key]

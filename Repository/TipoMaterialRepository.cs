@@ -59,11 +59,33 @@ namespace Reciicer.Repository
 
         public IEnumerable<TipoMaterialQuantidadeChart> ObterNomeQuantidadeTipoMaterialGrafico(int anoDashboard)
         {
+            var sql = MontarQueryGrafico(0);
+
+            var result = _context.Database.SqlQueryRaw<TipoMaterialQuantidadeChart>(sql, anoDashboard).ToList();
+            
+            return result;
+        }
+
+        public IEnumerable<TipoMaterialQuantidadeChart> ObterNomeQuantidadeTipoMaterialGrafico(int anoDashboard, int pontoColetaId)
+        {
+            var sql = MontarQueryGrafico(pontoColetaId);
+
+            var result = _context.Database.SqlQueryRaw<TipoMaterialQuantidadeChart>(sql, anoDashboard, pontoColetaId).ToList();
+            
+            return result;
+        }
+
+        private string MontarQueryGrafico(int? pontoColetaId)
+        {
+            var filtroPontoColeta = pontoColetaId > 0 ? "AND C.PontoColetaId = {1}" : string.Empty;
+
             var sql = @"Select 
                             TM.Id, TM.Nome AS TipoMaterialNome, Count(MC.Id) AS Quantidade
                         FROM 
                             Coleta C
-                            JOIN Material_Coleta MC ON C.Id = MC.ColetaId And Year(C.DataOperacao) = {0}
+                            JOIN Material_Coleta MC ON C.Id = MC.ColetaId 
+                                AND Year(C.DataOperacao) = {0}
+                                "+ filtroPontoColeta + @"
                             JOIN Material M ON Mc.MaterialId = M.Id
                             JOIN TipoMaterial TM ON tm.Id = M.TipoMaterialId										
                         GROUP BY
@@ -71,10 +93,7 @@ namespace Reciicer.Repository
                         ORDER BY 
                             TM.id;";
 
-            var result = _context.Database.SqlQueryRaw<TipoMaterialQuantidadeChart>(sql, anoDashboard).ToList();
-            
-            return result;
+            return sql;
         }
-
     }
 }

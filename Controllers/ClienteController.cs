@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.Mvc;
 using Reciicer.Models.Entities;
 using Reciicer.Repository.Interface;
@@ -17,7 +16,6 @@ namespace Reciicer.Controllers
         private readonly IEmailService _emailService;
         
 
-
         public ClienteController(ClienteService clienteService, IEmailService emailService, PremiacaoService premiacaoService)
         {
             
@@ -29,8 +27,7 @@ namespace Reciicer.Controllers
 
         public IActionResult Index()
         {
- 
-            return View(_clienteService.ListarCliente());
+            return View(_clienteService.ListarCliente(Convert.ToInt32(User.FindFirst("PontoColetaId")?.Value)));
         }
 
 

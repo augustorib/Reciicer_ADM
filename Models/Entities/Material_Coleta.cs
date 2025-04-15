@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Reciicer.Models.Entities
 {
-    public class Material_Coleta
+    public class Material_Coleta : EntidadeBase
     {
         [Key]
         public int Id { get; set; }

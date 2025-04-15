@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Reciicer.Models.Entities
 {
-    public class Cliente
+    public class Cliente : EntidadeBase
     {
         [Key]
         public int Id { get; set; }
@@ -24,7 +24,7 @@ namespace Reciicer.Models.Entities
 
         [Display(Name ="Pontuação")]
         public int PontuacaoTotal { get; set; }
-        public DateTime DataCadastro { get; set; } = DateTime.Now;
+        public DateTime DataCadastro { get; set; }
 
         //Navigation
         public ICollection<ClientePremiacao>? ClientePremiacoes { get; set; }

@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Reciicer.Models.ColetaViewModels;
@@ -29,17 +28,23 @@ namespace Reciicer.Controllers
             _material_ColetaService = material_ColetaService;
             _estoqueService = estoqueService;
             _userManager = userManager;
+
         }
 
+
         public IActionResult Index()
-        {
-            return View(_coletaService.ListarColeta());
+        { 
+            var pontoColetaId = Convert.ToInt32(User.FindFirst("PontoColetaId")!.Value);
+            
+            return View(_coletaService.ListarColeta(pontoColetaId));
         }
 
         [HttpGet]
         public IActionResult Create()
         {
-            var coletaCreate = _coletaService.ObterColetaCreateViewModel();
+            var pontoColetaId = Convert.ToInt32(User.FindFirst("PontoColetaId")!.Value);
+
+            var coletaCreate = _coletaService.ObterColetaCreateViewModel(pontoColetaId);
 
             return View(coletaCreate);
         }
@@ -51,7 +56,7 @@ namespace Reciicer.Controllers
             //Cria a Coleta para o cliente
             _coletaService.EfetuarColetaCliente(coletaCreateViewModel, User);
 
-            var coletaCreateViewCliente =_coletaService.ObterColetaCreateViewModelComUltimaColeta(coletaCreateViewModel.ClienteId);
+            var coletaCreateViewCliente =_coletaService.ObterColetaCreateViewModelComUltimaColeta(coletaCreateViewModel.ClienteId, Convert.ToInt32(User.FindFirst("PontoColetaId")!.Value));
     
             return View("Create", coletaCreateViewCliente);
             

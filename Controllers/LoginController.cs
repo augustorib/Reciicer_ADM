@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Reciicer.Models.Entities;
 using Reciicer.Models.LoginViewModels;
+using Reciicer.Service.PontoColeta;
 using System.Security.Claims;
 
 
@@ -11,11 +12,13 @@ namespace Reciicer.Controllers
     {
         private readonly UserManager<UsuarioIdentity> _userManager;
         private readonly SignInManager<UsuarioIdentity> _signInManager;
+        private readonly PontoColetaService _pontoColetaService;
     
-        public LoginController(SignInManager<UsuarioIdentity> signInManager, UserManager<UsuarioIdentity> userManager)
+        public LoginController(SignInManager<UsuarioIdentity> signInManager, UserManager<UsuarioIdentity> userManager, PontoColetaService pontoColetaService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _pontoColetaService = pontoColetaService;
             
         }
 
@@ -48,6 +51,8 @@ namespace Reciicer.Controllers
                     return RedirectToAction("Index", "Home");
                 }
 
+                TempData["Mensagem"] = "Usuário ou senha inválidos!";
+
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             }
 
@@ -67,11 +72,14 @@ namespace Reciicer.Controllers
             {
                 var user = new UsuarioIdentity { UserName = model.UserName, Email = model.Email, PontoColetaId = 1 };
                 
-                var result = await _userManager.CreateAsync(user, model.Password);
+                var result = await _userManager.CreateAsync(user, model.Password!);
+
+                var pontoColeta = _pontoColetaService.ObterPontoColetaPorId(user.PontoColetaId);
 
                 if (result.Succeeded)
                 {
                     await  _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "Operador"));
+                    await  _userManager.AddClaimAsync(user, new Claim("PontoColetaId", pontoColeta.Id.ToString()));
                     await  _userManager.AddToRoleAsync(user, "Operador");      
 
                     return RedirectToAction("Login", "Login");

@@ -111,6 +111,50 @@ namespace Reciicer.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("AspNetUserClaims", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+                            ClaimValue = "Admin",
+                            UserId = "8868b1f4-812f-4bbd-a438-1b25f7241f78"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ClaimType = "PontoColetaId",
+                            ClaimValue = "1",
+                            UserId = "8868b1f4-812f-4bbd-a438-1b25f7241f78"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+                            ClaimValue = "Operador",
+                            UserId = "02f34b97-229a-4764-ba00-2298903959c5"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ClaimType = "PontoColetaId",
+                            ClaimValue = "2",
+                            UserId = "02f34b97-229a-4764-ba00-2298903959c5"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+                            ClaimValue = "Operador",
+                            UserId = "c6b63962-b8ae-440b-b396-7c279fc00a65"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ClaimType = "PontoColetaId",
+                            ClaimValue = "2",
+                            UserId = "c6b63962-b8ae-440b-b396-7c279fc00a65"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -159,6 +203,11 @@ namespace Reciicer.Migrations
                         {
                             UserId = "02f34b97-229a-4764-ba00-2298903959c5",
                             RoleId = "8a62bbbf-8420-459c-94d3-9da153f3803f"
+                        },
+                        new
+                        {
+                            UserId = "c6b63962-b8ae-440b-b396-7c279fc00a65",
+                            RoleId = "8a62bbbf-8420-459c-94d3-9da153f3803f"
                         });
                 });
 
@@ -181,6 +230,37 @@ namespace Reciicer.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Reciicer.Models.Entities.AuditLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Acao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Changes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ModificadoEm")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModificadoPor")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RegistroId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Tabela")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AuditLog");
+                });
+
             modelBuilder.Entity("Reciicer.Models.Entities.Cliente", b =>
                 {
                     b.Property<int>("Id")
@@ -190,30 +270,64 @@ namespace Reciicer.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CNPJ")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(18)
+                        .HasColumnType("nvarchar(18)");
 
                     b.Property<string>("CPF")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(14)
+                        .HasColumnType("nvarchar(14)");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("8868b1f4-812f-4bbd-a438-1b25f7241f78");
 
                     b.Property<DateTime>("DataCadastro")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("PontuacaoTotal")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<string>("Telefone")
                         .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CNPJ")
+                        .IsUnique()
+                        .HasFilter("[CNPJ] IS NOT NULL");
+
+                    b.HasIndex("CPF")
+                        .IsUnique()
+                        .HasFilter("[CPF] IS NOT NULL");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Cliente");
 
@@ -222,17 +336,17 @@ namespace Reciicer.Migrations
                         {
                             Id = 1,
                             CPF = "777.777.777-77",
-                            DataCadastro = new DateTime(2025, 3, 24, 16, 50, 54, 765, DateTimeKind.Local).AddTicks(4639),
+                            DataCadastro = new DateTime(2023, 10, 3, 20, 28, 26, 290, DateTimeKind.Unspecified),
                             Email = "jurandir@gmail.com",
                             Nome = "Jurandir",
-                            PontuacaoTotal = 15,
+                            PontuacaoTotal = 0,
                             Telefone = "(65) 4984-9849"
                         },
                         new
                         {
                             Id = 2,
                             CPF = "544.894.849-98",
-                            DataCadastro = new DateTime(2025, 3, 24, 16, 50, 54, 765, DateTimeKind.Local).AddTicks(4651),
+                            DataCadastro = new DateTime(2023, 10, 3, 20, 28, 26, 290, DateTimeKind.Unspecified),
                             Email = "judit@gmail.com",
                             Nome = "Judit",
                             PontuacaoTotal = 0,
@@ -242,7 +356,7 @@ namespace Reciicer.Migrations
                         {
                             Id = 3,
                             CPF = "894.399.251-32",
-                            DataCadastro = new DateTime(2025, 3, 24, 16, 50, 54, 765, DateTimeKind.Local).AddTicks(4653),
+                            DataCadastro = new DateTime(2023, 10, 3, 20, 28, 26, 290, DateTimeKind.Unspecified),
                             Email = "astolfo@gmail.com",
                             Nome = "Astolfo",
                             PontuacaoTotal = 0,
@@ -250,13 +364,63 @@ namespace Reciicer.Migrations
                         },
                         new
                         {
-                            Id = 4,
-                            CNPJ = "54.594.954/9549-89",
-                            DataCadastro = new DateTime(2025, 3, 24, 16, 50, 54, 765, DateTimeKind.Local).AddTicks(4654),
+                            Id = 5,
+                            CPF = "544.484.948-49",
+                            DataCadastro = new DateTime(2024, 11, 3, 20, 28, 26, 290, DateTimeKind.Unspecified),
                             Email = "manoel@padaria.com",
-                            Nome = "Padaria Manoel",
+                            Nome = "Teobaldo",
                             PontuacaoTotal = 0,
-                            Telefone = "(31) 98371-8402"
+                            Telefone = "(82) 8959-8598"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CPF = "494.292.982-82",
+                            DataCadastro = new DateTime(2024, 10, 3, 20, 28, 26, 290, DateTimeKind.Unspecified),
+                            Email = "nelson@gmail.com",
+                            Nome = "Nelson",
+                            PontuacaoTotal = 0,
+                            Telefone = "(51) 6165-5551"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CPF = "594.985.982-29",
+                            DataCadastro = new DateTime(2024, 10, 3, 20, 28, 26, 290, DateTimeKind.Unspecified),
+                            Email = "beth@gmail.com",
+                            Nome = "Beth",
+                            PontuacaoTotal = 0,
+                            Telefone = "(54) 4988-5165"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CPF = "889.248.484-98",
+                            DataCadastro = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "zezin@gmail.com",
+                            Nome = "Zezin",
+                            PontuacaoTotal = 0,
+                            Telefone = "(59) 8988-8995"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CPF = "944.984.298-24",
+                            DataCadastro = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "nikita@gmail.com",
+                            Nome = "Nikita",
+                            PontuacaoTotal = 0,
+                            Telefone = "(89) 4494-9849"
+                        },
+                        new
+                        {
+                            Id = 1010,
+                            CPF = "984.984.984-84",
+                            DataCadastro = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "linkedin@gmail.com",
+                            Nome = "Linkedin",
+                            PontuacaoTotal = 0,
+                            Telefone = "(49) 8498-4984"
                         });
                 });
 
@@ -271,11 +435,23 @@ namespace Reciicer.Migrations
                     b.Property<int>("ClienteId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("DataOperacao")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("PremiacaoId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -292,6 +468,34 @@ namespace Reciicer.Migrations
                             ClienteId = 3,
                             DataOperacao = new DateTime(2024, 11, 21, 4, 23, 6, 153, DateTimeKind.Local),
                             PremiacaoId = 3
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ClienteId = 2,
+                            DataOperacao = new DateTime(2024, 12, 3, 20, 21, 1, 913, DateTimeKind.Local),
+                            PremiacaoId = 3
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ClienteId = 7,
+                            DataOperacao = new DateTime(2025, 1, 21, 2, 15, 38, 995, DateTimeKind.Local),
+                            PremiacaoId = 3
+                        },
+                        new
+                        {
+                            Id = 1004,
+                            ClienteId = 1010,
+                            DataOperacao = new DateTime(2025, 2, 4, 17, 27, 18, 12, DateTimeKind.Local),
+                            PremiacaoId = 3
+                        },
+                        new
+                        {
+                            Id = 1005,
+                            ClienteId = 8,
+                            DataOperacao = new DateTime(2025, 2, 19, 23, 37, 4, 812, DateTimeKind.Local),
+                            PremiacaoId = 3
                         });
                 });
 
@@ -303,11 +507,14 @@ namespace Reciicer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Ativo")
-                        .HasColumnType("bit");
-
                     b.Property<int>("ClienteId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DataOperacao")
                         .HasColumnType("datetime2");
@@ -317,6 +524,12 @@ namespace Reciicer.Migrations
 
                     b.Property<int>("PontuacaoGanha")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -330,20 +543,226 @@ namespace Reciicer.Migrations
                         new
                         {
                             Id = 1,
-                            Ativo = false,
                             ClienteId = 1,
-                            DataOperacao = new DateTime(2025, 3, 24, 16, 50, 54, 765, DateTimeKind.Local).AddTicks(4853),
+                            DataOperacao = new DateTime(2025, 3, 24, 16, 50, 54, 765, DateTimeKind.Unspecified),
                             PontoColetaId = 2,
                             PontuacaoGanha = 10
                         },
                         new
                         {
-                            Id = 2,
-                            Ativo = false,
+                            Id = 3,
+                            ClienteId = 2,
+                            DataOperacao = new DateTime(2024, 9, 4, 20, 8, 0, 0, DateTimeKind.Unspecified),
+                            PontoColetaId = 1,
+                            PontuacaoGanha = 54
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ClienteId = 3,
+                            DataOperacao = new DateTime(2024, 10, 17, 20, 9, 0, 0, DateTimeKind.Unspecified),
+                            PontoColetaId = 1,
+                            PontuacaoGanha = 20
+                        },
+                        new
+                        {
+                            Id = 5,
                             ClienteId = 1,
-                            DataOperacao = new DateTime(2025, 3, 24, 16, 50, 54, 765, DateTimeKind.Local).AddTicks(4856),
+                            DataOperacao = new DateTime(2024, 11, 17, 20, 10, 0, 0, DateTimeKind.Unspecified),
+                            PontoColetaId = 1,
+                            PontuacaoGanha = 6
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ClienteId = 1,
+                            DataOperacao = new DateTime(2024, 11, 22, 20, 11, 0, 0, DateTimeKind.Unspecified),
+                            PontoColetaId = 1,
+                            PontuacaoGanha = 150
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ClienteId = 2,
+                            DataOperacao = new DateTime(2024, 12, 3, 20, 20, 0, 0, DateTimeKind.Unspecified),
+                            PontoColetaId = 1,
+                            PontuacaoGanha = 115
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ClienteId = 2,
+                            DataOperacao = new DateTime(2024, 12, 2, 20, 20, 0, 0, DateTimeKind.Unspecified),
+                            PontoColetaId = 1,
+                            PontuacaoGanha = 200
+                        },
+                        new
+                        {
+                            Id = 9,
+                            ClienteId = 6,
+                            DataOperacao = new DateTime(2024, 11, 14, 20, 43, 0, 0, DateTimeKind.Unspecified),
                             PontoColetaId = 2,
-                            PontuacaoGanha = 5
+                            PontuacaoGanha = 30
+                        },
+                        new
+                        {
+                            Id = 10,
+                            ClienteId = 7,
+                            DataOperacao = new DateTime(2024, 10, 8, 20, 44, 0, 0, DateTimeKind.Unspecified),
+                            PontoColetaId = 2,
+                            PontuacaoGanha = 260
+                        },
+                        new
+                        {
+                            Id = 11,
+                            ClienteId = 5,
+                            DataOperacao = new DateTime(2024, 12, 18, 0, 18, 0, 0, DateTimeKind.Unspecified),
+                            PontoColetaId = 1,
+                            PontuacaoGanha = 1000
+                        },
+                        new
+                        {
+                            Id = 12,
+                            ClienteId = 3,
+                            DataOperacao = new DateTime(2024, 12, 11, 0, 21, 0, 0, DateTimeKind.Unspecified),
+                            PontoColetaId = 1,
+                            PontuacaoGanha = 250
+                        },
+                        new
+                        {
+                            Id = 13,
+                            ClienteId = 7,
+                            DataOperacao = new DateTime(2025, 1, 9, 2, 16, 0, 0, DateTimeKind.Unspecified),
+                            PontoColetaId = 1,
+                            PontuacaoGanha = 75
+                        },
+                        new
+                        {
+                            Id = 14,
+                            ClienteId = 9,
+                            DataOperacao = new DateTime(2025, 1, 22, 14, 54, 0, 0, DateTimeKind.Unspecified),
+                            PontoColetaId = 1,
+                            PontuacaoGanha = 0
+                        },
+                        new
+                        {
+                            Id = 1014,
+                            ClienteId = 1010,
+                            DataOperacao = new DateTime(2025, 2, 4, 17, 25, 0, 0, DateTimeKind.Unspecified),
+                            PontoColetaId = 2,
+                            PontuacaoGanha = 120
+                        },
+                        new
+                        {
+                            Id = 1015,
+                            ClienteId = 1010,
+                            DataOperacao = new DateTime(2025, 2, 4, 17, 26, 0, 0, DateTimeKind.Unspecified),
+                            PontoColetaId = 2,
+                            PontuacaoGanha = 200
+                        },
+                        new
+                        {
+                            Id = 1016,
+                            ClienteId = 1010,
+                            DataOperacao = new DateTime(2025, 2, 3, 17, 51, 0, 0, DateTimeKind.Unspecified),
+                            PontoColetaId = 1,
+                            PontuacaoGanha = 6
+                        },
+                        new
+                        {
+                            Id = 1017,
+                            ClienteId = 1,
+                            DataOperacao = new DateTime(2023, 3, 12, 18, 41, 0, 0, DateTimeKind.Unspecified),
+                            PontoColetaId = 1,
+                            PontuacaoGanha = 75
+                        },
+                        new
+                        {
+                            Id = 1018,
+                            ClienteId = 7,
+                            DataOperacao = new DateTime(2023, 7, 7, 22, 2, 0, 0, DateTimeKind.Unspecified),
+                            PontoColetaId = 1,
+                            PontuacaoGanha = 100
+                        },
+                        new
+                        {
+                            Id = 1019,
+                            ClienteId = 8,
+                            DataOperacao = new DateTime(2025, 2, 19, 23, 36, 0, 0, DateTimeKind.Unspecified),
+                            PontoColetaId = 1,
+                            PontuacaoGanha = 200
+                        },
+                        new
+                        {
+                            Id = 2085,
+                            ClienteId = 1,
+                            DataOperacao = new DateTime(2025, 3, 4, 1, 57, 0, 0, DateTimeKind.Unspecified),
+                            PontoColetaId = 1,
+                            PontuacaoGanha = 120
+                        },
+                        new
+                        {
+                            Id = 2090,
+                            ClienteId = 7,
+                            DataOperacao = new DateTime(2025, 3, 13, 3, 40, 0, 0, DateTimeKind.Unspecified),
+                            PontoColetaId = 1,
+                            PontuacaoGanha = 0
+                        },
+                        new
+                        {
+                            Id = 2091,
+                            ClienteId = 2,
+                            DataOperacao = new DateTime(2025, 3, 13, 3, 41, 0, 0, DateTimeKind.Unspecified),
+                            PontoColetaId = 1,
+                            PontuacaoGanha = 0
+                        },
+                        new
+                        {
+                            Id = 2092,
+                            ClienteId = 2,
+                            DataOperacao = new DateTime(2025, 3, 5, 3, 42, 0, 0, DateTimeKind.Unspecified),
+                            PontoColetaId = 1,
+                            PontuacaoGanha = 0
+                        },
+                        new
+                        {
+                            Id = 3090,
+                            ClienteId = 1,
+                            DataOperacao = new DateTime(2025, 3, 20, 19, 2, 0, 0, DateTimeKind.Unspecified),
+                            PontoColetaId = 1,
+                            PontuacaoGanha = 4
+                        },
+                        new
+                        {
+                            Id = 3091,
+                            ClienteId = 2,
+                            DataOperacao = new DateTime(2025, 2, 26, 19, 40, 0, 0, DateTimeKind.Unspecified),
+                            PontoColetaId = 1,
+                            PontuacaoGanha = 90
+                        },
+                        new
+                        {
+                            Id = 3092,
+                            ClienteId = 1,
+                            DataOperacao = new DateTime(2025, 3, 18, 19, 41, 0, 0, DateTimeKind.Unspecified),
+                            PontoColetaId = 1,
+                            PontuacaoGanha = 120
+                        },
+                        new
+                        {
+                            Id = 4103,
+                            ClienteId = 2,
+                            DataOperacao = new DateTime(2025, 3, 4, 17, 10, 0, 0, DateTimeKind.Unspecified),
+                            PontoColetaId = 1,
+                            PontuacaoGanha = 20
+                        },
+                        new
+                        {
+                            Id = 4105,
+                            ClienteId = 1,
+                            DataOperacao = new DateTime(2025, 3, 6, 19, 51, 0, 0, DateTimeKind.Unspecified),
+                            PontoColetaId = 1,
+                            PontuacaoGanha = 0
                         });
                 });
 
@@ -356,15 +775,39 @@ namespace Reciicer.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CNPJ")
+                        .IsRequired()
+                        .HasMaxLength(18)
+                        .HasColumnType("nvarchar(18)");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CNPJ")
+                        .IsUnique();
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Cooperativa");
 
@@ -372,9 +815,16 @@ namespace Reciicer.Migrations
                         new
                         {
                             Id = 1,
-                            CNPJ = "00.000.000/0000-00",
-                            Email = "",
+                            CNPJ = "00.000.000",
+                            Email = "coop@gmail.com",
                             Nome = "Cooperativa de Reciclagem"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CNPJ = "48489484848",
+                            Email = "comlurb@gmail.com",
+                            Nome = "Comlurb"
                         });
                 });
 
@@ -388,26 +838,49 @@ namespace Reciicer.Migrations
 
                     b.Property<string>("Bairro")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Cep")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(9)
+                        .HasColumnType("nvarchar(9)");
 
                     b.Property<string>("Cidade")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Estado")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("Numero")
+                        .HasMaxLength(10)
                         .HasColumnType("int");
 
                     b.Property<string>("Rua")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Rua", "Numero", "Bairro", "Cep")
+                        .IsUnique();
 
                     b.ToTable("Endereco");
 
@@ -448,6 +921,12 @@ namespace Reciicer.Migrations
                     b.Property<string>("Codigo")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("PesoArmazenado")
                         .HasColumnType("int");
 
@@ -460,21 +939,32 @@ namespace Reciicer.Migrations
                     b.Property<string>("Tipo")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PontoColetaId");
 
-                    b.ToTable("Estoque");
+                    b.ToTable("Estoque", t =>
+                        {
+                            t.HasCheckConstraint("CHK_Estoque_Capacidade", "PesoArmazenado + QuantidadeArmazenada <= Capacidade");
+
+                            t.HasCheckConstraint("CHK_Estoque_Capacidade_NaoNegativa", "Capacidade >= 0");
+                        });
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            Capacidade = 10,
+                            Capacidade = 20,
                             Codigo = "PR001",
-                            PesoArmazenado = 0,
+                            PesoArmazenado = 4,
                             PontoColetaId = 1,
-                            QuantidadeArmazenada = 0,
+                            QuantidadeArmazenada = 16,
                             Tipo = "Interno"
                         },
                         new
@@ -486,6 +976,26 @@ namespace Reciicer.Migrations
                             PontoColetaId = 2,
                             QuantidadeArmazenada = 0,
                             Tipo = "Externo"
+                        },
+                        new
+                        {
+                            Id = 1007,
+                            Capacidade = 10,
+                            Codigo = "PN002",
+                            PesoArmazenado = 3,
+                            PontoColetaId = 1,
+                            QuantidadeArmazenada = 6,
+                            Tipo = "Normal"
+                        },
+                        new
+                        {
+                            Id = 1008,
+                            Capacidade = 10,
+                            Codigo = "PN003",
+                            PesoArmazenado = 2,
+                            PontoColetaId = 1,
+                            QuantidadeArmazenada = 0,
+                            Tipo = "Normal"
                         });
                 });
 
@@ -496,6 +1006,12 @@ namespace Reciicer.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("EstoqueId")
                         .HasColumnType("int");
@@ -509,6 +1025,12 @@ namespace Reciicer.Migrations
                     b.Property<int>("Quantidade")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("EstoqueId");
@@ -516,6 +1038,256 @@ namespace Reciicer.Migrations
                     b.HasIndex("MaterialId");
 
                     b.ToTable("EstoqueMaterial");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 158,
+                            EstoqueId = 1,
+                            MaterialId = 4,
+                            Peso = 8,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 159,
+                            EstoqueId = 1007,
+                            MaterialId = 4,
+                            Peso = 2,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 163,
+                            EstoqueId = 1,
+                            MaterialId = 5,
+                            Peso = 6,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 164,
+                            EstoqueId = 1007,
+                            MaterialId = 5,
+                            Peso = 2,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 171,
+                            EstoqueId = 1007,
+                            MaterialId = 3,
+                            Peso = 0,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 172,
+                            EstoqueId = 1008,
+                            MaterialId = 3,
+                            Peso = 0,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 1165,
+                            EstoqueId = 1,
+                            MaterialId = 5,
+                            Peso = 0,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 1166,
+                            EstoqueId = 1,
+                            MaterialId = 3,
+                            Peso = 0,
+                            Quantidade = 4
+                        },
+                        new
+                        {
+                            Id = 1167,
+                            EstoqueId = 1007,
+                            MaterialId = 3,
+                            Peso = 0,
+                            Quantidade = 2
+                        },
+                        new
+                        {
+                            Id = 1168,
+                            EstoqueId = 1007,
+                            MaterialId = 1,
+                            Peso = 0,
+                            Quantidade = 1
+                        },
+                        new
+                        {
+                            Id = 1169,
+                            EstoqueId = 1008,
+                            MaterialId = 1,
+                            Peso = 0,
+                            Quantidade = 2
+                        },
+                        new
+                        {
+                            Id = 2163,
+                            EstoqueId = 2,
+                            MaterialId = 5,
+                            Peso = 0,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 2164,
+                            EstoqueId = 1007,
+                            MaterialId = 1,
+                            Peso = 0,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 2165,
+                            EstoqueId = 1007,
+                            MaterialId = 1,
+                            Peso = 0,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 2166,
+                            EstoqueId = 1007,
+                            MaterialId = 1,
+                            Peso = 0,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 2167,
+                            EstoqueId = 1007,
+                            MaterialId = 1,
+                            Peso = 0,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 2168,
+                            EstoqueId = 1007,
+                            MaterialId = 3,
+                            Peso = 0,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 2169,
+                            EstoqueId = 1007,
+                            MaterialId = 1,
+                            Peso = 0,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 2170,
+                            EstoqueId = 1007,
+                            MaterialId = 3,
+                            Peso = 0,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 2171,
+                            EstoqueId = 1007,
+                            MaterialId = 3,
+                            Peso = 0,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 2172,
+                            EstoqueId = 1008,
+                            MaterialId = 3,
+                            Peso = 0,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 2173,
+                            EstoqueId = 1007,
+                            MaterialId = 3,
+                            Peso = 0,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 2174,
+                            EstoqueId = 1007,
+                            MaterialId = 1,
+                            Peso = 0,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 2175,
+                            EstoqueId = 1007,
+                            MaterialId = 1,
+                            Peso = 0,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 2176,
+                            EstoqueId = 1007,
+                            MaterialId = 4,
+                            Peso = 2,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 2177,
+                            EstoqueId = 1,
+                            MaterialId = 1,
+                            Peso = 0,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 2178,
+                            EstoqueId = 1,
+                            MaterialId = 1,
+                            Peso = 0,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 2179,
+                            EstoqueId = 1,
+                            MaterialId = 1,
+                            Peso = 0,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 2180,
+                            EstoqueId = 1,
+                            MaterialId = 4,
+                            Peso = 2,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 2181,
+                            EstoqueId = 1007,
+                            MaterialId = 3,
+                            Peso = 0,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 2182,
+                            EstoqueId = 1008,
+                            MaterialId = 3,
+                            Peso = 0,
+                            Quantidade = 0
+                        });
                 });
 
             modelBuilder.Entity("Reciicer.Models.Entities.Material", b =>
@@ -526,11 +1298,21 @@ namespace Reciicer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Descricao")
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
                     b.Property<string>("Nome")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("PontuacaoPeso")
                         .HasColumnType("int");
@@ -539,12 +1321,22 @@ namespace Reciicer.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("TempoDegradacao")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int>("TipoMaterialId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("Nome")
+                        .IsUnique();
 
                     b.HasIndex("TipoMaterialId");
 
@@ -590,6 +1382,16 @@ namespace Reciicer.Migrations
                             PontuacaoUnidade = 10,
                             TempoDegradacao = 1000000,
                             TipoMaterialId = 3
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Descricao = "Latinha",
+                            Nome = "Alumínio",
+                            PontuacaoPeso = 10,
+                            PontuacaoUnidade = 2,
+                            TempoDegradacao = 1000,
+                            TipoMaterialId = 4
                         });
                 });
 
@@ -604,6 +1406,12 @@ namespace Reciicer.Migrations
                     b.Property<int>("ColetaId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("MaterialId")
                         .HasColumnType("int");
 
@@ -612,6 +1420,12 @@ namespace Reciicer.Migrations
 
                     b.Property<int>("Quantidade")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -629,6 +1443,222 @@ namespace Reciicer.Migrations
                             MaterialId = 3,
                             Peso = 5,
                             Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ColetaId = 3,
+                            MaterialId = 1,
+                            Peso = 0,
+                            Quantidade = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ColetaId = 3,
+                            MaterialId = 4,
+                            Peso = 2,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ColetaId = 4,
+                            MaterialId = 4,
+                            Peso = 0,
+                            Quantidade = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ColetaId = 5,
+                            MaterialId = 3,
+                            Peso = 0,
+                            Quantidade = 2
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ColetaId = 6,
+                            MaterialId = 3,
+                            Peso = 10,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ColetaId = 7,
+                            MaterialId = 5,
+                            Peso = 10,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ColetaId = 7,
+                            MaterialId = 3,
+                            Peso = 0,
+                            Quantidade = 5
+                        },
+                        new
+                        {
+                            Id = 9,
+                            ColetaId = 8,
+                            MaterialId = 1,
+                            Peso = 10,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 10,
+                            ColetaId = 9,
+                            MaterialId = 4,
+                            Peso = 0,
+                            Quantidade = 3
+                        },
+                        new
+                        {
+                            Id = 11,
+                            ColetaId = 10,
+                            MaterialId = 3,
+                            Peso = 0,
+                            Quantidade = 20
+                        },
+                        new
+                        {
+                            Id = 12,
+                            ColetaId = 10,
+                            MaterialId = 1,
+                            Peso = 10,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 13,
+                            ColetaId = 11,
+                            MaterialId = 1,
+                            Peso = 50,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 14,
+                            ColetaId = 12,
+                            MaterialId = 4,
+                            Peso = 10,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 15,
+                            ColetaId = 13,
+                            MaterialId = 3,
+                            Peso = 5,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 16,
+                            ColetaId = 14,
+                            MaterialId = 1,
+                            Peso = 20,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 1016,
+                            ColetaId = 1014,
+                            MaterialId = 2,
+                            Peso = 10,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 1017,
+                            ColetaId = 1014,
+                            MaterialId = 4,
+                            Peso = 0,
+                            Quantidade = 2
+                        },
+                        new
+                        {
+                            Id = 1018,
+                            ColetaId = 1015,
+                            MaterialId = 1,
+                            Peso = 10,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 1019,
+                            ColetaId = 1016,
+                            MaterialId = 3,
+                            Peso = 0,
+                            Quantidade = 2
+                        },
+                        new
+                        {
+                            Id = 1020,
+                            ColetaId = 1017,
+                            MaterialId = 3,
+                            Peso = 5,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 1021,
+                            ColetaId = 1018,
+                            MaterialId = 4,
+                            Peso = 0,
+                            Quantidade = 10
+                        },
+                        new
+                        {
+                            Id = 1022,
+                            ColetaId = 1019,
+                            MaterialId = 2,
+                            Peso = 20,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 2114,
+                            ColetaId = 2085,
+                            MaterialId = 4,
+                            Peso = 0,
+                            Quantidade = 12
+                        },
+                        new
+                        {
+                            Id = 3119,
+                            ColetaId = 3090,
+                            MaterialId = 5,
+                            Peso = 0,
+                            Quantidade = 2
+                        },
+                        new
+                        {
+                            Id = 3120,
+                            ColetaId = 3091,
+                            MaterialId = 3,
+                            Peso = 6,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 3121,
+                            ColetaId = 3092,
+                            MaterialId = 1,
+                            Peso = 6,
+                            Quantidade = 0
+                        },
+                        new
+                        {
+                            Id = 4133,
+                            ColetaId = 4103,
+                            MaterialId = 4,
+                            Peso = 0,
+                            Quantidade = 2
                         });
                 });
 
@@ -640,15 +1670,32 @@ namespace Reciicer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("EnderecoId")
                         .HasColumnType("int");
 
                     b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("EnderecoId");
+
+                    b.HasIndex("Nome")
+                        .IsUnique();
 
                     b.ToTable("PontoColeta");
 
@@ -678,18 +1725,35 @@ namespace Reciicer.Migrations
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Descricao")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("PontuacaoRequerida")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("Nome")
+                        .IsUnique();
 
                     b.ToTable("Premiacao");
 
@@ -731,32 +1795,57 @@ namespace Reciicer.Migrations
                     b.Property<int>("CooperativaId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("DataRecolhimento")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("PontoColetaId")
-                        .HasColumnType("int");
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CooperativaId");
-
-                    b.HasIndex("PontoColetaId");
 
                     b.ToTable("Recolhimento");
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            CooperativaId = 1,
-                            DataRecolhimento = new DateTime(2024, 11, 21, 4, 23, 6, 153, DateTimeKind.Local)
+                            Id = 8,
+                            CooperativaId = 2,
+                            DataRecolhimento = new DateTime(2025, 3, 25, 19, 4, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
-                            Id = 2,
+                            Id = 9,
                             CooperativaId = 1,
-                            DataRecolhimento = new DateTime(2025, 2, 21, 6, 23, 6, 153, DateTimeKind.Local)
+                            DataRecolhimento = new DateTime(2025, 3, 18, 19, 4, 0, 0, DateTimeKind.Local)
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CooperativaId = 2,
+                            DataRecolhimento = new DateTime(2025, 3, 5, 19, 42, 0, 0, DateTimeKind.Local)
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CooperativaId = 2,
+                            DataRecolhimento = new DateTime(2025, 3, 5, 1, 54, 0, 0, DateTimeKind.Local)
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CooperativaId = 1,
+                            DataRecolhimento = new DateTime(2025, 3, 7, 2, 18, 0, 0, DateTimeKind.Local)
                         });
                 });
 
@@ -767,6 +1856,12 @@ namespace Reciicer.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("EstoqueMaterialId")
                         .HasColumnType("int");
@@ -780,6 +1875,12 @@ namespace Reciicer.Migrations
                     b.Property<int>("RecolhimentoId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("EstoqueMaterialId");
@@ -787,52 +1888,47 @@ namespace Reciicer.Migrations
                     b.HasIndex("RecolhimentoId");
 
                     b.ToTable("RecolhimentoEstoqueMaterial");
-                });
-
-            modelBuilder.Entity("Reciicer.Models.Entities.RecolhimentoMaterial", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("MaterialId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PesoTotal")
-                        .HasColumnType("int");
-
-                    b.Property<int>("QuantidadeTotal")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RecolhimentoId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MaterialId");
-
-                    b.HasIndex("RecolhimentoId");
-
-                    b.ToTable("RecolhimentoMaterial");
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            MaterialId = 1,
-                            PesoTotal = 21,
-                            QuantidadeTotal = 0,
-                            RecolhimentoId = 1
+                            Id = 5,
+                            EstoqueMaterialId = 1165,
+                            Peso = 0,
+                            Quantidade = 1,
+                            RecolhimentoId = 8
                         },
                         new
                         {
-                            Id = 2,
-                            MaterialId = 2,
-                            PesoTotal = 0,
-                            QuantidadeTotal = 10,
-                            RecolhimentoId = 2
+                            Id = 6,
+                            EstoqueMaterialId = 1165,
+                            Peso = 0,
+                            Quantidade = 1,
+                            RecolhimentoId = 9
+                        },
+                        new
+                        {
+                            Id = 9,
+                            EstoqueMaterialId = 1169,
+                            Peso = 1,
+                            Quantidade = 0,
+                            RecolhimentoId = 13
+                        },
+                        new
+                        {
+                            Id = 1002,
+                            EstoqueMaterialId = 1169,
+                            Peso = 2,
+                            Quantidade = 0,
+                            RecolhimentoId = 14
+                        },
+                        new
+                        {
+                            Id = 1003,
+                            EstoqueMaterialId = 2163,
+                            Peso = 0,
+                            Quantidade = 2,
+                            RecolhimentoId = 15
                         });
                 });
 
@@ -845,17 +1941,36 @@ namespace Reciicer.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Ativo")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Descricao")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Nome")
+                        .IsUnique();
 
                     b.ToTable("TipoMaterial");
 
@@ -964,7 +2079,7 @@ namespace Reciicer.Migrations
                         {
                             Id = "8868b1f4-812f-4bbd-a438-1b25f7241f78",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "42903dbf-3571-45b1-89af-747db8e03ab9",
+                            ConcurrencyStamp = "061e5273-5d5d-4a4a-a394-2ee3dc910673",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -973,7 +2088,7 @@ namespace Reciicer.Migrations
                             PasswordHash = "AQAAAAIAAYagAAAAELOGUtUv5slutFj/g2ySNtpAyK6JnEzlfSGIQVH2hL8onfOArNzzqS3hzh4KBbfBlg==",
                             PhoneNumberConfirmed = false,
                             PontoColetaId = 1,
-                            SecurityStamp = "2aaf02f3-e468-4835-b70c-204e99e3a6bd",
+                            SecurityStamp = "35b1d119-efe5-4e5a-ab9e-4eaa92ba7be9",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -981,7 +2096,7 @@ namespace Reciicer.Migrations
                         {
                             Id = "02f34b97-229a-4764-ba00-2298903959c5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cdd0f7b6-9bba-4422-9328-9845eed3d054",
+                            ConcurrencyStamp = "37f70293-3bfc-4f70-8f01-f9710d3d6d6a",
                             Email = "operador@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -990,9 +2105,26 @@ namespace Reciicer.Migrations
                             PasswordHash = "AQAAAAIAAYagAAAAEHQ7mga+DIAlOUen1rubIYWrGtJL/2ELlGuZQrZgvy/1u0aPPJa1UHG0VWqHJa06uA==",
                             PhoneNumberConfirmed = false,
                             PontoColetaId = 2,
-                            SecurityStamp = "f2f39961-af59-414d-8188-a60913060d00",
+                            SecurityStamp = "4a929988-d15b-4bda-8d23-cb30ba852611",
                             TwoFactorEnabled = false,
                             UserName = "operador"
+                        },
+                        new
+                        {
+                            Id = "c6b63962-b8ae-440b-b396-7c279fc00a65",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "75b041b6-3a0b-4e00-b8d0-b12388128d61",
+                            Email = "goku@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "GOKU@GMAIL.COM",
+                            NormalizedUserName = "GOKU",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFVovPC6/IgInBQyzn23KHGYw8xpexogmm3uwut00seoRzsW0YQW4GHBf1pNtdPl2w==",
+                            PhoneNumberConfirmed = false,
+                            PontoColetaId = 2,
+                            SecurityStamp = "757f563b-cc3e-4a78-8310-33708c819e84",
+                            TwoFactorEnabled = false,
+                            UserName = "goku"
                         });
                 });
 
@@ -1105,7 +2237,7 @@ namespace Reciicer.Migrations
                         .IsRequired();
 
                     b.HasOne("Reciicer.Models.Entities.Material", "Material")
-                        .WithMany()
+                        .WithMany("EstoqueMateriais")
                         .HasForeignKey("MaterialId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1164,10 +2296,6 @@ namespace Reciicer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Reciicer.Models.Entities.PontoColeta", null)
-                        .WithMany("Recolhimentos")
-                        .HasForeignKey("PontoColetaId");
-
                     b.Navigation("Cooperativa");
                 });
 
@@ -1186,25 +2314,6 @@ namespace Reciicer.Migrations
                         .IsRequired();
 
                     b.Navigation("EstoqueMaterial");
-
-                    b.Navigation("Recolhimento");
-                });
-
-            modelBuilder.Entity("Reciicer.Models.Entities.RecolhimentoMaterial", b =>
-                {
-                    b.HasOne("Reciicer.Models.Entities.Material", "Material")
-                        .WithMany()
-                        .HasForeignKey("MaterialId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Reciicer.Models.Entities.Recolhimento", "Recolhimento")
-                        .WithMany()
-                        .HasForeignKey("RecolhimentoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Material");
 
                     b.Navigation("Recolhimento");
                 });
@@ -1249,14 +2358,14 @@ namespace Reciicer.Migrations
 
             modelBuilder.Entity("Reciicer.Models.Entities.Material", b =>
                 {
+                    b.Navigation("EstoqueMateriais");
+
                     b.Navigation("Material_Coletas");
                 });
 
             modelBuilder.Entity("Reciicer.Models.Entities.PontoColeta", b =>
                 {
                     b.Navigation("Coletas");
-
-                    b.Navigation("Recolhimentos");
 
                     b.Navigation("UsuarioIdentities");
                 });

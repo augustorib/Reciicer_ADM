@@ -1,0 +1,39 @@
+@model Reciicer.Models.RoleViewModels.UserRoleViewModel
+@{
+    ViewData["Title"] = Model.UserName;
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <div class="form-group row my-4">
+
+        <div class="col-md-5">
+            <label asp-for="Role" class="form-label">@Html.DisplayNameFor(model => model.Role)</label>
+            <input asp-for="Role" class="form-control" disabled>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="Email" class="form-label">@Html.DisplayNameFor(model => model.Email):</label>
+            <input asp-for="Email" class="form-control" disabled>
+        </div>
+        
+    </div>
+
+    <div class="form-group row my-4">
+        <div class="col-md-6">
+            <label asp-for="UserName" class="form-label">@Html.DisplayNameFor(model => model.UserName)</label>
+            <input asp-for="UserName" class="form-control" disabled>
+        </div>
+        <div class="col-md-5">
+            <label asp-for="PontoColeta" class="form-label">@Html.DisplayNameFor(model => model.PontoColeta)</label>
+            <input asp-for="PontoColeta" class="form-control" disabled>
+        </div>
+
+    </div>
+
+    <div class="form-group mt-2">
+        <a asp-action="Update" asp-route-Id="@Model.Id" class="btn btn-warning text-white ">Atualizar <i class="fa-solid fa-pen"></i></a>
+        <a asp-action="Index" class="btn btn-secondary">Voltar <i class="fa-solid fa-rotate-left"></i></a>
+    </div>
+</div>

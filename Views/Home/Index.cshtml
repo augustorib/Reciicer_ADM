@@ -7,7 +7,7 @@
     List<int> quantidadeMateriaisChart = new List<int>();
     
     //mapeia as informações vindas do banco para deixar o grafico dinâmico
-    foreach(var item in Model.TipoMaterialQuantidadeCharts)
+    foreach(var item in Model.TipoMaterialQuantidadeCharts!)
     {
         labelsChart.Add(item.TipoMaterialNome);
         quantidadeMateriaisChart.Add(item.Quantidade);
@@ -18,9 +18,9 @@
     List<string> nomeMes = new List<string>();
     List<int> totalClientesMes = new List<int>();
 
-    foreach(var item in Model.ClientePorMes)
+    foreach(var item in Model.ClientePorMes!)
     {
-        nomeMes.Add(item.NomeMes);
+        nomeMes.Add(item.NomeMes!);
         totalClientesMes.Add(item.TotalCliente);
     }
 
@@ -28,9 +28,9 @@
     List<string> nomeMesColetas = new List<string>();
     List<int> totalColetasMes = new List<int>();
 
-    foreach(var item in Model.ColetasPorMes)
+    foreach(var item in Model.ColetasPorMes!)
     {
-        nomeMesColetas.Add(item.NomeMes);
+        nomeMesColetas.Add(item.NomeMes!);
         totalColetasMes.Add(item.TotalColetaMes);
     }
 }
@@ -41,7 +41,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="overview-wrap justify-content-center pb-3 ">
-                <h2 class="title-1">Dashboard</h2>
+                <h2 class="display-6 text-center mb-4">Dashboard</h2>
             </div>
         </div>
     </div>
@@ -119,7 +119,7 @@
                             <span>Última Coleta</span>
                         </div>
                     </div>
-                    <div class="overview-chart">
+                    <div class="overview-chart"></div>
                         @* <canvas id="widgetChart2"></canvas> *@
                     </div>
                 </div>
@@ -170,11 +170,11 @@
                                 <tr>
                                     <th>Rank</th>
                                     <th>Nome</th>
-                                    <th>@Html.DisplayNameFor(model => model.Top10Clientes.First().PontuacaoTotal)</th>
+                                    <th>@Html.DisplayNameFor(model => model.Top10Clientes!.First().PontuacaoTotal)</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var item in Model.Top10Clientes)
+                                @foreach (var item in Model.Top10Clientes!)
                                 {
                                     
 
