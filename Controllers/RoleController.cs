@@ -112,10 +112,13 @@ namespace Reciicer.Controllers
             await _userManager.ReplaceClaimAsync(usuarioAtualizar, pontoColetaClaim!, new Claim("PontoColetaId", userRoleViewModel.PontoColetaId.ToString()));
             await _userManager.ReplaceClaimAsync(usuarioAtualizar, roleName!, new Claim(ClaimTypes.Role, _roleManager.FindByIdAsync(userRoleViewModel.RoleId).Result!.Name!));
 
-            TempData["Update"] = "Usuário atualizado com sucesso!";
+            
 
             if(User.FindFirst(ClaimTypes.NameIdentifier)?.Value == usuarioAtualizar.Id)
+            {
+                TempData["Update"] = "Usuário atualizado com sucesso!";
                 return RedirectToAction("Logout", "Login"); 
+            }
             else    
                 return RedirectToAction("Index");
         }
