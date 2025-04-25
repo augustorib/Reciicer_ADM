@@ -33,14 +33,14 @@ namespace Reciicer.Service.Coleta
         public void EfetuarColetaCliente(ColetaCreateViewModel coletaCreateViewModel, ClaimsPrincipal User)
         {
 
-            var userLogadoId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userLogadoId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
 
             var userLogado = _usuarioIdentityService.ObterUsuarioIdentityPorIdAsync(userLogadoId).Result;
 
             var coleta = new Entities.Coleta
             {
                 ClienteId = coletaCreateViewModel.ClienteId,
-                DataOperacao = coletaCreateViewModel.Coleta.DataOperacao,
+                DataOperacao = coletaCreateViewModel.Coleta!.DataOperacao,
                 PontuacaoGanha = 0,
                 PontoColetaId = userLogado.PontoColetaId
             };
@@ -241,7 +241,7 @@ namespace Reciicer.Service.Coleta
             
             var pontuacaoColeta =  _material_ColetaService
                                     .ListarMaterialColetaPorColetaId(coleta.Id)
-                                    .Sum(mc => (mc.Material.PontuacaoPeso * mc.Peso) 
+                                    .Sum(mc => (mc.Material!.PontuacaoPeso * mc.Peso) 
                                         + (mc.Quantidade * mc.Material.PontuacaoUnidade)
                                         );
 

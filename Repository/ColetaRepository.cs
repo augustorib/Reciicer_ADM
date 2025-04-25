@@ -25,7 +25,7 @@ namespace Reciicer.Repository
 
         public Coleta ObterColetaPorId(int id)
         {
-            return _context.Coleta.Include(c => c.Cliente).FirstOrDefault(r => r.Id == id);
+            return _context.Coleta.Include(c => c.Cliente).FirstOrDefault(r => r.Id == id)!;
         }
 
         public void AtualizarColeta(Coleta coleta)
@@ -53,7 +53,7 @@ namespace Reciicer.Repository
 
                 transaction.Commit();
              }
-             catch(Exception e)
+             catch(Exception)
              {
                 transaction.Rollback();
              }
@@ -75,7 +75,7 @@ namespace Reciicer.Repository
             return _context.Coleta.Where(r => r.ClienteId == clienteId)
                                       .Include(r => r.Cliente)
                                       .OrderByDescending(r => r.Id)
-                                      .FirstOrDefault();
+                                      .FirstOrDefault()!;
         }
 
         public void CalcularPontuacaoColeta(int coletaId)

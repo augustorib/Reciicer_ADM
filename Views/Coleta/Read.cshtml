@@ -8,21 +8,21 @@
 <div class="row">
     <div class="col">
         
-        <input type="hidden" name="coletaId" value="@Model.Coleta.Id" />
+        <input type="hidden" name="coletaId" value="@Model.Coleta!.Id" />
         
             <div class="form-group row">
                 <div class="col-md-6">
-                    <label asp-for="Coleta.Cliente.Nome" class="control-label">Cliente: </label>
-                    <input asp-for="Coleta.Cliente.Nome" class="form-control" disabled>
+                    <label asp-for="Coleta!.Cliente!.Nome" class="control-label">Cliente: </label>
+                    <input asp-for="Coleta!.Cliente!.Nome" class="form-control" disabled>
                 </div>
 
                 <div class="col-md-4">
-                    <label  asp-for="Coleta.DataOperacao" class="control-label">Data: </label>
-                    <input  asp-for="Coleta.DataOperacao" class="form-control" disabled  >
+                    <label  asp-for="Coleta!.DataOperacao" class="control-label">Data: </label>
+                    <input  asp-for="Coleta!.DataOperacao" class="form-control" disabled  >
                 </div>
                 <div class="col-md-2">
-                    <label  asp-for="Coleta.PontuacaoGanha" class="control-label">@Html.DisplayNameFor(model => model.Coleta.PontuacaoGanha) </label>
-                    <input  asp-for="Coleta.PontuacaoGanha" class="form-control" disabled  >
+                    <label  asp-for="Coleta!.PontuacaoGanha" class="control-label">@Html.DisplayNameFor(model => model.Coleta!.PontuacaoGanha) </label>
+                    <input  asp-for="Coleta!.PontuacaoGanha" class="form-control" disabled  >
                 </div>
             </div>
             
@@ -34,7 +34,7 @@
                     <tr>
                             <th>Material</th>
                             <th>Tipo Material</th>
-                            <th>@Html.DisplayNameFor(model => model.Material_Coletas.First().Peso)</th>
+                            <th>@Html.DisplayNameFor(model => model.Material_Coletas!.First().Peso)</th>
                             <th>Quantidade</th>
                             <th></th>
                     </tr>
@@ -45,8 +45,8 @@
                     @foreach (var item in Model.Material_Coletas) 
                     {   
                         <tr>
-                            <td>@Html.DisplayFor(modelItem => item.Material.Nome)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Material.TipoMaterial.Nome)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Material!.Nome)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Material!.TipoMaterial!.Nome)</td>
                             <td>@Html.DisplayFor(modelItem => item.Peso)</td>
                             <td>@Html.DisplayFor(modelItem => item.Quantidade)</td>
                         </tr>

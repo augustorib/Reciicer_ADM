@@ -17,13 +17,13 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var user in Model.Users)
+        @foreach (var user in Model.Users!)
         {
             <tr>
                 <td>@user.UserName</td>
                 <td>@user.Email</td>
                 <td>@user.PontoColeta</td>
-                <td>@string.Join("| ", user.Roles)</td>
+                <td>@string.Join("| ", user.Roles!)</td>
                 <td>
                     <a class="btn btn-primary " asp-action="Read" asp-route-Id="@user.Id">
                         <i class="fa-solid fa-circle-info text-white"></i>

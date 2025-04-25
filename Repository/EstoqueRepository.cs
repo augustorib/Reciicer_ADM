@@ -21,7 +21,7 @@ namespace Reciicer.Repository
 
         public Estoque ObterEstoquePorId(int id)
         {
-            return _context.Estoque.Include(e => e.PontoColeta).FirstOrDefault(e => e.Id == id);
+            return _context.Estoque.Include(e => e.PontoColeta).FirstOrDefault(e => e.Id == id)!;
         }
 
         public void RegistrarEstoque(Estoque estoque)

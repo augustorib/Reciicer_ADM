@@ -22,7 +22,7 @@ namespace Reciicer.Repository
         }
         public TipoMaterial ObterTipoMaterialPorId(int id)
         {
-            return _context.TipoMaterial.Find(id);
+            return _context.TipoMaterial.Find(id)!;
         }
 
         public void RegistrarTipoMaterial(TipoMaterial tipoMaterial)

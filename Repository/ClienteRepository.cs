@@ -24,7 +24,7 @@ namespace Reciicer.Repository
 
         public Cliente ObterClientePorId(int id)
         {
-            return _context.Cliente.Find(id);
+            return _context.Cliente.Find(id)!;
         }
 
         public void RegistrarCliente(Cliente model)

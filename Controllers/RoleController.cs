@@ -73,7 +73,7 @@ namespace Reciicer.Controllers
         { 
             var user = _userManager.Users.FirstOrDefault(u => u.Id == id);
 
-            var userRole = _userManager.GetRolesAsync(user!).Result.FirstOrDefault();
+            var userRole = _userManager.GetRolesAsync(user!).Result.FirstOrDefault() ?? string.Empty;
 
             
             var model = new UserRoleViewModel
@@ -82,7 +82,7 @@ namespace Reciicer.Controllers
                 UserName = user.UserName!,
                 PontoColetaId = _pontoColetaService.ObterPontoColetaPorId(user.PontoColetaId).Id,
                 Email = user!.Email ?? string.Empty,
-                RoleId = _roleManager.FindByNameAsync(userRole).Result.Id,
+                RoleId = _roleManager.FindByNameAsync(userRole).Result!.Id,
                 RolesList = _roleManager.Roles.ToList(),
                 PontoColetas = _pontoColetaService.ListarPontoColeta(),
             };
@@ -103,14 +103,14 @@ namespace Reciicer.Controllers
             
             await _userManager.UpdateAsync(usuarioAtualizar);
             await _userManager.RemoveFromRolesAsync(usuarioAtualizar, _userManager.GetRolesAsync(usuarioAtualizar).Result);
-            await _userManager.AddToRoleAsync(usuarioAtualizar,  _roleManager.FindByIdAsync(userRoleViewModel.RoleId).Result!.NormalizedName);
+            await _userManager.AddToRoleAsync(usuarioAtualizar,  _roleManager.FindByIdAsync(userRoleViewModel.RoleId!).Result!.NormalizedName!);
 
             var currentClaims = await _userManager.GetClaimsAsync(usuarioAtualizar);
             var pontoColetaClaim = currentClaims.FirstOrDefault(c => c.Type == "PontoColetaId");
             var roleName = currentClaims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
 
             await _userManager.ReplaceClaimAsync(usuarioAtualizar, pontoColetaClaim!, new Claim("PontoColetaId", userRoleViewModel.PontoColetaId.ToString()));
-            await _userManager.ReplaceClaimAsync(usuarioAtualizar, roleName!, new Claim(ClaimTypes.Role, _roleManager.FindByIdAsync(userRoleViewModel.RoleId).Result!.Name!));
+            await _userManager.ReplaceClaimAsync(usuarioAtualizar, roleName!, new Claim(ClaimTypes.Role, _roleManager.FindByIdAsync(userRoleViewModel.RoleId!).Result!.Name!));
 
             
 
@@ -129,7 +129,7 @@ namespace Reciicer.Controllers
             
             var usuarioDeletar = await _userManager.FindByIdAsync(id);
 
-            await _userManager.DeleteAsync(usuarioDeletar);
+            await _userManager.DeleteAsync(usuarioDeletar!);
 
             return RedirectToAction("Index");
         }

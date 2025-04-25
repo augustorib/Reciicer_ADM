@@ -115,7 +115,7 @@ namespace Reciicer.Service.Estoque
             {
                 var estoqueMaterial = _estoqueMaterialRepository.ObterEstoqueMaterialPorId(recolhimentoEstoqueMaterial.EstoqueMaterialId);
 
-                var estoques = _estoqueRepository.ListarEstoquePorPontoColetaId(estoqueMaterial.Estoque.PontoColetaId);
+                var estoques = _estoqueRepository.ListarEstoquePorPontoColetaId(estoqueMaterial.Estoque!.PontoColetaId);
 
                 GerenciarRemocaoEstoque(estoques.ToList(), estoqueMaterial.MaterialId, recolhimentoEstoqueMaterial.Peso, recolhimentoEstoqueMaterial.Quantidade);
             }

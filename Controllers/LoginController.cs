@@ -43,7 +43,7 @@ namespace Reciicer.Controllers
 
             if (ModelState.IsValid && user is not null)
             {
-                var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password,  model.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(user.UserName!, model.Password,  model.RememberMe, lockoutOnFailure: false);
 
                 if (result.Succeeded)
                 {

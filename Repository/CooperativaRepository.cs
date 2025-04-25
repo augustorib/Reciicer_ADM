@@ -23,7 +23,7 @@ namespace Reciicer.Repository
 
         public Cooperativa ObterCooperativaPorId(int id)
         {
-            return _context.Cooperativa.Find(id);
+            return _context.Cooperativa.Find(id)!;
         }
 
         public void RegistrarCooperativa(Cooperativa cooperativa)

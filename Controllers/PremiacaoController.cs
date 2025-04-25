@@ -79,7 +79,7 @@ namespace Reciicer.Controllers
         public IActionResult PremiarCliente(int clienteId, int premiacaoId)
         { 
             
-            if(clienteId != null && premiacaoId != null)
+            if(clienteId != 0 && premiacaoId != 0)
             {
                var premiacaoRealizada = _premiacaoService.RealizarPremiacao(premiacaoId, clienteId);
 

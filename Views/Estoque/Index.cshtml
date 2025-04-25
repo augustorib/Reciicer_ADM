@@ -13,7 +13,7 @@
     <table class="table table-striped text-center" id="dataTableInit">
         <thead>
             <tr>
-                <th>@Html.DisplayNameFor(model => model.PontoColeta.Nome)</th>
+                <th>@Html.DisplayNameFor(model => model.PontoColeta!.Nome)</th>
                 <th>@Html.DisplayNameFor(model => model.Codigo)</th>
                 <th>@Html.DisplayNameFor(model => model.Tipo)</th>
                 <th>@Html.DisplayNameFor(model => model.Capacidade)</th>
@@ -24,7 +24,7 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@Html.DisplayFor(modelItem => item.PontoColeta.Nome)</td>
+                    <td>@Html.DisplayFor(modelItem => item.PontoColeta!.Nome)</td>
                     <td>@Html.DisplayFor(modelItem => item.Codigo)</td>
                     <td>@Html.DisplayFor(modelItem => item.Tipo)</td>
                     <td>@Html.DisplayFor(modelItem => item.Capacidade)</td>

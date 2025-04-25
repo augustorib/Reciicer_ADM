@@ -25,7 +25,7 @@ namespace Reciicer.Repository
         }
         public Premiacao ObterPremiacaoPorId(int id)
         {
-            return _context.Premiacao.FirstOrDefault(p => p.Id == id);
+            return _context.Premiacao.FirstOrDefault(p => p.Id == id)!;
         }
 
         public void AtualizarPremiacao(Premiacao premiacao)

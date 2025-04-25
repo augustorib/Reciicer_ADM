@@ -22,10 +22,10 @@ namespace Reciicer.Repository
         public Recolhimento ObterRecolhimentoPorId(int id)
         {
             return _context.Recolhimento.Include(r => r.Cooperativa)
-                                        .Include(r => r.RecolhimentoEstoqueMateriais)
+                                        .Include(r => r.RecolhimentoEstoqueMateriais!)
                                         .ThenInclude(rem => rem.EstoqueMaterial)
-                                        .ThenInclude(em => em.Material)
-                                        .FirstOrDefault(r => r.Id == id);
+                                        .ThenInclude(em => em!.Material)
+                                        .FirstOrDefault(r => r.Id == id)!;
             
         }
 

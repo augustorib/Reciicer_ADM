@@ -21,7 +21,7 @@ namespace Reciicer.Repository
 
         public Material ObterMaterialPorId(int id)
         {
-            return _context.Material.FirstOrDefault(m => m.Id == id);
+            return _context.Material.FirstOrDefault(m => m.Id == id)!;
         }
 
         public void RegistrarMaterial(Material material)

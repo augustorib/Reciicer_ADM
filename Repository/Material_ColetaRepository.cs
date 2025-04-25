@@ -28,13 +28,13 @@ namespace Reciicer.Repository
         {
             return _context.Material_Coleta.Where(mc => mc.ColetaId == ColetaId)
                                                .Include(mc => mc.Material)
-                                               .ThenInclude(m => m.TipoMaterial)
+                                               .ThenInclude(m => m!.TipoMaterial)
                                                .ToList();
         }
 
         public Material_Coleta ObterMaterialColetaPorId(int id)
         {
-            return _context.Material_Coleta.Include(mc => mc.Coleta).FirstOrDefault(mc => mc.Id == id);
+            return _context.Material_Coleta.Include(mc => mc.Coleta).FirstOrDefault(mc => mc.Id == id)!;
         }
 
         public void RegistrarMaterialColeta(Material_Coleta materialColeta)
@@ -48,7 +48,7 @@ namespace Reciicer.Repository
 
                 transaction.Commit();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 transaction.Rollback();
             }

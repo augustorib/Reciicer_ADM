@@ -8,8 +8,8 @@
 <div>
         <div class="form-group row my-4">
             <div class="col-md-5">
-                <label asp-for="Cooperativa.Nome" class="form-label">@Html.DisplayNameFor(model => model.Cooperativa.Nome)</label>
-                <input asp-for="Cooperativa.Nome" class="form-control" disabled>
+                <label asp-for="Cooperativa!.Nome" class="form-label">@Html.DisplayNameFor(model => model.Cooperativa!.Nome)</label>
+                <input asp-for="Cooperativa!.Nome" class="form-control" disabled>
             </div>
             <div class="col-md-3">
                 <label asp-for="DataRecolhimento" class="form-label">@Html.DisplayNameFor(model => model.DataRecolhimento):</label>
@@ -26,13 +26,13 @@
                 </tr>
             </thead>
             <tbody>
-                @for (int i = 0; i < Model.RecolhimentoEstoqueMateriais.Count() ; i++)
+                @for (int i = 0; i < Model.RecolhimentoEstoqueMateriais!.Count() ; i++)
                 {
                     
-                    var item = Model.RecolhimentoEstoqueMateriais.ElementAt(i);
+                    var item = Model.RecolhimentoEstoqueMateriais!.ElementAt(i);
 
                     <tr>    
-                        <td>@item.EstoqueMaterial.Material.Nome</td>
+                        <td>@item.EstoqueMaterial!.Material!.Nome</td>
                         <td>@item.Quantidade</td>
                         <td>@item.Peso</td>
                     </tr>

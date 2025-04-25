@@ -32,8 +32,8 @@
             </div>
 
             <div class="col-md-3">
-                <label asp-for="Premiacao.PontuacaoRequerida" class="form-label">Pontuação Mínima: </label>
-                <input asp-for="Premiacao.PontuacaoRequerida" class="form-control" disabled />
+                <label asp-for="Premiacao!.PontuacaoRequerida" class="form-label">Pontuação Mínima: </label>
+                <input asp-for="Premiacao!.PontuacaoRequerida" class="form-control" disabled />
             </div>
             
             <div class="col-md-2 align-self-end">
@@ -48,15 +48,15 @@
     <table class="table table-striped text-center" id="dataTableInit">
         <thead>
             <tr>
-                <th>@Html.DisplayNameFor(model => model.Clientes.First().Nome)</th>
-                <th>@Html.DisplayNameFor(model => model.Clientes.First().Email)</th>
-                <th>@Html.DisplayNameFor(model => model.Clientes.First().PontuacaoTotal)</th>
+                <th>@Html.DisplayNameFor(model => model.Clientes!.First().Nome)</th>
+                <th>@Html.DisplayNameFor(model => model.Clientes!.First().Email)</th>
+                <th>@Html.DisplayNameFor(model => model.Clientes!.First().PontuacaoTotal)</th>
                 <th>Enviar Email</th>
             </tr>
         </thead>
         <tbody>
 
-    @foreach (var item in Model.Clientes) 
+    @foreach (var item in Model.Clientes!) 
     {
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.Nome)</td>

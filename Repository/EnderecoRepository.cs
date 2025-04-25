@@ -20,7 +20,7 @@ namespace Reciicer.Repository
 
         public Entities.Endereco ObterEnderecoPorId(int id)
         {
-            return _context.Endereco.Find(id);
+            return _context.Endereco.Find(id)!;
         }
 
         public void RegistrarEndereco(Entities.Endereco endereco)

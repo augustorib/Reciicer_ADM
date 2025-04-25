@@ -8,7 +8,7 @@
 @{
     var userIdentity =  _userManager.GetUserAsync(User).Result;
 
-    var userName = userIdentity.UserName;
+    var userName = userIdentity!.UserName;
     var email = userIdentity.Email;
     var roles = _userManager.GetRolesAsync(userIdentity).Result;
       

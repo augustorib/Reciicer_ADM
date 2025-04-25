@@ -19,7 +19,7 @@ namespace Reciicer.Repository
         }
         public PontoColeta ObterPontoColetaPorId(int id)
         {
-            return _context.PontoColeta.FirstOrDefault(pc => pc.Id == id);
+            return _context.PontoColeta.FirstOrDefault(pc => pc.Id == id)!;
         }
         
         public void RegistrarPontoColeta(PontoColeta pontoColeta)

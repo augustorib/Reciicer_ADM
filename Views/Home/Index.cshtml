@@ -9,7 +9,7 @@
     //mapeia as informações vindas do banco para deixar o grafico dinâmico
     foreach(var item in Model.TipoMaterialQuantidadeCharts!)
     {
-        labelsChart.Add(item.TipoMaterialNome);
+        labelsChart.Add(item.TipoMaterialNome!);
         quantidadeMateriaisChart.Add(item.Quantidade);
     }
 

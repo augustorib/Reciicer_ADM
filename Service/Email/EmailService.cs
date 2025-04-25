@@ -19,10 +19,10 @@ namespace Reciicer.Service.Email
         {
             try
             {
-                string host = _configuration.GetValue<string>("SMTP:Host");
-                string nome = _configuration.GetValue<string>("SMTP:Nome");
-                string username = _configuration.GetValue<string>("SMTP:UserName");
-                string senha = _configuration.GetValue<string>("SMTP:Senha");
+                string host = _configuration.GetValue<string>("SMTP:Host") ?? string.Empty;
+                string nome = _configuration.GetValue<string>("SMTP:Nome") ?? string.Empty;
+                string username = _configuration.GetValue<string>("SMTP:UserName") ?? string.Empty;
+                string senha = _configuration.GetValue<string>("SMTP:Senha") ?? string.Empty;
                 int porta = _configuration.GetValue<int>("SMTP:Porta");
 
 

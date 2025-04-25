@@ -20,7 +20,7 @@ namespace Reciicer.Repository
 
         public RecolhimentoEstoqueMaterial ObterRecolhimentoEstoqueMaterialPorId(int id)
         {
-            return _context.RecolhimentoEstoqueMaterial.Find(id);
+            return _context.RecolhimentoEstoqueMaterial.Find(id)!;
         }
 
         public void RegistrarRecolhimentoEstoqueMaterial(RecolhimentoEstoqueMaterial recolhimentoEstoqueMaterial)
@@ -34,7 +34,7 @@ namespace Reciicer.Repository
 
                 transaction.Commit();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 transaction.Rollback();
             }

@@ -23,8 +23,8 @@
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <label  asp-for="Coleta.DataOperacao" class="control-label">Data: </label>
-                        <input  asp-for="Coleta.DataOperacao" class="form-control" >
+                        <label  asp-for="Coleta!.DataOperacao" class="control-label">Data: </label>
+                        <input  asp-for="Coleta!.DataOperacao" class="form-control" >
                     </div>
 
                     <div class="col-md-2 align-self-end">
@@ -35,13 +35,13 @@
             {
                 <div class="form-group row">
                     <div class="col-md-7">
-                        <label asp-for="Coleta.Cliente.Nome" class="control-label">Cliente: </label>
-                        <input asp-for="Coleta.Cliente.Nome" class="form-control" disabled>
+                        <label asp-for="Coleta!.Cliente!.Nome" class="control-label">Cliente: </label>
+                        <input asp-for="Coleta!.Cliente!.Nome" class="form-control" disabled>
                     </div>
 
                     <div class="col-md-4">
-                        <label  asp-for="Coleta.DataOperacao" class="control-label">Data: </label>
-                        <input  asp-for="Coleta.DataOperacao" class="form-control" disabled  >
+                        <label  asp-for="Coleta!.DataOperacao" class="control-label">Data: </label>
+                        <input  asp-for="Coleta!.DataOperacao" class="form-control" disabled  >
                     </div>
                 </div>
             }
@@ -104,8 +104,8 @@
                     @foreach (var item in Model.Material_Coletas) 
                     {   
                         <tr>
-                            <td>@Html.DisplayFor(modelItem => item.Material.Nome)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Material.TipoMaterial.Nome)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Material!.Nome)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Material!.TipoMaterial!.Nome)</td>
                             <td>@Html.DisplayFor(modelItem => item.Peso)</td>
                             <td>@Html.DisplayFor(modelItem => item.Quantidade)</td>
                             <td>

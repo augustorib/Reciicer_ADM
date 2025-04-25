@@ -16,10 +16,10 @@ namespace Reciicer.Models.Entities
         [DisplayName("nº")]
         public int Numero { get; set; }
         public string? Cidade { get; set; }
-        public string Estado { get; set; }
+        public string Estado { get; set; } = string.Empty;
 
         [DisplayName("CEP ")]
-        public string Cep { get; set; }
+        public string? Cep { get; set; }
 
         
     }

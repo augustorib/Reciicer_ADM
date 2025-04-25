@@ -27,7 +27,7 @@ namespace Reciicer.Controllers
             var model = new ErrorViewModel
             {
                 RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,
-                ErrorMessage = _errorHandlingService.ErrorMessage(errorData.Error),
+                ErrorMessage = _errorHandlingService.ErrorMessage(errorData!.Error),
                 StatusCode = _errorHandlingService.ErrorStatusCode(errorData.Error)
             };
 

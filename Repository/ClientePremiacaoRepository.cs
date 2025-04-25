@@ -28,7 +28,7 @@ namespace Reciicer.Repository
 
                 transaction.Commit();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 transaction.Rollback();
             }
@@ -36,7 +36,7 @@ namespace Reciicer.Repository
 
         public ClientePremiacao ObterClientePremiacaoPorId(int id)
         {
-           return _context.ClientePremiacao.Find(id);
+           return _context.ClientePremiacao.Find(id)!;
         }
 
         public void ExcluirClientePremiacao(int id)
