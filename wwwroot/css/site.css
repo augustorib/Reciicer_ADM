@@ -1,1 +1,24 @@
 
+@media (max-width: 991px) {
+    .header-desktop {
+        position: absolute;
+        top: 100px;
+        left: 0;
+        right: 0;
+        height: 100px;
+    }
+}
+
+@media (max-width: 991px) {
+    .page-container {
+        position: relative;
+        top: 180px;
+        padding-left: 0;
+    }
+}
+
+@media (max-width: 991px) {
+    .section__content--p30 > div > p  {
+        text-align: center;
+    }
+}
