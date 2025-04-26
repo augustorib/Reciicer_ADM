@@ -1768,6 +1768,10 @@ section {
     margin-right: 19px;
 }
 
+.header-mobile .navbar-mobile .navbar-mobile__list li a > svg {
+    margin-right: 19px;
+}
+
 .header-mobile .navbar-mobile .navbar-mobile__list li.has-dropdown > a:after {
     content: '\f105';
     font-family: FontAwesome, cursive;

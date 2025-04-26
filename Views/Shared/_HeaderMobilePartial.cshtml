@@ -1,10 +1,21 @@
+@using Microsoft.AspNetCore.Identity
+@using Reciicer.Models.Entities
+@inject UserManager<UsuarioIdentity> _userManager
+
+@{
+    var userIdentity =  _userManager.GetUserAsync(User).Result;
+    var roles = _userManager.GetRolesAsync(userIdentity!).Result;
+
+    var isAdmin = roles.Contains("Admin");
+}
+
 <!-- HEADER MOBILE-->
 <header class="header-mobile d-block d-lg-none">
     <div class="header-mobile__bar">
         <div class="container-fluid">
             <div class="header-mobile-inner">
-                <a class="logo" href="index.html">
-                    <img src="images/icon/logo.png" alt="CoolAdmin" />
+                <a asp-action="Index" asp-controller="Home">
+                    <img src="~/img/login.png" alt="Reciicer" width="150" height="50"/>
                 </a>
                 <button class="hamburger hamburger--slider" type="button">
                     <span class="hamburger-box">
@@ -18,95 +29,82 @@
         <div class="container-fluid">
             <ul class="navbar-mobile__list list-unstyled">
                 <li class="has-sub">
-                    <a class="js-arrow" href="#">
-                        <i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                    <a class="js-arrow">
+                        <i class="fa-solid fa-person"></i>Cliente</a>
                     <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
                         <li>
-                            <a href="index.html">Dashboard 1</a>
+                            <a asp-controller="Cliente" asp-action="Index"><i class="fa-solid fa-list"></i>Listar</a>
                         </li>
                         <li>
-                            <a href="index2.html">Dashboard 2</a>
-                        </li>
-                        <li>
-                            <a href="index3.html">Dashboard 3</a>
-                        </li>
-                        <li>
-                            <a href="index4.html">Dashboard 4</a>
+                            <a asp-controller="Cliente" asp-action="ClientePremiacao"><i class="fa-solid fa-envelope"></i>Notificar</a>
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <a href="chart.html">
-                        <i class="fas fa-chart-bar"></i>Charts</a>
+                    <a asp-controller="Coleta" asp-action="Index">
+                        <i class="fa-solid fa-recycle "></i>Coleta</a>
                 </li>
+                @if(isAdmin){
                 <li>
-                    <a href="table.html">
-                        <i class="fas fa-table"></i>Tables</a>
+                    <a asp-controller="PontoColeta" asp-action="Index">
+                        <i class="fa-solid fa-location-dot"></i>Pontos de Coleta</a>
                 </li>
+                }
                 <li>
-                    <a href="form.html">
-                        <i class="far fa-check-square"></i>Forms</a>
-                </li>
-                <li>
-                    <a href="calendar.html">
-                        <i class="fas fa-calendar-alt"></i>Calendar</a>
-                </li>
-                <li>
-                    <a href="map.html">
-                        <i class="fas fa-map-marker-alt"></i>Maps</a>
+                    <a asp-controller="Endereco" asp-action="Index">
+                        <i class="fa-solid fa-map-pin"></i>Endereço</a>
                 </li>
                 <li class="has-sub">
-                    <a class="js-arrow" href="#">
-                        <i class="fas fa-copy"></i>Pages</a>
+                    <a class="js-arrow">
+                        <i class="fa-solid fa-trophy"></i>Premiação</a>
                     <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
                         <li>
-                            <a href="login.html">Login</a>
+                            <a asp-controller="Premiacao" asp-action="Index"><i class="fa-solid fa-list"></i>Listar</a>
                         </li>
                         <li>
-                            <a href="register.html">Register</a>
+                            <a asp-controller="Premiacao" asp-action="PremiacaoCliente"><i class="fa-solid fa-gift"></i>Premiar</a>
+                        </li>
+                    </ul>
+                </li>
+                @if(isAdmin){
+                <li class="has-sub">
+                    <a class="js-arrow">
+                        <i class="fa-solid fa-file"></i>Relatórios</a>
+                    <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                        <li>
+                            <a asp-controller="Relatorio" asp-action="RelatorioPontuacao"><i class="fa-solid fa-ranking-star"></i>Pontuação</a>
                         </li>
                         <li>
-                            <a href="forget-pass.html">Forget Password</a>
+                            <a asp-controller="Relatorio" asp-action="RelatorioRecolhimento"><i class="fa-solid fa-weight-hanging"></i>Recolhimento</a>
+                        </li>
+                    </ul>
+                </li>
+                }
+                <li class="has-sub">
+                    <a class="js-arrow">
+                        <i class="fa-solid fa-tag"></i>Gestão Materiais</a>
+                    <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                        <li>
+                            <a asp-controller="Material" asp-action="Index"><i class="fa-solid fa-tag"></i>Material</a>
+                        </li>
+                        <li>
+                            <a asp-controller="TipoMaterial" asp-action="Index"><i class="fa-solid fa-gifts"></i>Tipo</a>
                         </li>
                     </ul>
                 </li>
                 <li class="has-sub">
-                    <a class="js-arrow" href="#">
-                        <i class="fas fa-desktop"></i>UI Elements</a>
+                    <a class="js-arrow">
+                        <i class="fa-solid fa-truck"></i>Gestão Recolhimento</a>
                     <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                        <li>
-                            <a href="button.html">Button</a>
-                        </li>
-                        <li>
-                            <a href="badge.html">Badges</a>
-                        </li>
-                        <li>
-                            <a href="tab.html">Tabs</a>
-                        </li>
-                        <li>
-                            <a href="card.html">Cards</a>
-                        </li>
-                        <li>
-                            <a href="alert.html">Alerts</a>
-                        </li>
-                        <li>
-                            <a href="progress-bar.html">Progress Bars</a>
-                        </li>
-                        <li>
-                            <a href="modal.html">Modals</a>
-                        </li>
-                        <li>
-                            <a href="switch.html">Switchs</a>
-                        </li>
-                        <li>
-                            <a href="grid.html">Grids</a>
-                        </li>
-                        <li>
-                            <a href="fontawesome.html">Fontawesome Icon</a>
-                        </li>
-                        <li>
-                            <a href="typo.html">Typography</a>
-                        </li>
+                 <li>
+                    <a asp-controller="Cooperativa" asp-action="Index"> <i class="fa-solid fa-tree-city"></i>Cooperativa</a>
+                </li>
+                <li>
+                    <a asp-controller="Recolhimento" asp-action="Index"><i class="fa-solid fa-truck-pickup"></i>Recolhimento</a>
+                </li>
+                <li>
+                    <a asp-controller="Estoque" asp-action="Index"><i class="fa-solid fa-warehouse"></i>Estoque</a>
+                </li>
                     </ul>
                 </li>
             </ul>

@@ -126,4 +126,14 @@ $(".animsition").animsition({
   }
 });
 
+  try {
+    var jscr1 = $('.js-scrollbar1');
+    if(jscr1[0]) {
+      const ps1 = new PerfectScrollbar('.js-scrollbar1');      
+    }
+
+  } catch (error) {
+    console.log(error);
+  }
+
 })(jQuery);
